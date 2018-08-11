@@ -1,0 +1,18 @@
+{
+  "name": "Credence_Goods",
+  "private": true,
+  "dependencies": {
+    "@rails/webpacker": "3.5",
+    "babel-preset-react": "^6.24.1",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
+  },
+  "devDependencies": {
+    "jest": "^23.5.0",
+    "webpack-dev-server": "2.11.2"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}
