@@ -1,0 +1,15 @@
+- name: ci
+  type: parallel
+  steps:
+  - name: ruby specs
+    service: credence-goods
+    command: bundle exec rspec
+  - name: js specs
+    service: credence-goods
+    command: yarn test
+- name: Push
+  service: app
+  type: push
+  image_name: registry.heroku.com/burningpony/credence-goods
+  registry: registry.heroku.com
+  dockercfg_service: dockercfg_generator

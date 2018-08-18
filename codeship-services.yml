@@ -1,0 +1,28 @@
+credence-goods:
+  build:
+    image: burningpony/credence-goods
+    dockerfile: Dockerfile
+  depends_on:
+    - redis
+    - postgres
+  environment:
+    - DATABASE_URL=postgres://postgres@postgres/YOUR_DATABASE_NAME
+    - REDIS_URL=redis://redis
+redis:
+  image: healthcheck/redis:alpine
+postgres:
+  image: healthcheck/postgres:alpine
+herokudeployment:
+  image: codeship/heroku-deployment
+  encrypted_env_file: heroku-deployment.env.encrypted
+  volumes:
+    - ./:/deploy
+app:
+  build:
+    image: registry.heroku.com/burningpony/credence-goods
+    dockerfile: Dockerfile
+  encrypted_env_file: heroku-deployment.env.encrypted
+dockercfg_generator:
+  image: codeship/heroku-dockercfg-generator
+  add_docker: true
+  encrypted_env_file: heroku-deployment.env.encrypted
