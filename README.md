@@ -1,24 +1,42 @@
-# README
+# Credence Goods
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+An application to support the collection of data for economics studies.
 
-Things you may want to cover:
+### Dependencies
 
-* Ruby version
+* docker
+* docker-compose
 
-* System dependencies
+### Getting it Running
 
-* Configuration
+Start a bash console inside of the dev environment.
 
-* Database creation
+1. `docker-compose run --rm web bash`
 
-* Database initialization
+** If this readme says "in the container" it is assumed the following command is
+run within the above command.
 
-* How to run the test suite
+Setup DB. (only once)
 
 2. `bin/setup`
 
-* Deployment instructions
+In another tab. To start the application and it's Dependencies
 
-* ...
+3. docker-compose up
+
+
+### Working within the project
+
+Pulling down others work
+
+    git pull
+    docker-compose build web
+
+    *In the container*
+    bin/update
+
+
+Running Tests
+
+    In the container
+    > bin/rake
