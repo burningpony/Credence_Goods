@@ -23,7 +23,10 @@ services:
       - db
       - redis
   db:
-    image: postgres:10.3-alpine
+    image: postgres:10.5-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: agreatpassword
 
   redis:
     image: redis
