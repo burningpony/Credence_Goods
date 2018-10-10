@@ -1,3 +1,15 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  ActiveAdmin.routes(self)
+  namespace :api, format: :json do
+    resources :users, only: [:create]
+    resources :groups, only: [:show]
+  end
+
+  namespace :admin do
+    root to: "admin#index"
+  end
+
+  root to: "experiment#index"
+
+  get '*url', to: 'experiment#index', as: 'react'
 end
