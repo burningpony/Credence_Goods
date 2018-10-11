@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from '../../styles/blocks/graph/button';
-import Label from '../../styles/blocks/graph/label';
-import Input from '../../styles/blocks/graph/input';
+import Button from '../styles/blocks/graph/button';
+import Label from '../styles/blocks/graph/label';
+import Input from '../styles/blocks/graph/input';
 
-class ValueCoordinate extends Component {
+class SamplePoints extends Component {
   static propTypes() {
     return {
       functionString: PropTypes.string.isRequired,
-      costOfCoordinate: PropTypes.number.isRequired,
+      costOfPoint: PropTypes.number.isRequired,
       callback: PropTypes.number.isRequired,
     };
   }
@@ -16,10 +16,10 @@ class ValueCoordinate extends Component {
   static defaultState() {
     return {
       totalCost: 0,
-      totalCoordinates: 0,
-      valueCoordinates: 0,
+      totalPoints: 0,
+      valuePoints: 0,
       cost: 0,
-      cooordinates: [],
+      points: [],
     };
   }
 
@@ -43,7 +43,7 @@ class ValueCoordinate extends Component {
     const { cost } = this.state;
     return (
       <div>
-        <Label>Value Coordinates:</Label>
+        <Label>Sample Points:</Label>
         <Input onChange={this.setValueCoordinates()} type="number" />
         <Button>SUBMIT</Button>
         Cost:
@@ -54,4 +54,4 @@ class ValueCoordinate extends Component {
   }
 }
 
-export default ValueCoordinate;
+export default SamplePoints;

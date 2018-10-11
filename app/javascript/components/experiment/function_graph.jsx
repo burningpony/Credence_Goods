@@ -24,6 +24,7 @@ class FunctionGraph extends Component {
     this.state = {
       boughtPoints: 0,
       boughtCoordinates: 0,
+      cost: 0
     };
   }
 
@@ -39,9 +40,25 @@ class FunctionGraph extends Component {
     const { boughtCoordinates } = this.state;
   }
 
+  buyBoughtCoordinates = ({totalCost, valueCoordinates}) => {
+    this.setState({
+      boughtCoordinates: valueCoordinates,
+      cost: this.state.cost + totalCost
+    });
+  }
+
+  renderCost() {
+    const { cost } = this.state;
+
+    if (cost) {
+      return `$${Math.round(cost * 100) / 100}`
+    }
+  }
+
   render() {
     return (
       <FlexDisplay>
+
         <ScatterChart
           width={400}
           height={400}
@@ -54,12 +71,23 @@ class FunctionGraph extends Component {
           <CartesianGrid verticle={false} horizontalPoints={this.horizontalPoints()} />
 
         </ScatterChart>
+
+
         <div>
-          <ValueCoordinateInput />
+          <ValueCoordinateInput costOfCoordinate={2.33} callback={this.buyBoughtCoordinates}/>
           <SamplePointsInput />
+
+          <h3>
+            Cost:
+            { " " }
+            <small>{this.renderCost()}</small>
+          </h3>
+
+
           <MaxValuePredict />
+
         </div>
-      </FlexDisplay>
+        </FlexDisplay>
     );
   }
 }
