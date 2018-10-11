@@ -27,5 +27,10 @@
   },
   "scripts": {
     "test": "jest"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/config/webpack"
+    ]
   }
 }
