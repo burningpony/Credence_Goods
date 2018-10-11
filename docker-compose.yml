@@ -22,11 +22,14 @@ services:
     depends_on:
       - db
       - redis
+
   db:
     image: postgres:10.5-alpine
     restart: always
     environment:
       POSTGRES_PASSWORD: agreatpassword
+    ports:
+      - '5432:5432'
 
   redis:
     image: redis
