@@ -8,6 +8,7 @@
 /.env
 /.env_heroku
 /codeship.aes
+/codeship.env
 
 # Ignore bundler config.
 /.bundle
