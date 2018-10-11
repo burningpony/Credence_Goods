@@ -1,5 +1,6 @@
 import React from 'react';
-import FunctionGraph from './graph/component';
+import FunctionGraph from './function_graph';
+
 // import { connect } from 'react-redux';
 // import { setState } from '../actions/experiment_actions';
 const functions = [
@@ -18,7 +19,9 @@ const FunctionsSelection = () => (
           {' '}
           {i + 1}
         </h2>
+
         <FunctionGraph function={func} />
+
       </div>
     ))}
   </div>

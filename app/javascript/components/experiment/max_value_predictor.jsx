@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from '../../styles/blocks/graph/button';
-import Label from '../../styles/blocks/graph/label';
-import Input from '../../styles/blocks/graph/input';
+import Button from '../styles/blocks/graph/button';
+import Label from '../styles/blocks/graph/label';
+import Input from '../styles/blocks/graph/input';
 
 class MaxValuePrediction extends Component {
   static propTypes() {
