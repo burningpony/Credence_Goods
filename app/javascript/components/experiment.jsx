@@ -7,6 +7,7 @@ import Part2 from './experiment/part_2';
 import PartnerMatching from './experiment/partner_matching';
 import Instructions from './experiment/instructions';
 import { state as getState } from './selectors/experiment_selectors';
+import { hot } from 'react-hot-loader'
 
 const ExperimentTheme = styled.section`
   padding: 4em;
@@ -38,4 +39,4 @@ const mapStateToProps = state => ({
   experimentState: getState(state),
 });
 
-export default connect(mapStateToProps)(App);
+export default hot(module)(connect(mapStateToProps)(App));

@@ -3,13 +3,13 @@
   steps:
   - name: ruby specs
     service: credence-goods
-    command: bundle exec rspec
+    command: rake db:create spec
   - name: js specs
     service: credence-goods
     command: yarn test
 - name: Push
   service: app
   type: push
-  image_name: registry.heroku.com/burningpony/credence-goods
+  image_name: registry.heroku.com/credence-goods/web
   registry: registry.heroku.com
   dockercfg_service: dockercfg_generator
