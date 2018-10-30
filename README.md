@@ -11,32 +11,29 @@ An application to support the collection of data for economics studies.
 
 Start a bash console inside of the dev environment.
 
-1. `docker-compose run --rm web bash`
+1. `$ docker-compose run --rm web bash`
 
-** If this readme says "in the container" it is assumed the following command is
-run within the above command.
+**If this readme says "in the container" it is assumed the following command is
+run within the above command.**
 
 Setup DB. (only once)
 
-2. `bin/setup`
+2. `$ bin/setup`
 
 In another tab. To start the application and it's Dependencies
 
-3. docker-compose up
-
+3. `$ docker-compose up -d`
 
 ### Working within the project
 
-Pulling down others work
+#### Pulling down others work
 
-    git pull
-    docker-compose build web
-
-    *In the container*
-    bin/update
+    $ git pull
+    $ docker-compose build web
 
 
-Running Tests
+#### Running Tests
 
-    In the container
-    > bin/rake
+In the container
+
+    $ bin/rake
