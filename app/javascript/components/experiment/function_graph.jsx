@@ -28,8 +28,10 @@ class FunctionGraph extends Component {
     };
   }
 
-  func(x) {
+  func = (x) => {
     const { func } = this.props;
+
+    return (eval(`x = ${x}; ${func}`));
   }
 
   data() {
@@ -85,8 +87,8 @@ class FunctionGraph extends Component {
 
 
         <div>
-          <ValueCoordinateInput costOfCoordinate={2.33} callback={this.buyValueCoordinates} />
-          <SamplePointsInput costOfCoordinate={2.33} callback={this.buySamplePoints} />
+          <ValueCoordinateInput costOfCoordinate={2.33} func={this.func} callback={this.buyValueCoordinates} />
+          <SamplePointsInput costOfCoordinate={2.33} func={this.func} callback={this.buySamplePoints} />
 
           <h3>
             Cost:

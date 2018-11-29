@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import Button from '../styles/blocks/graph/button';
 import Label from '../styles/blocks/graph/label';
 import Input from '../styles/blocks/graph/input';
+import { calculateSamplePoint } from '../helpers/function';
 
 class SamplePoints extends Component {
   static propTypes() {
     return {
-      functionString: PropTypes.string.isRequired,
+      func: PropTypes.function.isRequired,
       costOfPoint: PropTypes.number.isRequired,
-      callback: PropTypes.number.isRequired,
+      callback: PropTypes.function.isRequired,
     };
   }
 
@@ -37,16 +38,17 @@ class SamplePoints extends Component {
   }
 
   generatePoints = () => {
+    const { func } = this.props;
     const { samplePoints } = this.state;
     const localPoints = [];
 
     for (let i = 0; i < samplePoints; i++) {
-      localPoints.push({ x: i * Math.random(), y: i * Math.random() });
+      const [x, y] = calculateSamplePoint(func, i * 3, 5);
+      localPoints.push({ x, y });
     }
 
     return localPoints;
   }
-
 
   onClick = () => {
     const { callback } = this.props;
