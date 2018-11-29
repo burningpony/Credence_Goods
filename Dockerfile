@@ -25,3 +25,5 @@ COPY yarn.lock /app/yarn.lock
 RUN yarn install
 
 COPY . /app
+
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
