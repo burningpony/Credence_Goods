@@ -24,7 +24,7 @@ class MaxValuePrediction extends Component {
       <div>
         <Label>Max Value Prediction:</Label>
         <Input onChange={e => this.setState({ maxValue: e.value })} type="number" />
-        <Button>SUBMIT</Button>
+        <Button>Predict</Button>
       </div>
     );
   }

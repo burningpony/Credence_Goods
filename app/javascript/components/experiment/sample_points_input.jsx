@@ -28,15 +28,43 @@ class SamplePoints extends Component {
     this.state = this.constructor.defaultState();
   }
 
-  setValueCoordinates(e) {
-    return () => {
-      this.setState();
-    };
+  setSamplePoints = (e) => {
+    const newSamplePoints = parseFloat(e.target.value);
+    this.setState((previousState, props) => ({
+      samplePoints: newSamplePoints,
+      totalCost: ((props.costOfCoordinate * newSamplePoints) + previousState.totalCost) || 0,
+    }));
   }
 
-  onClick(e) {
-    this.callback(this.state);
-    this.setState(this.constructor.defaultState());
+  generatePoints = () => {
+    const { samplePoints } = this.state;
+    const localPoints = [];
+
+    for (let i = 0; i < samplePoints; i++) {
+      localPoints.push({ x: i * Math.random(), y: i * Math.random() });
+    }
+
+    return localPoints;
+  }
+
+
+  onClick = () => {
+    const { callback } = this.props;
+    this.setState(
+      { points: this.generatePoints() },
+      () => {
+        callback(this.state);
+        // this.setState(this.constructor.defaultState());
+      },
+    );
+  }
+
+  renderTotalCost() {
+    const { totalCost } = this.state;
+
+    if (totalCost) {
+      return Math.round(totalCost * 100) / 100;
+    }
   }
 
   render() {
@@ -44,11 +72,11 @@ class SamplePoints extends Component {
     return (
       <div>
         <Label>Sample Points:</Label>
-        <Input onChange={this.setValueCoordinates()} type="number" />
-        <Button>SUBMIT</Button>
+        <Input onChange={this.setSamplePoints} type="number" />
+        <Button onClick={this.onClick}>SUBMIT</Button>
         Cost:
         {' '}
-        {cost}
+        { this.renderTotalCost() }
       </div>
     );
   }
