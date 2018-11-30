@@ -5,6 +5,7 @@ import {
   ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
 
+import math from 'mathjs';
 import ValueCoordinateInput from './value_coordinate_input';
 import SamplePointsInput from './sample_points_input';
 import MaxValuePredict from './max_value_predictor';
@@ -15,6 +16,16 @@ const FlexDisplay = styled.div`
 `;
 
 class FunctionGraph extends Component {
+  static propTypes() {
+    return {
+      func: PropTypes.function.isRequired,
+      maxY: PropTypes.number.isRequired,
+      maxX: PropTypes.number.isRequired,
+      minY: PropTypes.number.isRequired,
+      minX: PropTypes.number.isRequired,
+    };
+  }
+
   defaultProps: {
     func: ""
   }
@@ -30,8 +41,7 @@ class FunctionGraph extends Component {
 
   func = (x) => {
     const { func } = this.props;
-
-    return (eval(`x = ${x}; ${func}`));
+    return math.eval(func, { x });
   }
 
   data() {

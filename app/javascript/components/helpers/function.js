@@ -1,3 +1,4 @@
+const minimize = require('minimize-golden-section-1d');
 
 const invphi = (Math.sqrt(5) - 1) / 2; // 1/phi
 const invphi2 = (3 - Math.sqrt(5)) / 2; // 1/phi^2
@@ -37,6 +38,6 @@ const gssrec = (f, a, b, tol, {
 };
 
 export const calculateSamplePoint = (func, a, b) => {
-  const tol = 1e-5;
-  return gssrec(func, a, b, tol, {});
+  const x = minimize(func, { upperBound: a, lowerBound: b });
+  return [x, func(x)];
 };
