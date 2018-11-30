@@ -1,5 +1,5 @@
 module Api
-  class GroupsController < ApiController
+  class FunctionResponseController < ApiController
     def show
       group = Group.find(params[:id])
 
