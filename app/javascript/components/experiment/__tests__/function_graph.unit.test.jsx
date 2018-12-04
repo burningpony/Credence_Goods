@@ -1,5 +1,5 @@
 import { shallow } from 'enzyme';
-import React from 'React';
+import React from 'react';
 import Component from '../function_graph';
 
 describe('Component', () => {
