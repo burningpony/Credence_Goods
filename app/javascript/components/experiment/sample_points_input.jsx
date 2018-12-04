@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import Button from '../styles/blocks/graph/button';
 import Label from '../styles/blocks/graph/label';
 import Input from '../styles/blocks/graph/input';
+import { calculateSamplePoint } from '../helpers/function';
 
 class SamplePoints extends Component {
   static propTypes() {
     return {
-      functionString: PropTypes.string.isRequired,
+      func: PropTypes.function.isRequired,
       costOfPoint: PropTypes.number.isRequired,
-      callback: PropTypes.number.isRequired,
+      callback: PropTypes.function.isRequired,
     };
   }
 
@@ -28,15 +29,44 @@ class SamplePoints extends Component {
     this.state = this.constructor.defaultState();
   }
 
-  setValueCoordinates(e) {
-    return () => {
-      this.setState();
-    };
+  setSamplePoints = (e) => {
+    const newSamplePoints = parseFloat(e.target.value);
+    this.setState((previousState, props) => ({
+      samplePoints: newSamplePoints,
+      totalCost: ((props.costOfCoordinate * newSamplePoints) + previousState.totalCost) || 0,
+    }));
   }
 
-  onClick(e) {
-    this.callback(this.state);
-    this.setState(this.constructor.defaultState());
+  generatePoints = () => {
+    const { func } = this.props;
+    const { samplePoints } = this.state;
+    const localPoints = [];
+
+    for (let i = 0; i < samplePoints; i++) {
+      const [x, y] = calculateSamplePoint(func, i * 3, 5);
+      localPoints.push({ x, y });
+    }
+
+    return localPoints;
+  }
+
+  onClick = () => {
+    const { callback } = this.props;
+    this.setState(
+      { points: this.generatePoints() },
+      () => {
+        callback(this.state);
+        // this.setState(this.constructor.defaultState());
+      },
+    );
+  }
+
+  renderTotalCost() {
+    const { totalCost } = this.state;
+
+    if (totalCost) {
+      return Math.round(totalCost * 100) / 100;
+    }
   }
 
   render() {
@@ -44,11 +74,11 @@ class SamplePoints extends Component {
     return (
       <div>
         <Label>Sample Points:</Label>
-        <Input onChange={this.setValueCoordinates()} type="number" />
-        <Button>SUBMIT</Button>
+        <Input onChange={this.setSamplePoints} type="number" />
+        <Button onClick={this.onClick}>SUBMIT</Button>
         Cost:
         {' '}
-        {cost}
+        { this.renderTotalCost() }
       </div>
     );
   }

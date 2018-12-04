@@ -18,7 +18,7 @@ class ValueCoordinate extends Component {
       totalCost: 0,
       totalCoordinates: 0,
       valueCoordinates: 0,
-      cooordinates: [],
+      coordinates: [],
     };
   }
 
@@ -34,31 +34,44 @@ class ValueCoordinate extends Component {
    * @memberof ValueCoordinate
    */
   setValueCoordinates = (e) => {
-    const newValueCoordinates = parseFloat(e.target.value)
-    this.setState((previousState, props) => {
-      return {
-        valueCoordinates: newValueCoordinates,
-        totalCost: ((props.costOfCoordinate * newValueCoordinates) + previousState.totalCost) || 0
-      }
-    });
+    const newValueCoordinates = parseFloat(e.target.value);
+    this.setState((previousState, props) => ({
+      valueCoordinates: newValueCoordinates,
+      totalCost: ((props.costOfCoordinate * newValueCoordinates) + previousState.totalCost) || 0,
+    }));
+  }
+
+  generateCoordinates = () => {
+    const { valueCoordinates } = this.state;
+    const localCoordinates = [];
+
+    for (let i = 0; i < valueCoordinates; i++) {
+      localCoordinates.push(i * Math.random());
+    }
+
+    return localCoordinates;
   }
 
   onClick = (e) => {
-    this.props.callback(this.state);
-    this.setState(this.constructor.defaultState());
+    const { callback } = this.props;
+    this.setState(
+      { coordinates: this.generateCoordinates() },
+      () => {
+        callback(this.state);
+        // this.setState(this.constructor.defaultState());
+      },
+    );
   }
 
   renderTotalCost() {
     const { totalCost } = this.state;
 
     if (totalCost) {
-      return Math.round(totalCost * 100) / 100
+      return Math.round(totalCost * 100) / 100;
     }
-
   }
 
   render() {
-
     return (
       <div>
         <Label>Value Coordinates:</Label>
@@ -71,7 +84,6 @@ class ValueCoordinate extends Component {
       </div>
     );
   }
-
 }
 
 export default ValueCoordinate;
