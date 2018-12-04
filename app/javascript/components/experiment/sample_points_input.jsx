@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import Button from '../styles/blocks/graph/button';
 import Label from '../styles/blocks/graph/label';
 import Input from '../styles/blocks/graph/input';
-import { calculateSamplePoint } from '../helpers/function';
+import { calculateSamplePoint, calculateBounds } from '../helpers/function';
 
 class SamplePoints extends Component {
   static propTypes() {
     return {
       func: PropTypes.function.isRequired,
       costOfPoint: PropTypes.number.isRequired,
+      min: PropTypes.number.isRequired,
+      max: PropTypes.number.isRequired,
       callback: PropTypes.function.isRequired,
     };
   }
@@ -38,12 +40,21 @@ class SamplePoints extends Component {
   }
 
   generatePoints = () => {
-    const { func } = this.props;
+    const { func, min, max } = this.props;
     const { samplePoints } = this.state;
     const localPoints = [];
 
+    debugger;
+
     for (let i = 0; i < samplePoints; i++) {
-      const [x, y] = calculateSamplePoint(func, i * 3, 5);
+      // TODO: Determine a method to bounds from a min and max with n as input. loop over bounds
+      console.log(i, min, max);
+
+      const [localMin, localMax] = calculateBounds(i + 1, { min, max });
+
+      const [x, y] = calculateSamplePoint(func, localMin, localMax);
+      console.log(x, y);
+
       localPoints.push({ x, y });
     }
 
