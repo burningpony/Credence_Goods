@@ -44,8 +44,6 @@ class SamplePoints extends Component {
     const { samplePoints } = this.state;
     const localPoints = [];
 
-    debugger;
-
     for (let i = 0; i < samplePoints; i++) {
       // TODO: Determine a method to bounds from a min and max with n as input. loop over bounds
       console.log(i, min, max);
