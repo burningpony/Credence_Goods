@@ -12,7 +12,7 @@ redis:
   image: healthcheck/redis:alpine
 postgres:
   image: healthcheck/postgres:alpine
-herokudeployment:
+heroku-deployment:
   image: codeship/heroku-deployment
   encrypted_env_file: heroku-deployment.env.encrypted
   volumes:
@@ -22,7 +22,7 @@ app:
     image: registry.heroku.com/burningpony/credence-goods
     dockerfile: Dockerfile
   encrypted_env_file: heroku-deployment.env.encrypted
-dockercfg_generator:
+heroku-dockercfg-generator:
   image: codeship/heroku-dockercfg-generator
   add_docker: true
   encrypted_env_file: heroku-deployment.env.encrypted
