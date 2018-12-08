@@ -7,7 +7,9 @@
   - name: js specs
     service: credence-goods
     command: yarn test
+
 - name: Push
+  tag: master
   service: app
   type: push
   image_name: registry.heroku.com/credence-goods/web
@@ -15,5 +17,6 @@
   dockercfg_service: heroku-dockercfg-generator
 
 - name: Trigger Release
+  tag: master
   service: heroku-deployment
   command: heroku container:release --app credence-goods web
