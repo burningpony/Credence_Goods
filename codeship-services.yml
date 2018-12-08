@@ -8,6 +8,10 @@ credence-goods:
   environment:
     - DATABASE_URL=postgres://postgres@postgres/YOUR_DATABASE_NAME
     - REDIS_URL=redis://redis
+credence-goods-no-deps:
+  build:
+    image: burningpony/credence-goods
+    dockerfile: Dockerfile
 redis:
   image: healthcheck/redis:alpine
 postgres:

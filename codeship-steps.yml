@@ -5,7 +5,7 @@
     service: credence-goods
     command: rake db:create spec
   - name: js specs
-    service: credence-goods
+    service: credence-goods-no-deps
     command: yarn test
 
 - name: Push
