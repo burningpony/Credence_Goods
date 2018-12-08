@@ -12,4 +12,8 @@
   type: push
   image_name: registry.heroku.com/credence-goods/web
   registry: registry.heroku.com
-  dockercfg_service: dockercfg_generator
+  dockercfg_service: heroku-dockercfg-generator
+
+- name: Trigger Release
+  service: heroku-deployment
+  command: heroku container:release --app credence-goods web
