@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import {
@@ -36,6 +37,7 @@ class FunctionGraph extends Component {
       boughtPoints: [],
       boughtCoordinates: [],
       cost: 0,
+      debug: true,
     };
   }
 
@@ -78,6 +80,8 @@ class FunctionGraph extends Component {
   }
 
   render() {
+    const { minX, maxX } = this.props;
+    const { debug } = this.state;
     return (
       <FlexDisplay>
 
@@ -85,25 +89,27 @@ class FunctionGraph extends Component {
           width={400}
           height={400}
           margin={{
-            top: 20, right: 20, bottom: 20, left: 20,
+            top: 5, right: 5, bottom: 5, left: 5,
           }}
         >
-          <Scatter name="A school" data={this.data()} fill="#8884d8" />
-          <XAxis dataKey="x" type="number" tick={false} />
-          <YAxis dataKey="y" type="number" tick={false} />
-          <CartesianGrid verticle horizontalPoints={this.horizontalPoints()} />
+          <Scatter name="A school" line={debug} data={this.data()} fill="#8884d8" />
+          <XAxis dataKey="x" type="number" tick={debug} />
+          <YAxis dataKey="y" type="number" tick={debug} />
+          <CartesianGrid strokeDasharray="3 3" horizontalPoints={this.horizontalPoints()} />
 
         </ScatterChart>
 
-
         <div>
           <ValueCoordinateInput costOfCoordinate={2.33} func={this.func} callback={this.buyValueCoordinates} />
-          <SamplePointsInput costOfCoordinate={2.33} func={this.func} callback={this.buySamplePoints} />
+          <SamplePointsInput max={maxX} min={minX} costOfCoordinate={2.33} func={this.func} callback={this.buySamplePoints} />
 
           <h3>
-            Cost:
+            Cos
+            <span onClick={e => this.setState({ debug: !this.state.debug })}>t</span>
+:
             { ' ' }
             <small>{this.renderCost()}</small>
+
           </h3>
 
 
