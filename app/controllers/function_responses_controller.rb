@@ -1,2 +1,0 @@
-class FunctionResponsesController < ApplicationController
-end

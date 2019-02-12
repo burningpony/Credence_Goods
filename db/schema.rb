@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_08_162807) do
+ActiveRecord::Schema.define(version: 2019_02_12_154630) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,10 +29,45 @@ ActiveRecord::Schema.define(version: 2018_09_08_162807) do
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
   end
 
+  create_table "function_responses", force: :cascade do |t|
+    t.bigint "function_id"
+    t.bigint "user_id"
+    t.decimal "num_bought_value_coordinates"
+    t.decimal "num_bought_sample_points"
+    t.decimal "max_value_prediction"
+    t.integer "part"
+    t.time "time_to_response"
+    t.decimal "point_difference"
+    t.decimal "round_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["function_id"], name: "index_function_responses_on_function_id"
+    t.index ["user_id"], name: "index_function_responses_on_user_id"
+  end
+
+  create_table "function_sets", force: :cascade do |t|
+    t.bigint "group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_function_sets_on_group_id"
+  end
+
+  create_table "functions", force: :cascade do |t|
+    t.bigint "function_set_id"
+    t.string "string_representation_of_function"
+    t.decimal "min_x"
+    t.decimal "min_y"
+    t.decimal "max_x"
+    t.decimal "max_y"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["function_set_id"], name: "index_functions_on_function_set_id"
+  end
+
   create_table "groups", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name", default: "", null: false
+    t.string "name", null: false
     t.boolean "player_a_can_choose_player_b_payment", default: false, null: false
     t.boolean "sample_value_points_allowed", default: true, null: false
     t.boolean "sample_value_coordinates_allowed", default: true, null: false
