@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   namespace :api, format: :json do
     resources :users, only: [:create]
     resources :groups, only: [:show]
+    resources :function_sets ,only: [:index] do
+      resources :functions , only: [:index]
+    end
   end
 
   namespace :admin do
