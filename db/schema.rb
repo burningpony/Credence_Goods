@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_12_154630) do
+ActiveRecord::Schema.define(version: 2019_02_15_123326) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,10 +46,9 @@ ActiveRecord::Schema.define(version: 2019_02_12_154630) do
   end
 
   create_table "function_sets", force: :cascade do |t|
-    t.bigint "group_id"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["group_id"], name: "index_function_sets_on_group_id"
   end
 
   create_table "functions", force: :cascade do |t|
@@ -75,6 +74,8 @@ ActiveRecord::Schema.define(version: 2019_02_12_154630) do
     t.decimal "salary_payment", precision: 8, scale: 2, default: "24.0", null: false
     t.decimal "capitation_payment", precision: 8, scale: 2, default: "0.65", null: false
     t.decimal "ffs_payment", precision: 8, scale: 2, default: "0.2", null: false
+    t.bigint "function_set_id"
+    t.index ["function_set_id"], name: "index_groups_on_function_set_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -84,4 +85,5 @@ ActiveRecord::Schema.define(version: 2019_02_12_154630) do
     t.index ["group_id"], name: "index_users_on_group_id"
   end
 
+  add_foreign_key "groups", "function_sets"
 end
