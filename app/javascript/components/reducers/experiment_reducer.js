@@ -4,7 +4,7 @@ import { SET_STATE } from '../actions/experiment_actions';
 export default function experiment(state = iMap(), action) {
   switch (action.type) {
     case SET_STATE:
-      return state.set('state', action.state);
+      return state.set('state', action.state); //app step
     default:
       return state;
   }

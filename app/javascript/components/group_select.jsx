@@ -68,8 +68,8 @@ class GroupSelect extends Component {
   renderErrors() {
     return (
       <Errors>
-        {this.errors().toJS().map(error => (
-          <p>
+        {this.errors().toJS().map((error,index) => (
+          <p key={index}>
             {error}
           </p>
         ))}

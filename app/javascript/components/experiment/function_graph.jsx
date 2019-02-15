@@ -27,10 +27,6 @@ class FunctionGraph extends Component {
     };
   }
 
-  defaultProps: {
-    func: ""
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -81,6 +77,7 @@ class FunctionGraph extends Component {
 
   render() {
     const { minX, maxX } = this.props;
+    console.log("props",minX,maxX)
     const { debug } = this.state;
     return (
       <FlexDisplay>
