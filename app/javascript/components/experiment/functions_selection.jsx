@@ -8,10 +8,9 @@ import { connect } from 'react-redux';
 class FunctionsSelection extends Component {
   
   constructor(props) {
-    super(props);
-    this.props.mathFunctions.map((func, i) => console.log(func))
-
+    super(props);    
   }
+
   render () {
     return (<div>
       {this.props.mathFunctions.map((func, i) => (
@@ -23,11 +22,14 @@ class FunctionsSelection extends Component {
           </h2>
 
           <FunctionGraph
+            id={func.id}
             func={func.representation}
             maxY={func.max_y}
             maxX={func.max_x}
             minY={func.min_y}
             minX={func.min_x}
+            disabled={func.saved}
+            responses={func.responses}
           />
 
         </div>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Button from '../styles/blocks/graph/button';
+import { connect } from 'react-redux';
 
 import {
   ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
@@ -10,15 +12,17 @@ import math from 'mathjs';
 import ValueCoordinateInput from './value_coordinate_input';
 import SamplePointsInput from './sample_points_input';
 import MaxValuePredict from './max_value_predictor';
-
+import {storeFunctionResponses} from '../actions/functions_actions'
 
 const FlexDisplay = styled.div`
   display: flex;
 `;
 
 class FunctionGraph extends Component {
+
   static propTypes() {
     return {
+      id:PropTypes.function.isRequired,//function_id
       func: PropTypes.function.isRequired,
       maxY: PropTypes.number.isRequired,
       maxX: PropTypes.number.isRequired,
@@ -75,13 +79,25 @@ class FunctionGraph extends Component {
     return formattedCost;
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      user_id:this.props.user.id,
+      part:1,
+      ...this.props.responses
+    }
+    const {storeResponse} = this.props
+    console.log(storeResponse)
+    storeResponse(this.props.group.id,this.props.group.function_set_id,this.props.id,data)
+  }
+
   render() {
     const { minX, maxX } = this.props;
     console.log("props",minX,maxX)
     const { debug } = this.state;
     return (
       <FlexDisplay>
-
+        {this.props.enable}
         <ScatterChart
           width={400}
           height={400}
@@ -97,8 +113,8 @@ class FunctionGraph extends Component {
         </ScatterChart>
 
         <div>
-          <ValueCoordinateInput costOfCoordinate={2.33} func={this.func} callback={this.buyValueCoordinates} />
-          <SamplePointsInput max={maxX} min={minX} costOfCoordinate={2.33} func={this.func} callback={this.buySamplePoints} />
+          <ValueCoordinateInput id={this.props.id} costOfCoordinate={2.33} func={this.func} callback={this.buyValueCoordinates} disabled={this.props.disabled} />
+          <SamplePointsInput id={this.props.id} max={maxX} min={minX} costOfCoordinate={2.33} func={this.func} callback={this.buySamplePoints} disabled={this.props.disabled} />
 
           <h3>
             Cos
@@ -109,13 +125,22 @@ class FunctionGraph extends Component {
 
           </h3>
 
+          <MaxValuePredict id={this.props.id} disabled={this.props.disabled}/>
 
-          <MaxValuePredict />
-
+          <button onClick={this.handleSubmit} disabled={this.props.disabled}>Submit Answers</button>
         </div>
       </FlexDisplay>
     );
   }
 }
 
-export default FunctionGraph;
+const mapStateToProps = state => ({
+  group: state.group.toJS(),
+  user: state.user.toJS()
+});
+
+const mapDispatchToProps = dispatch => ({
+  storeResponse: (groupId,setId,functionId,functionsResponses) => dispatch(storeFunctionResponses(groupId,setId,functionId,functionsResponses)),
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(FunctionGraph);

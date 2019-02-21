@@ -4,10 +4,12 @@ import Button from '../styles/blocks/graph/button';
 import Label from '../styles/blocks/graph/label';
 import Input from '../styles/blocks/graph/input';
 import { calculateSamplePoint, calculateBounds } from '../helpers/function';
+import { connect } from 'react-redux';
 
 class SamplePoints extends Component {
   static propTypes() {
     return {
+      id:PropTypes.function.isRequired,//function_id
       func: PropTypes.function.isRequired,
       costOfPoint: PropTypes.number.isRequired,
       min: PropTypes.number.isRequired,
@@ -37,6 +39,8 @@ class SamplePoints extends Component {
       samplePoints: newSamplePoints,
       totalCost: ((props.costOfCoordinate * newSamplePoints) + previousState.totalCost) || 0,
     }));
+    this.props.dispatch({ type:'SAVE_FUNCTION_RESPONSES', id: this.props.id, field: "num_bought_sample_points", value:newSamplePoints })
+
   }
 
   generatePoints = () => {
@@ -83,7 +87,7 @@ class SamplePoints extends Component {
     return (
       <div>
         <Label>Sample Points:</Label>
-        <Input onChange={this.setSamplePoints} type="number" />
+        <Input onChange={this.setSamplePoints} disabled={this.props.disabled} type="number" />
         <Button onClick={this.onClick}>SUBMIT</Button>
         Cost:
         {' '}
@@ -93,4 +97,4 @@ class SamplePoints extends Component {
   }
 }
 
-export default SamplePoints;
+export default connect()(SamplePoints);

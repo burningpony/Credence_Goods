@@ -4,7 +4,9 @@ Rails.application.routes.draw do
     resources :users, only: [:create]
     resources :groups, only: [:show] do
       resources :function_sets ,only: [:index] do
-        resources :functions , only: [:index]
+        resources :functions , only: [:index] do
+          resources :function_responses, only: [:create]
+        end
       end
     end
   end

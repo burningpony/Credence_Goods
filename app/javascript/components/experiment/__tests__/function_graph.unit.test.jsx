@@ -17,7 +17,7 @@ describe('Component', () => {
       {...props}
     />);
   });
-  it('calculates the six(1)', () => {
+  it('calculates the sin(1)', () => {
     expect(wrapper.instance().func(1)).toBe(0.8414709848078965);
   });
 });

@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import Button from '../styles/blocks/graph/button';
 import Label from '../styles/blocks/graph/label';
 import Input from '../styles/blocks/graph/input';
+import { connect } from 'react-redux';
 
 class ValueCoordinate extends Component {
+
   static propTypes() {
     return {
+      id:PropTypes.function.isRequired,//function_id
       functionString: PropTypes.string.isRequired,
       costOfCoordinate: PropTypes.number.isRequired,
       callback: PropTypes.func.isRequired,
@@ -39,6 +42,7 @@ class ValueCoordinate extends Component {
       valueCoordinates: newValueCoordinates,
       totalCost: ((props.costOfCoordinate * newValueCoordinates) + previousState.totalCost) || 0,
     }));
+    this.props.dispatch({ type:'SAVE_FUNCTION_RESPONSES', id: this.props.id, field: "num_bought_value_coordinates", value:newValueCoordinates })
   }
 
   generateCoordinates = () => {
@@ -75,7 +79,7 @@ class ValueCoordinate extends Component {
     return (
       <div>
         <Label>Value Coordinates:</Label>
-        <Input onChange={this.setValueCoordinates} type="number" />
+        <Input onChange={this.setValueCoordinates} disabled={this.props.disabled} type="number" />
         <Button onClick={this.onClick}>SUBMIT</Button>
         Cost:
         {' '}
@@ -86,4 +90,4 @@ class ValueCoordinate extends Component {
   }
 }
 
-export default ValueCoordinate;
+export default connect()(ValueCoordinate);
