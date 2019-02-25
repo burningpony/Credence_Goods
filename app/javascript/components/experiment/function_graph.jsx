@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '../styles/blocks/graph/button';
 import { connect } from 'react-redux';
+import { Alert } from 'reactstrap';
 
 import {
   ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
@@ -38,10 +39,14 @@ class FunctionGraph extends Component {
       boughtCoordinates: [],
       cost: 0,
       debug: true,
+      alert:false,
+      alertType:"success",
+      alertText:""
     };
 
     this.validateAttrs = this.validateAttrs.bind(this)
     this.triggerError = this.triggerError.bind(this)
+    this.generateAlert = this.generateAlert.bind(this)
 
   }
 
@@ -95,7 +100,22 @@ class FunctionGraph extends Component {
   }
 
   triggerError = () => {
-    alert("You have to Fill all the parameters of the function")
+    this.setState({
+      alert:true,
+      alertType:"error",
+      alertText:"Fill all the parameters"
+    });
+    setTimeout(()=>{
+      this.setState({
+        alert:false
+      });
+    },10000)
+  }
+
+  generateAlert = () => {
+    return (this.state.alert ?<Alert color={this.state.alertType}>
+      {this.state.alertText}
+      </Alert> : null)
   }
 
   handleSubmit = (e) => {
@@ -124,9 +144,10 @@ class FunctionGraph extends Component {
     const { minX, maxX } = this.props;
     console.log("props",minX,maxX)
     const { debug } = this.state;
+    const {generateAlert} = this
     return (
       <FlexDisplay>
-        {this.props.enable}
+        {generateAlert()}
         <ScatterChart
           width={400}
           height={400}

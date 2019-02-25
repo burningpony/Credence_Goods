@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 
 import store from './stores/index';
 import Experiment from './experiment';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
