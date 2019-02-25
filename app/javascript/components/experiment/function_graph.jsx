@@ -12,7 +12,7 @@ import math from 'mathjs';
 import ValueCoordinateInput from './value_coordinate_input';
 import SamplePointsInput from './sample_points_input';
 import MaxValuePredict from './max_value_predictor';
-import {storeFunctionResponses} from '../actions/functions_actions'
+import {storeFunctionResponses,updateFunctionResponses} from '../actions/functions_actions'
 
 const FlexDisplay = styled.div`
   display: flex;
@@ -39,6 +39,10 @@ class FunctionGraph extends Component {
       cost: 0,
       debug: true,
     };
+
+    this.validateAttrs = this.validateAttrs.bind(this)
+    this.triggerError = this.triggerError.bind(this)
+
   }
 
   func = (x) => {
@@ -79,16 +83,41 @@ class FunctionGraph extends Component {
     return formattedCost;
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    const data = {
-      user_id:this.props.user.id,
-      part:1,
-      ...this.props.responses
+  validateAttrs = () => {
+    if(this.props.responses){
+      return !(
+        isNaN(this.props.responses.max_value_prediction) &&
+        isNaN(this.props.responses.num_bought_value_coordinates) &&
+        isNaN(this.props.responses.num_bought_sample_points)
+         )
     }
-    const {storeResponse} = this.props
-    console.log(storeResponse)
-    storeResponse(this.props.group.id,this.props.group.function_set_id,this.props.id,data)
+    return false
+  }
+
+  triggerError = () => {
+    alert("You have to Fill all the parameters of the function")
+  }
+
+  handleSubmit = (e) => {
+    if(this.validateAttrs()){
+      e.preventDefault();
+      const data = {
+        user_id:this.props.user.id,
+        part:1,
+        ...this.props.responses
+      }
+      if(this.props.disabled) { 
+        const {updateResponse} = this.props
+        updateResponse(this.props.group.id,this.props.group.function_set_id,this.props.id,this.props.responses.response_id,data)
+      } else {
+        const {storeResponse} = this.props
+        storeResponse(this.props.group.id,this.props.group.function_set_id,this.props.id,data)
+      }
+    } else {
+      this.triggerError()
+    }
+    
+    
   }
 
   render() {
@@ -125,9 +154,9 @@ class FunctionGraph extends Component {
 
           </h3>
 
-          <MaxValuePredict id={this.props.id} disabled={this.props.disabled}/>
+          <MaxValuePredict id={this.props.id} />
 
-          <button onClick={this.handleSubmit} disabled={this.props.disabled}>Submit Answers</button>
+          <button onClick={this.handleSubmit} > Submit Answers </button>
         </div>
       </FlexDisplay>
     );
@@ -141,6 +170,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   storeResponse: (groupId,setId,functionId,functionsResponses) => dispatch(storeFunctionResponses(groupId,setId,functionId,functionsResponses)),
+  updateResponse: (groupId,setId,functionId,responseId,functionsResponses) => dispatch(updateFunctionResponses(groupId,setId,functionId,responseId,functionsResponses)),
+
 });
 
 export default connect(mapStateToProps,mapDispatchToProps)(FunctionGraph);

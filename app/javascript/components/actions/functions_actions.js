@@ -54,5 +54,18 @@ export const storeFunctionResponses = (groupId,setId,functionId,functionsRespons
     'X-CSRF-Token': getToken(),
   },
 }).then(response => response.json()).then((response) => {
-  dispatch({type:'SET_SAVED_FUNCTION',id:functionId})
+  if (!response.errors) dispatch({type:'SET_SAVED_FUNCTION',id:functionId,responseId:response.id})
+});
+
+export const updateFunctionResponses = (groupId,setId,functionId,responseId,functionsResponses) => dispatch => fetch(`${API_URL}/groups/${groupId}/function_sets/${setId}/functions/${functionId}/function_responses/${responseId}`, {
+  method: 'PUT',
+  body: JSON.stringify(functionsResponses),
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-Token': getToken(),
+  },
+}).then(response => response.json()).then((response) => {
+
 });

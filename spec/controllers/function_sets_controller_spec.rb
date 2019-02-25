@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe FunctionSetsController, type: :controller do
+RSpec.describe Api::FunctionSetsController, type: :controller do
 
 end

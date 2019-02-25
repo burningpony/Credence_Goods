@@ -21,6 +21,7 @@ export default function functions(state = [], action) {
     return state.map((func)=>{
       if(func.get('id') == action.id){
         func = func.toJS()
+        func.responses.response_id = action.responseId
         func.saved = true
         return fromJS(func)
         } else return func

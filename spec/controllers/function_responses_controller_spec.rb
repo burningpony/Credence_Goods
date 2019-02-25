@@ -1,12 +1,12 @@
 require 'rails_helper'
-
-RSpec.describe FunctionResponsesController, type: :controller do
+require "spec_helper"
+RSpec.describe Api::FunctionResponsesController, type: :controller do
     describe 'POST /function-responses' do
         # valid payload
         let(:valid_attributes) { { function_id: 1, user_id: 1 ,num_bought_value_coordinates:0,num_bought_sample_points: 0, max_value_prediction: 0, part: 1,time_to_response: 0,point_difference: 0,round_number: 0  } }
     
         context 'when the request is valid' do
-          before { post '/function-responses', params: valid_attributes }
+          before { post 'api/groups/1/function_sets/1/functions/1/function_responses', params: valid_attributes }
           #draft of tests  
           it 'creates a response' do
             expect(json['function_id']).to eq(1)
@@ -18,7 +18,7 @@ RSpec.describe FunctionResponsesController, type: :controller do
         end
     
         context 'when the request is invalid' do
-          before { post '/function-responses', params: { title: 'Foobar' } }
+          before { post 'api/groups/1/function_sets/1/functions/1/function_responses', params: valid_attributes }
     
           it 'returns status code 422' do
             expect(response).to have_http_status(422)

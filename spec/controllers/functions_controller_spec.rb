@@ -1,9 +1,11 @@
 require 'rails_helper'
-
-RSpec.describe FunctionsController, type: :controller do
+require "spec_helper"
+RSpec.describe Api::FunctionsController, type: :controller do
     describe 'GET function-sets/:id/functions' do
         # make HTTP get request before each example
-        before { get 'function-sets/1/functions' }
+        let(:valid_attributes) {  }
+
+        before { get 'api/groups/1/function_sets/1/functions/1', params: valid_attributes }
     
         it 'returns functions' do
           # Note `json` is a custom helper to parse JSON responses
