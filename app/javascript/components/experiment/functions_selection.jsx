@@ -1,12 +1,18 @@
-import FunctionGraph from './function_graph';
+import FunctionGraph from '../../containers/experiment/function_graph';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-// import { connect } from 'react-redux';
-// import { setState } from '../actions/experiment_actions';
+import PropTypes from 'prop-types';
 
 class FunctionsSelection extends Component {
   
+  static propTypes() {
+    return {
+      viewMode:PropTypes.boolean.isRequired,//function_id
+      part:PropTypes.string.isRequired
+
+    };
+  }
+
   constructor(props) {
     super(props);    
   }
@@ -30,6 +36,7 @@ class FunctionsSelection extends Component {
             minX={func.min_x}
             disabled={func.saved}
             responses={func.responses}
+            viewMode={this.props.viewMode}
           />
 
         </div>
@@ -38,9 +45,5 @@ class FunctionsSelection extends Component {
     );
     }
 }
-function mapStateToProps(state) {
-  return {
-    mathFunctions: state.functions.toJS()
-  }
-}
-export default connect(mapStateToProps,null)(FunctionsSelection);
+
+export default FunctionsSelection;

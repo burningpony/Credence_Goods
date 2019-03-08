@@ -2,10 +2,13 @@ import styled from 'styled-components';
 import React from 'react';
 import { connect } from 'react-redux';
 import GroupSelect from './group_select';
-import Part1 from './experiment/part_1';
-import Part2 from './experiment/part_2';
-import PartnerMatching from './experiment/partner_matching';
-import Instructions from './experiment/instructions';
+import Part1 from '../containers/experiment/part_1';
+import Part2 from '../containers/experiment/part_2';
+import Quiz1 from '../containers/experiment/quiz_1';
+import Quiz2 from '../containers/experiment/quiz_2';
+
+import PartnerMatching from '../containers/experiment/partner_matching';
+import Instructions from '../containers/experiment/instructions';
 import { state as getState } from './selectors/experiment_selectors';
 import { hot } from 'react-hot-loader'
 
@@ -24,6 +27,10 @@ const ExperimentComponent = (experimentState) => {
       return (<PartnerMatching />);
     case 'part2':
       return (<Part2 />);
+    case 'quiz1':
+      return (<Quiz1 />);
+    case 'quiz2':
+      return (<Quiz2 />);
     default:
       return (<GroupSelect />);
   }

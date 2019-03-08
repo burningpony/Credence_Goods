@@ -4,7 +4,6 @@ import Button from '../styles/blocks/graph/button';
 import Label from '../styles/blocks/graph/label';
 import Input from '../styles/blocks/graph/input';
 import { calculateSamplePoint, calculateBounds } from '../helpers/function';
-import { connect } from 'react-redux';
 
 class SamplePoints extends Component {
   static propTypes() {
@@ -31,15 +30,22 @@ class SamplePoints extends Component {
   constructor(props) {
     super(props);
     this.state = this.constructor.defaultState();
+    //binding
+    this.updateStateAndStorage = this.updateStateAndStorage.bind(this)
+    this.renderTotalCost = this.renderTotalCost.bind(this)
   }
 
   setSamplePoints = (e) => {
     const newSamplePoints = parseFloat(e.target.value);
+    this.updateStateAndStorage(newSamplePoints);
+  }
+
+  updateStateAndStorage(newSamplePoints,callback){
     this.setState((previousState, props) => ({
       samplePoints: newSamplePoints,
       totalCost: ((props.costOfCoordinate * newSamplePoints) + previousState.totalCost) || 0,
-    }));
-    this.props.dispatch({ type:'SAVE_FUNCTION_RESPONSES', id: this.props.id, field: "num_bought_sample_points", value:newSamplePoints })
+    }),callback);
+    this.props.updateFunctionResponse(this.props.id,newSamplePoints)
 
   }
 
@@ -47,16 +53,13 @@ class SamplePoints extends Component {
     const { func, min, max } = this.props;
     const { samplePoints } = this.state;
     const localPoints = [];
-
+    console.log(samplePoints)
     for (let i = 0; i < samplePoints; i++) {
       // TODO: Determine a method to bounds from a min and max with n as input. loop over bounds
       console.log(i, min, max);
-
       const [localMin, localMax] = calculateBounds(i + 1, { min, max });
-
       const [x, y] = calculateSamplePoint(func, localMin, localMax);
       console.log(x, y);
-
       localPoints.push({ x, y });
     }
 
@@ -73,7 +76,7 @@ class SamplePoints extends Component {
       },
     );
   }
-
+  
   renderTotalCost() {
     const { totalCost } = this.state;
 
@@ -97,4 +100,4 @@ class SamplePoints extends Component {
   }
 }
 
-export default connect()(SamplePoints);
+export default SamplePoints;

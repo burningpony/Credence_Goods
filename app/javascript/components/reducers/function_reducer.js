@@ -1,5 +1,5 @@
 import { Map as iMap } from 'immutable';
-import { RECEIVE_FUNCTIONS,SAVE_FUNCTION_RESPONSES,SET_SAVED_FUNCTION } from '../actions/functions_actions';
+import { RECEIVE_FUNCTIONS,SAVE_FUNCTION_RESPONSES,SET_SAVED_FUNCTION,GET_FUNCTION } from '../actions/functions_actions';
 import { fromJS } from 'immutable';
 
 export default function functions(state = [], action) {

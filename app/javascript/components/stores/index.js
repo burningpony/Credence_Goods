@@ -7,12 +7,12 @@ import user from '../reducers/user_reducer';
 import group from '../reducers/group_reducer';
 import functions from '../reducers/function_reducer';
 import functionSet from '../reducers/function_set_reducer';
-
+import pair from '../reducers/user_pair_reducer'
 //import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 
 export default createStore(
-  combineReducers({ user, experiment, group, functionSet,functions }),
+  combineReducers({ user, experiment, group, functionSet,functions,pair }),
   {},
   compose(
     applyMiddleware(thunk),

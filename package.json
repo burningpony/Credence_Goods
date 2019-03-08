@@ -7,6 +7,7 @@
     "babel-jest": "^23.6.0",
     "babel-preset-react": "^6.24.1",
     "bootstrap": "^4.3.1",
+    "create-react-class": "^15.6.2",
     "enzyme-adapter-react-16": "^1.7.0",
     "immutability-helper": "^3.0.0",
     "immutable": "^3.8.2",
@@ -42,6 +43,6 @@
       "/node_modules/",
       "<rootDir>/config/webpack"
     ],
-    "setupTestFrameworkScriptFile": "<rootDir>/app/javascript/setupTests.js"
+    "setupFilesAfterEnv": [ "<rootDir>/app/javascript/setupTests.js"]
   }
 }

@@ -6,6 +6,7 @@ export const RECEIVE_FUNCTIONS = 'RECEIVE_FUNCTIONS';
 export const RECEIVE_FUNCTION_SET = 'RECEIVE_FUNCTION_SET';
 export const SAVE_FUNCTION_RESPONSES = 'SAVE_FUNCTION_RESPONSES';
 export const SET_SAVED_FUNCTION = 'SET_SAVED_FUNCTION';
+export const GET_FUNCTION = 'GET_FUNCTION';
 
 export const receiveFunctions = functions => ({
   type: RECEIVE_FUNCTIONS,
@@ -41,6 +42,10 @@ export const fetchFunctions = (groupId,setId) => dispatch => fetch(`${API_URL}/g
     Accept: 'application/json',
   },
 }).then(response => response.json()).then((response) => {
+  response = response.map((func)=>{
+    func.responses = {}
+    return func
+  })
   dispatch(receiveFunctions(fromJS(response)));
 });
 

@@ -23,24 +23,19 @@ class MaxValuePrediction extends Component {
 
   
   setMaxValue = (e) => {
-    this.props.dispatch({ type:'SAVE_FUNCTION_RESPONSES', id: this.props.id, field: "max_value_prediction", value:parseFloat(e.target.value) })
+    this.props.setResponse(this.props.id,e.target.value)
     this.setState({ maxValue: e.value })
-
   }
 
   render() {
     return (
       <div>
         <Label>Max Value Prediction:</Label>
-        <Input  onChange={this.setMaxValue} type="number" />
+        <Input  onChange={this.setMaxValue} type="number"/>
         <Button >Predict</Button>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  configureUser: groupName => dispatch(configureUser(groupName)),
-});
-
-export default connect()(MaxValuePrediction);
+export default MaxValuePrediction;

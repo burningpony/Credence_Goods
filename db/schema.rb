@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_15_123326) do
+ActiveRecord::Schema.define(version: 2019_02_26_173920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,26 @@ ActiveRecord::Schema.define(version: 2019_02_15_123326) do
     t.index ["function_set_id"], name: "index_groups_on_function_set_id"
   end
 
+  create_table "quiz_responses", force: :cascade do |t|
+    t.bigint "user_id"
+    t.jsonb "responses"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_quiz_responses_on_user_id"
+  end
+
+  create_table "user_pairs", force: :cascade do |t|
+    t.integer "round"
+    t.bigint "person_a_id"
+    t.bigint "person_b_id"
+    t.bigint "group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_user_pairs_on_group_id"
+    t.index ["person_a_id"], name: "index_user_pairs_on_person_a_id"
+    t.index ["person_b_id"], name: "index_user_pairs_on_person_b_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -86,4 +106,6 @@ ActiveRecord::Schema.define(version: 2019_02_15_123326) do
   end
 
   add_foreign_key "groups", "function_sets"
+  add_foreign_key "user_pairs", "users", column: "person_a_id"
+  add_foreign_key "user_pairs", "users", column: "person_b_id"
 end

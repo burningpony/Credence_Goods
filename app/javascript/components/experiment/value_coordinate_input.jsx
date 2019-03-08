@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Button from '../styles/blocks/graph/button';
 import Label from '../styles/blocks/graph/label';
 import Input from '../styles/blocks/graph/input';
-import { connect } from 'react-redux';
 
 class ValueCoordinate extends Component {
 
@@ -28,6 +27,7 @@ class ValueCoordinate extends Component {
   constructor(props) {
     super(props);
     this.state = this.constructor.defaultState();
+    this.updateStateAndStorage = this.updateStateAndStorage.bind(this)
   }
 
   /**
@@ -38,11 +38,16 @@ class ValueCoordinate extends Component {
    */
   setValueCoordinates = (e) => {
     const newValueCoordinates = parseFloat(e.target.value);
+    this.updateStateAndStorage(newValueCoordinates)
+  }
+
+  updateStateAndStorage(newValueCoordinates,callback){
     this.setState((previousState, props) => ({
       valueCoordinates: newValueCoordinates,
       totalCost: ((props.costOfCoordinate * newValueCoordinates) + previousState.totalCost) || 0,
-    }));
-    this.props.dispatch({ type:'SAVE_FUNCTION_RESPONSES', id: this.props.id, field: "num_bought_value_coordinates", value:newValueCoordinates })
+    }),callback);
+    this.props.updateFunctionResponse(this.props.id,newValueCoordinates)
+
   }
 
   generateCoordinates = () => {
@@ -50,7 +55,7 @@ class ValueCoordinate extends Component {
     const localCoordinates = [];
 
     for (let i = 0; i < valueCoordinates; i++) {
-      localCoordinates.push(i * Math.random());
+      localCoordinates.push((i * Math.random()));
     }
 
     return localCoordinates;
@@ -90,4 +95,4 @@ class ValueCoordinate extends Component {
   }
 }
 
-export default connect()(ValueCoordinate);
+export default ValueCoordinate;

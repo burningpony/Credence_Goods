@@ -2,9 +2,10 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   namespace :api, format: :json do
     resources :users, only: [:create]
+    resources :quizes, only: [:create]
     resources :groups, only: [:show] do
       resources :function_sets ,only: [:index] do
-        resources :functions , only: [:index] do
+        resources :functions , only: [:index,:show,:create] do
           resources :function_responses, only: [:create,:update]
         end
       end
@@ -14,7 +15,7 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: "admin#index"
   end
-
+  mount ActionCable.server => '/cable'
   root to: "experiment#index"
 
   get '*url', to: 'experiment#index', as: 'react'
