@@ -5,8 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-set = FunctionSet.create!(name:"default set")
-group = Group.create(name: "default",function_set_id: set.id)
+group = Group.create(name: "default")
+set = FunctionSet.create!(name:"default set",group_id:group.id)
 Function.create(function_set_id: set.id, string_representation_of_function: 'sin(x)',max_y: 1, max_x: 2, min_y: -1, min_x: -1)
 Function.create(function_set_id: set.id, string_representation_of_function: 'cos(x)',max_y: 1, max_x: 2, min_y: -1, min_x: -1)
 Function.create(function_set_id: set.id, string_representation_of_function: 'cos(x) * 2 / 4',max_y: 1, max_x: 2, min_y: -1, min_x: -1)

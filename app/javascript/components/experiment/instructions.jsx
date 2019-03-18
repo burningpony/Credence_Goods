@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {Button} from '@bootstrap-styled/v4';
+
 class Instructions extends Component{
 
   render(){ return(
@@ -22,9 +24,9 @@ class Instructions extends Component{
       <p>
         At any time during the experiment, you may choose to browse the internet instead of completing the task that you are assigned.
       </p>
-      <button onClick={this.props.transition}>
+      <Button onClick={this.props.transition}>
         Continue
-      </button>
+      </Button>
     </div>
   )};
 }

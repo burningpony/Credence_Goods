@@ -1,10 +1,10 @@
-import { Map as iMap } from 'immutable';
-import { RECEIVE_GROUP } from '../actions/group_actions';
+import { Map as iMap, fromJS } from 'immutable';
+import { RECEIVE_GROUP} from '../actions/group_actions';
 
-export default function user(state = iMap(), action) {
+export default function group(state = iMap, action) {
   switch (action.type) {
     case RECEIVE_GROUP:
-      return action.user;
+      return action.group;
     default:
       return state;
   }

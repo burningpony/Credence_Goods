@@ -8,13 +8,13 @@ class FunctionsSelection extends Component {
   static propTypes() {
     return {
       viewMode:PropTypes.boolean.isRequired,//function_id
-      part:PropTypes.string.isRequired
-
+      part:PropTypes.string.isRequired,
+      groupId:PropTypes.number.isRequired
     };
   }
 
   constructor(props) {
-    super(props);    
+    super(props);   
   }
 
   render () {

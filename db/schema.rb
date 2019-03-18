@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2019_02_26_173920) do
 
   create_table "function_sets", force: :cascade do |t|
     t.string "name"
+    t.bigint "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -105,7 +106,6 @@ ActiveRecord::Schema.define(version: 2019_02_26_173920) do
     t.index ["group_id"], name: "index_users_on_group_id"
   end
 
-  add_foreign_key "groups", "function_sets"
   add_foreign_key "user_pairs", "users", column: "person_a_id"
   add_foreign_key "user_pairs", "users", column: "person_b_id"
 end

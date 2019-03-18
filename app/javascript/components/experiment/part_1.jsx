@@ -1,19 +1,32 @@
-import React from 'react';
+import React, { Component } from 'react';
 import FunctionsSelection from '../../containers/experiment/function_selection';
 import BrowseWeb from './browse_web';
+import {Button} from '@bootstrap-styled/v4';
+class Part1 extends Component{
+  constructor(props){
+    super(props)
+    this.props.startTimer()
+  }
+  render (){
+      return (
+      <div>
+        <h1>Part 1</h1>
+        <BrowseWeb>
+          <FunctionsSelection part={1} />
+        </BrowseWeb>
+       
+        <Button onClick={()=> this.props.transition("sets")} color="success">
+          Back to groups
+        </Button>
 
-const Part1 = ({ transition }) => (
-  <div>
-    <h1>Part 1</h1>
-    <BrowseWeb>
-      <FunctionsSelection part={1} />
-    </BrowseWeb>
-    <button onClick={transition} type="button">
-      Continue
-    </button>
-  </div>
-);
+        <Button onClick={()=> this.props.transition("partner_matching")} color="success">
+          Continue
+        </Button>
 
+      </div>
+    );
+  }
+}
 
 
 export default Part1;

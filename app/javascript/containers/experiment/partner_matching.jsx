@@ -6,7 +6,7 @@ import { RECEIVE_USER_PAIR } from '../../components//actions/user_pair_actions';
 
 const mapDispatchToProps = dispatch => ({
     transition: (state) => dispatch(setState(state)),
-    receivePair: (data) => dispatch({ type: RECEIVE_USER_PAIR, pair: { ...data } })
+    receivePair: (data) => dispatch({ type: RECEIVE_USER_PAIR, pair: data })
 });
 
 const mapStateToProps = state => ({

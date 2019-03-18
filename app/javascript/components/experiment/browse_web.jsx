@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Button from '../styles/elements/button';
+import {Button,Col,Row,Alert} from '@bootstrap-styled/v4';
 
 // hmmmmm
 const Browser = () => (
@@ -31,7 +31,7 @@ class BrowseWeb extends Component {
   render() {
     return (
       <div>
-        <Button onClick={this.toggleBrowsing}>
+        <Button onClick={this.toggleBrowsing} color="success">
           Browse Web
         </Button>
         <div>

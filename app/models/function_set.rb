@@ -1,4 +1,4 @@
 class FunctionSet < ApplicationRecord
-    has_one :group
+    belongs_to :group
     has_many :functions
 end

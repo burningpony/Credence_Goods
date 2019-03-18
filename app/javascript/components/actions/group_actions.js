@@ -4,9 +4,9 @@ import { setState } from './experiment_actions';
 import {fetchFunctionSet} from './functions_actions'
 export const RECEIVE_GROUP = 'RECEIVE_GROUP';
 
-export const receiveGroup = user => ({
+export const receiveGroup = group => ({
   type: RECEIVE_GROUP,
-  user,
+  group,
 });
 
 export const fetchGroup = groupId => dispatch => fetch(`${API_URL}/groups/${groupId}`, {

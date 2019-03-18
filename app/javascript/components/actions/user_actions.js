@@ -3,6 +3,8 @@ import { API_URL, getToken } from '../../service';
 import { fetchGroup } from './group_actions';
 
 export const RECEIVE_USER = 'RECEIVE_USER';
+export const START_PART_1 = 'START_PART_1';
+export const START_PART_2 = 'START_PART_2';
 
 export const receiveUser = user => ({
   type: RECEIVE_USER,

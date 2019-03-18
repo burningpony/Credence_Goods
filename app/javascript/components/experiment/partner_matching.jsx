@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ActionCableConsumer from '../react-cable/ActionCableConsumer'
 import { cable } from '../app'
+import {Button,Col,Row,Alert} from '@bootstrap-styled/v4';
+import { fromJS } from 'immutable';
 
 
 class PartnerMatching extends Component {
@@ -41,9 +43,9 @@ class PartnerMatching extends Component {
       player = 'A'
     }
 
-    this.props.receivePair({ ...data, player })
+    this.props.receivePair(fromJS({ ...data, player, part:2}))
 
-    this.setState({ pairSetted: true, player })
+    this.setState({ pairSetted: true, player})
   }
   //html render methods
 
@@ -56,7 +58,7 @@ class PartnerMatching extends Component {
 
   transitionRole() {
     if (this.state.player == 'B') {
-      this.props.transition('part2')
+      this.props.transition('sets')
     } else {
       this.props.transition('quiz1')
     }
@@ -64,7 +66,8 @@ class PartnerMatching extends Component {
 
   render() {
     return (
-      <div>
+      <Row>
+
         <h1>Matching Partners</h1>
         {this.playerAlert()}
         <h2>Player A is selecting payment method for player B</h2>
@@ -77,10 +80,10 @@ class PartnerMatching extends Component {
           ref="SimulationChannel"
           cable={cable}
         />
-        <button onClick={this.transitionRole} type="button" disabled={!this.state.pairSetted}>
+        <Button onClick={this.transitionRole} type="button" disabled={!this.state.pairSetted}>
           Continue
-    </button>
-      </div>
+        </Button>
+      </Row>
     );
   }
 

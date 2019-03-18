@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-
-class ActionCableConsumer extends Component{
+//person b = expert
+//person a = customer
+class ActionCableConsumer extends Component {
+    
     constructor(props){
         super(props)
         //binding methods

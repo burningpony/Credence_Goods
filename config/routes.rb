@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api, format: :json do
     resources :users, only: [:create]
     resources :quizes, only: [:create]
-    resources :groups, only: [:show] do
+    resources :groups, only: [:show, :index] do
       resources :function_sets ,only: [:index] do
         resources :functions , only: [:index,:show,:create] do
           resources :function_responses, only: [:create,:update]

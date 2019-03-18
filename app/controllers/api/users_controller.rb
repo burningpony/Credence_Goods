@@ -3,7 +3,6 @@ module Api
     def create
       group = Group.find_by(name: user_params[:group_name])
       user = User.create(group: group)
-
       if user.save
         render json: user
       else

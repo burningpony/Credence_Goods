@@ -4,11 +4,14 @@ import ActionCableConsumer  from '../react-cable/ActionCableConsumer'
 import React, { Component } from 'react';
 import { fromJS } from 'immutable';
 import {cable} from '../app'
+import {Button,Col,Row,Alert} from '@bootstrap-styled/v4';
 
 class Part2 extends Component {
 
   constructor (props) {
     super(props);
+    this.props.startTimer()
+
     const viewMode = (this.props.pair.player == 'A')
     this.state = {
       viewMode: viewMode
@@ -18,6 +21,9 @@ class Part2 extends Component {
     this.requestFormat = this.requestFormat.bind(this)
     this.onConnected = this.onConnected.bind(this)
     this.onReceived = this.onReceived.bind(this)
+    this.backToGroups = this.backToGroups.bind(this)
+    this.backToGroupsButton = this.backToGroupsButton.bind(this)
+
   }
 
   componentDidUpdate(prevProps) {
@@ -30,7 +36,13 @@ class Part2 extends Component {
 
   onReceived (data){
     if(this.props.pair.player == 'A'){
-      this.props.setFunctions(fromJS(data.data))
+      if(data.action == 'function_change'){
+        this.props.setFunctions(fromJS(data.data))
+      } else if(data.action == 'back_to_groups'){
+        this.props.transition("sets")
+      }else{
+        this.props.transition("finished")
+      }
     }
   }
 
@@ -48,6 +60,27 @@ class Part2 extends Component {
     }
   }
 
+  backToGroups(){
+    this.props.transition("sets")
+    this.refs.FunctionResponsesChannel.perform('notify_back',this.requestFormat({}))
+  }
+
+  finishPart(){
+    this.props.transition("finished")
+    this.refs.FunctionResponsesChannel.perform('finish',this.requestFormat({}))
+  }
+
+  //render functions
+  
+  backToGroupsButton(){
+    if(this.state.viewMode){
+      return (<div></div>)
+    }
+    return (<Button onClick={this.backToGroups} color="success">
+      Back to groups
+    </Button>)
+  }
+
   render () { return (
     <div>
       <h1>Part 2</h1>
@@ -61,9 +94,11 @@ class Part2 extends Component {
           />
         <FunctionsSelection viewMode={this.state.viewMode} part={2}/>
       </BrowseWeb>
-      <button onClick={this.props.transition} type="button">
+
+      {this.backToGroupsButton()}
+      <Button onClick={()=> this.finishPart()} color="success">
         Finish
-      </button>
+      </Button>
     </div>);
   }
 }

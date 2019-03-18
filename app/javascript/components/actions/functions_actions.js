@@ -7,6 +7,8 @@ export const RECEIVE_FUNCTION_SET = 'RECEIVE_FUNCTION_SET';
 export const SAVE_FUNCTION_RESPONSES = 'SAVE_FUNCTION_RESPONSES';
 export const SET_SAVED_FUNCTION = 'SET_SAVED_FUNCTION';
 export const GET_FUNCTION = 'GET_FUNCTION';
+export const MARK_AS_SELECTED = 'MARK_AS_SELECTED';
+export const SET_CURRENT_FUNCTION_SET = 'SET_CURRENT_FUNCTION_SET';
 
 export const receiveFunctions = functions => ({
   type: RECEIVE_FUNCTIONS,
@@ -18,11 +20,6 @@ export const receiveFunctionSet = sets => ({
   sets,
 });
 
-//export const saveFunctionResponses = response => ({
-//  type: SAVE_FUNCTION_RESPONSES,
-//  response,
-//});
-
 export const fetchFunctionSet = groupId => dispatch => fetch(`${API_URL}/groups/${groupId}/function_sets`, {
   method: 'GET',
   headers: {
@@ -31,7 +28,7 @@ export const fetchFunctionSet = groupId => dispatch => fetch(`${API_URL}/groups/
   },
 }).then(response => response.json()).then((response) => {
   dispatch(receiveFunctionSet(fromJS(response)));
-  if (!response.errors) dispatch(fetchFunctions(response.group_id,response.id));
+  //if (!response.errors) dispatch(fetchFunctions(response.group_id,response.id));
 
 });
 

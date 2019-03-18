@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { saveQuiz }  from '../../services/quiz_service'
+import {Card,Row,Col,Button,Container} from '@bootstrap-styled/v4';
 
 const questions = [
     {
@@ -79,7 +80,7 @@ class Quiz1 extends Component {
                     </div>
                 </div>
             ))}
-        <button onClick={this.saveQuiz} >Submit</button>
+        <Button onClick={this.saveQuiz}> Submit</Button>
         </div>)
     }
 

@@ -1,9 +1,8 @@
 module Api
     class FunctionsController < ApiController
         def index
-            group = Group.find(params[:group_id])
-            function_set = group.function_set
-            functions = function_set.functions.map { |fun|{
+            functions = Function.where(:function_set_id => params[:function_set_id] ).all()
+            functions = functions.map { |fun|{
                 :id => fun.id,
                 :min_x => fun.min_x.to_i,
                 :min_y => fun.min_y.to_i,

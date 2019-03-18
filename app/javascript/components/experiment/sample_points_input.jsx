@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from '../styles/blocks/graph/button';
 import Label from '../styles/blocks/graph/label';
-import Input from '../styles/blocks/graph/input';
 import { calculateSamplePoint, calculateBounds } from '../helpers/function';
+import {Button,Input} from '@bootstrap-styled/v4';
 
 class SamplePoints extends Component {
   static propTypes() {

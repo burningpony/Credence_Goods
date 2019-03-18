@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Alert } from 'reactstrap';
 import Label from '../styles/blocks/graph/label';
 import Input from '../styles/blocks/graph/input';
+import {Button,Col,Row,Alert} from '@bootstrap-styled/v4';
 
 import {
   ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Line,
@@ -188,7 +188,7 @@ class FunctionGraph extends Component {
 
   renderSubmitButton(){
     if(!this.props.viewMode){
-      return(<button onClick={this.handleSubmit} > Submit Answers </button>)
+      return(<Button onClick={this.handleSubmit} > Predict </Button>)
     }
     return(<div></div>)
   }
@@ -199,8 +199,11 @@ class FunctionGraph extends Component {
     const { debug,horizontalTick } = this.state;
     const {generateAlert,renderSubmitButton,renderValueCoordinate,renderSamplePoints,renderMaxValue} = this
     return (
-      <FlexDisplay>
-        {generateAlert()}
+      <Row>
+        <Col lg="12">
+          {generateAlert()}
+        </Col>
+        <Col lg="6">
         <ScatterChart
           width={400}
           height={400}
@@ -213,8 +216,8 @@ class FunctionGraph extends Component {
           <XAxis dataKey="x" type="number" tick={debug} />  
           <YAxis dataKey="y" type="number" tick={horizontalTick} domain={[minY,maxY]} tickCount={this.horizontalPoints()}/>
         </ScatterChart>
-
-        <div>    
+        </Col>
+        <Col lg="6">    
           {renderValueCoordinate()}
           {renderSamplePoints()}
           <h3>
@@ -227,8 +230,8 @@ class FunctionGraph extends Component {
           </h3>
           {renderMaxValue()}
           {renderSubmitButton()}
-        </div>
-      </FlexDisplay>
+        </Col>
+      </Row>
     );
   }
 }

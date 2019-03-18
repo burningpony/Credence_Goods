@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from '../styles/blocks/graph/button';
 import Label from '../styles/blocks/graph/label';
-import Input from '../styles/blocks/graph/input';
 import { connect } from 'react-redux';
+import {Button,Input} from '@bootstrap-styled/v4';
+
 //import 
 class MaxValuePrediction extends Component {
   static propTypes() {
@@ -32,7 +32,7 @@ class MaxValuePrediction extends Component {
       <div>
         <Label>Max Value Prediction:</Label>
         <Input  onChange={this.setMaxValue} type="number"/>
-        <Button >Predict</Button>
+        {/* <Button >Predict</Button> */}
       </div>
     );
   }

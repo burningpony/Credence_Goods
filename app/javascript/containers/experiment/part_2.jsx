@@ -2,15 +2,19 @@ import Part2 from '../../components/experiment/part_2';
 import { connect } from 'react-redux';
 import React from 'react';
 import { setState } from '../../components/actions/experiment_actions';
+import {START_PART_2} from '../../components/actions/user_actions'
 
 const mapDispatchToProps = dispatch => ({
-    transition: () => dispatch(setState('finished')),
+    transition: (state) => dispatch(setState(state)),
     setFunctions: (data) =>  dispatch({type:'RECEIVE_FUNCTIONS' , functions:data }),
+    startTimer: () => dispatch({type:START_PART_2}),
+
   });
   
   const mapStateToProps = state => ({
+    group : state.group.toJS(),
     user: state.user.toJS(),
-    pair: state.pair,
+    pair: state.pair.toJS(),
     functions: state.functions.toJS()
   })
 
