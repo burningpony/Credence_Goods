@@ -4,7 +4,7 @@ import React from 'react';
 import { setState } from '../../components/actions/experiment_actions';
 
 const mapDispatchToProps = dispatch => ({
-  transition: () => dispatch(setState('part2')),
+  transition: () => dispatch(setState('partner_matching')),
 });
 
 const mapStateToProps = state => ({

@@ -23,7 +23,17 @@ class Part2 extends Component {
     this.onReceived = this.onReceived.bind(this)
     this.backToGroups = this.backToGroups.bind(this)
     this.backToGroupsButton = this.backToGroupsButton.bind(this)
+    this.handleScroll = this.handleScroll.bind(this)
+  }
+  //the expert will share also his scrolling
+  componentDidMount() {
+    if(!this.state.viewMode)
+      window.addEventListener('scroll', this.handleScroll);
+  }
 
+  componentWillUnmount() {
+    if(!this.state.viewMode)
+      window.removeEventListener('scroll', this.handleScroll);
   }
 
   componentDidUpdate(prevProps) {
@@ -40,6 +50,8 @@ class Part2 extends Component {
         this.props.setFunctions(fromJS(data.data))
       } else if(data.action == 'back_to_groups'){
         this.props.transition("sets")
+      }else if(data.action == 'scrolling'){
+        window.scrollTo(0,data.data)
       }else{
         this.props.transition("finished")
       }
@@ -47,6 +59,10 @@ class Part2 extends Component {
   }
 
   onConnected (data) {
+  }
+
+  handleScroll(event){
+    this.refs.FunctionResponsesChannel.perform('scrolling',this.requestFormat(window.scrollY))
   }
 
   sendChanges(response){
@@ -71,7 +87,7 @@ class Part2 extends Component {
   }
 
   //render functions
-  
+
   backToGroupsButton(){
     if(this.state.viewMode){
       return (<div></div>)

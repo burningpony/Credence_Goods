@@ -19,7 +19,7 @@ class Part1 extends Component{
           Back to groups
         </Button>
 
-        <Button onClick={()=> this.props.transition("quiz2")} color="success">
+        <Button onClick={()=> this.props.transition("partner_matching")} color="success">
           Continue
         </Button>
 

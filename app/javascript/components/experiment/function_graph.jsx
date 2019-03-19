@@ -212,8 +212,8 @@ class FunctionGraph extends Component {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <Scatter name="A school" line={debug} data={this.data()} fill="#8884d8" />
-          <XAxis dataKey="x" type="number" tick={debug} />  
+          <Scatter name="A school" line={debug} data={this.data()} fill="#8884d8" stroke="none" />
+          <XAxis dataKey="x" type="number" tick={false} />  
           <YAxis dataKey="y" type="number" tick={horizontalTick} domain={[minY,maxY]} tickCount={this.horizontalPoints()}/>
         </ScatterChart>
         </Col>

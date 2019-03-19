@@ -13,13 +13,30 @@ import Instructions from '../containers/experiment/instructions';
 import { state as getState } from './selectors/experiment_selectors';
 import { hot } from 'react-hot-loader'
 import Timer from '../containers/experiment/timer'
+import { ToastConsumer, ToastProvider, withToastManager } from 'react-toast-notifications';
+
+
 const ExperimentTheme = styled.section`
   padding: 4em;
   background: #f1f1f1;
 `;
 
 class ExperimentComponent extends Component{
-  render () {
+
+  constructor(props) {
+    super(props)
+    //binding
+    this.renderPage = this.renderPage.bind(this)
+  }
+
+  componentDidMount() {
+    window.onbeforeunload = function() {
+        this.props.toastManager.add('You tried to leave the experiment', { appearance: 'warning' });
+        return "";
+    }.bind(this);
+  }
+
+  renderPage () {
       switch (this.props.experimentState) {
         case 'sets':
           return (<SetSelect />);
@@ -41,13 +58,34 @@ class ExperimentComponent extends Component{
           return (<GroupSelect />);
       }
   };
+
+  render(){
+    return (
+      <div>
+        {this.renderPage()}
+      </div>
+    )
+  }
 }
 
+const ExperimentWithToasts = withToastManager(ExperimentComponent);
+const TimerWithToast = withToastManager(Timer)
 const App = ({ experimentState }) => (
-  <ExperimentTheme>
-    <Timer></Timer>
-    <ExperimentComponent experimentState={experimentState}></ExperimentComponent>
-  </ExperimentTheme>
+    <ExperimentTheme>
+      <ToastProvider>
+      
+        <TimerWithToast>
+          <ToastConsumer>
+          </ToastConsumer>
+        </TimerWithToast>
+
+        <ExperimentWithToasts experimentState={experimentState}>
+          <ToastConsumer>
+          </ToastConsumer>
+        </ExperimentWithToasts>
+      
+      </ToastProvider>
+    </ExperimentTheme>
 );
 
 const mapStateToProps = state => ({

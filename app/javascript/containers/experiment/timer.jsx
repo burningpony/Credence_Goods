@@ -58,6 +58,7 @@ class Timer extends Component{
         }
         //time over
         if(this.state.value == 0 && this.state.seconds == 0){
+            this.props.toastManager.add('You finished The experiment!!!', { appearance: 'success' });
             this.props.transition('partner_matching')
             clearInterval(this.intervalHandle)
         }

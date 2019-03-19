@@ -20,6 +20,12 @@ class FunctionResponsesChannel < ApplicationCable::Channel
     emit specific_channel(data["pair_id"]),response_format('finish', nil)
   end
 
+  def scrolling(data)
+    if !data["data"].nil? #if positions its not valid
+      emit specific_channel(data["pair_id"]),response_format('scrolling',data["data"])
+    end
+  end
+
   def receive(payload)
     send_change(payload)
   end
