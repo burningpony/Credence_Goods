@@ -9,8 +9,7 @@ ActiveAdmin.register Group do
                 :treatment_selection,
                 :salary_payment,
                 :capitation_payment,
-                :ffs_payment,
-                :function_set_id
-
+                :ffs_payment
+                
   scope :all, default: true
 end

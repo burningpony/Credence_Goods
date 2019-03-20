@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import FunctionGraph from '../../containers/experiment/function_graph';
-import BrowseWeb from './browse_web';
 import {Button} from '@bootstrap-styled/v4';
-const mathFunctions = [{id:0,representation:"x+2",max_y:1,max_x:1,min_y:0,min_x:0},{representation:"(x*x)",max_y:1,max_x:1,min_y:0,min_x:0}]
+const mathFunctions = [{id:0,representation:"x",max_y:1,max_x:1,min_y:0,min_x:0},{representation:"(x*x)",max_y:1,max_x:1,min_y:0,min_x:0}]
 
 class TestFunctions extends Component{
 
@@ -10,7 +9,6 @@ class TestFunctions extends Component{
       return (
       <div>
         <h1>Tests functions</h1>
-        <BrowseWeb>
             <div>
                 {mathFunctions.map((func, i) => (
                     <div key={i}>
@@ -35,8 +33,6 @@ class TestFunctions extends Component{
                     </div>
                 ))}
             </div>
-
-        </BrowseWeb>
 
         <Button onClick={()=> this.props.transition()} color="success">
           Continue to select a group

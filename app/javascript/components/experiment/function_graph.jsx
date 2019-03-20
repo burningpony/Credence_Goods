@@ -58,6 +58,7 @@ class FunctionGraph extends Component {
     this.validateAttrs = this.validateAttrs.bind(this)
     this.triggerError = this.triggerError.bind(this)
     this.generateAlert = this.generateAlert.bind(this)
+    this.checkForFirstTimeInput = this.checkForFirstTimeInput.bind(this)
 
     this.renderValueCoordinate = this.renderValueCoordinate.bind(this)
     this.renderMaxValue = this.renderMaxValue.bind(this)
@@ -85,10 +86,15 @@ class FunctionGraph extends Component {
       }
   }
 
-  buyValueCoordinates = ({ valueCoordinates,totalCost, coordinates, cost }) => {
+  checkForFirstTimeInput(){
     if(!this.state.firstTimeInput){
-      this.setState({firstTimeInput:true,startTime:new Date().getTime(),verticalTick:true})
+      const date = new Date().getTime()
+      this.setState({firstTimeInput:true,startTime: date,verticalTick:true})
     }
+  }
+
+  buyValueCoordinates = ({ valueCoordinates,totalCost, coordinates, cost }) => {
+    this.checkForFirstTimeInput()
     this.setState({
       boughtCoordinates: coordinates,
       cost: cost + totalCost,
@@ -97,9 +103,7 @@ class FunctionGraph extends Component {
   }
 
   buySamplePoints = ({ totalCost, points, cost }) => {
-    if(!this.state.firstTimeInput){
-      this.setState({firstTimeInput:true,startTime:new Date().getTime()})
-    }
+    this.checkForFirstTimeInput()
     this.setState({
       boughtPoints: points,
       cost: cost + totalCost,
@@ -149,6 +153,7 @@ class FunctionGraph extends Component {
     if(this.validateAttrs()){
       e.preventDefault();
       const finishTime = new Date().getTime()
+      console.log("time spent",(finishTime-this.state.startTime),finishTime,this.state.startTime)
       const data = {
         user_id:this.props.user.id,
         part:this.props.part,

@@ -28,7 +28,8 @@ class Timer extends Component{
     }
 
     componentDidUpdate(prevProps) {
-        // Any time the functions.response changes , it will update througth the WS 
+
+        // start conditions 
         if(this.props.user.part_1_start && !this.state.part1){
             this.setState({value:15,
                 seconds:0,part1:true})
@@ -42,6 +43,15 @@ class Timer extends Component{
             clearInterval(this.intervalHandle)
             this.setState({value:0,
                 seconds:0})
+        }
+
+        //stop conditions
+        if(this.props.experimentState == 'partner_matching') {
+            clearInterval(this.intervalHandle) 
+        } else if(this.props.experimentState == 'rounds') {
+            clearInterval(this.intervalHandle) 
+            this.setState({part2:false})
+        
         }
     }
 
