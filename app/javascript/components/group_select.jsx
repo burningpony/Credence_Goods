@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Map as iMap } from 'immutable';
 import { user as userSelector } from './selectors/user_selectors';
 import { configureUser } from './actions/user_actions';
+import {Button} from '@bootstrap-styled/v4';
 
 const StyledForm = styled.form`
     font-size: 1em;
@@ -93,7 +94,7 @@ class GroupSelect extends Component {
           />
         </FormLabel>
         {this.errors() && this.renderErrors() }
-        <input type="submit" value="Continue" />
+        <Button color="success">Continue</Button>
       </StyledForm>
     );
   }

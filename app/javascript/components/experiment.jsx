@@ -7,6 +7,7 @@ import Part1 from '../containers/experiment/part_1';
 import Part2 from '../containers/experiment/part_2';
 import Quiz1 from '../containers/experiment/quiz_1';
 import Quiz2 from '../containers/experiment/quiz_2';
+import Rounds from '../containers/experiment/rounds';
 import TestFunctions from '../containers/experiment/test_functions';
 import PartnerMatching from '../containers/experiment/partner_matching';
 import Instructions from '../containers/experiment/instructions';
@@ -39,23 +40,25 @@ class ExperimentComponent extends Component{
   renderPage () {
       switch (this.props.experimentState) {
         case 'sets':
-          return (<SetSelect />);
+          return (<SetSelect toastManager={this.props.toastManager}  />);
         case 'instructions':
-          return (<Instructions />);
+          return (<Instructions toastManager={this.props.toastManager}  />);
         case 'part1':
-          return (<Part1 />);
+          return (<Part1 toastManager={this.props.toastManager} />);
         case 'partner_matching':
-          return (<PartnerMatching />);
+          return (<PartnerMatching toastManager={this.props.toastManager}  />);
         case 'part2':
-          return (<Part2 />);
+          return (<Part2 toastManager={this.props.toastManager}  />);
         case 'quiz1':
-          return (<Quiz1 />);
+          return (<Quiz1 toastManager={this.props.toastManager}  />);
         case 'quiz2':
-          return (<Quiz2 />);
+          return (<Quiz2 toastManager={this.props.toastManager}  />);
         case 'test':
-          return (<TestFunctions />);
+          return (<TestFunctions toastManager={this.props.toastManager}  />);
+        case 'rounds':
+          return (<Rounds toastManager={this.props.toastManager}  />);
         default:
-          return (<GroupSelect />);
+          return (<GroupSelect toastManager={this.props.toastManager}  />);
       }
   };
 

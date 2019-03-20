@@ -45,23 +45,18 @@ class SamplePoints extends Component {
       totalCost: ((props.costOfCoordinate * newSamplePoints) + previousState.totalCost) || 0,
     }),callback);
     this.props.updateFunctionResponse(this.props.id,newSamplePoints)
-
   }
 
   generatePoints = () => {
     const { func, min, max } = this.props;
     const { samplePoints } = this.state;
     const localPoints = [];
-    console.log(samplePoints)
     for (let i = 0; i < samplePoints; i++) {
       // TODO: Determine a method to bounds from a min and max with n as input. loop over bounds
-      console.log(i, min, max);
       const [localMin, localMax] = calculateBounds(i + 1, { min, max });
       const [x, y] = calculateSamplePoint(func, localMin, localMax);
-      console.log(x, y);
       localPoints.push({ x, y });
     }
-
     return localPoints;
   }
 
@@ -78,7 +73,6 @@ class SamplePoints extends Component {
   
   renderTotalCost() {
     const { totalCost } = this.state;
-
     if (totalCost) {
       return Math.round(totalCost * 100) / 100;
     }

@@ -9,7 +9,8 @@ class FunctionsSelection extends Component {
     return {
       viewMode:PropTypes.boolean.isRequired,//function_id
       part:PropTypes.string.isRequired,
-      groupId:PropTypes.number.isRequired
+      groupId:PropTypes.number.isRequired,
+      round:PropTypes.number.isRequired,
     };
   }
 
@@ -37,6 +38,7 @@ class FunctionsSelection extends Component {
             disabled={func.saved}
             responses={func.responses}
             viewMode={this.props.viewMode}
+            round={this.props.round}
           />
 
         </div>

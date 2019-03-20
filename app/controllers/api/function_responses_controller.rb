@@ -17,12 +17,12 @@ module Api
         private
         def response_params
             # whitelist params
-            params.permit(:function_id, :user_id, :max_value_prediction, :num_bought_sample_points, :num_bought_value_coordinates, :part, :point_difference, :round_number)
+            params.permit(:function_id, :user_id, :max_value_prediction, :num_bought_sample_points, :num_bought_value_coordinates, :part, :point_difference, :round_number,:time_to_response)
         end
 
         def response_update_params
             # whitelist params
-            params.permit(:max_value_prediction,:point_difference, :round_number)
+            params.permit(:max_value_prediction,:point_difference, :round_number,:time_to_response)
         end
 
     end

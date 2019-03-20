@@ -83,7 +83,7 @@ class ValueCoordinate extends Component {
     return (
       <div>
         <Label>Value Coordinates:</Label>
-        <Input onChange={this.setValueCoordinates} disabled={this.props.disabled} type="number" />
+        <Input onChange={this.setValueCoordinates} disabled={this.props.disabled} type="number" min="1" />
         <Button onClick={this.onClick}>SUBMIT</Button>
         Cost:
         {' '}

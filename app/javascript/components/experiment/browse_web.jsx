@@ -15,16 +15,21 @@ class BrowseWeb extends Component {
   constructor(props) {
     super(props);
     this.state = { browsing: false };
+    this.toggleBrowsing = this.toggleBrowsing.bind(this)
   }
 
-  toggleBrowsing = () => {
-    this.setState(prevState => ({ browsing: !prevState.browsing }));
+  toggleBrowsing () {
+    this.props.toastManager.add('You are leaving the experiment!!!', { appearance: 'warning' });
+    setTimeout(function(){
+      const win = window.open("", '_blank');
+      win.focus();
+    },1500)
+    this.setState({browsing:true})
+    //this.setState(prevState => ({ browsing: !prevState.browsing }));
   }
 
   renderContent() {
-    const { browsing } = this.state;
     const { children } = this.props;
-    if (browsing) return (<Browser />);
     return children;
   }
 

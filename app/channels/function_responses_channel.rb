@@ -19,6 +19,14 @@ class FunctionResponsesChannel < ApplicationCable::Channel
   def finish(data)
     emit specific_channel(data["pair_id"]),response_format('finish', nil)
   end
+  
+  def new_round(data)
+    emit specific_channel(data["pair_id"]),response_format('new_round', nil)
+  end
+
+  def mouse_move(data)
+    emit specific_channel(data["pair_id"]),response_format('mouse_move', data["data"])
+  end
 
   def scrolling(data)
     if !data["data"].nil? #if positions its not valid

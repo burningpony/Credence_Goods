@@ -13,7 +13,7 @@ class SimulationChannel < ApplicationCable::Channel
     pair = UserPair.request_pair(data["data"],1)
     emit(specific_channel(data["room"]), pair)
   end 
-
+  
   def confirm_pair
 
   end

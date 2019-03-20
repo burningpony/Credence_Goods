@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import FunctionsSelection from '../../containers/experiment/function_selection';
 import BrowseWeb from './browse_web';
 import {Button} from '@bootstrap-styled/v4';
+
 class Part1 extends Component{
   constructor(props){
     super(props)
@@ -11,7 +12,7 @@ class Part1 extends Component{
       return (
       <div>
         <h1>Part 1</h1>
-        <BrowseWeb>
+        <BrowseWeb toastManager={this.props.toastManager}>
           <FunctionsSelection part={1} />
         </BrowseWeb>
        

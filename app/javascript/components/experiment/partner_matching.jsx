@@ -58,16 +58,15 @@ class PartnerMatching extends Component {
 
   transitionRole() {
     if (this.state.player == 'B') {
-      this.props.transition('sets')
-    } else {
       this.props.transition('quiz1')
+    } else {
+      this.props.transition('sets')
     }
   }
 
   render() {
     return (
       <Row>
-
         <h1>Matching Partners</h1>
         {this.playerAlert()}
         <h2>Player A is selecting payment method for player B</h2>

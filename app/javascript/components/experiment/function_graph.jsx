@@ -31,6 +31,7 @@ class FunctionGraph extends Component {
       maxX: PropTypes.number.isRequired,
       minY: PropTypes.number.isRequired,
       minX: PropTypes.number.isRequired,
+      round: PropTypes.number.isRequired,
       responses: PropTypes.object.isRequired,
       viewMode: PropTypes.boolean.isRequired,
       part:PropTypes.string.isRequired
@@ -47,9 +48,11 @@ class FunctionGraph extends Component {
       cost: 0,
       debug: true,
       alert:false,
-      alertType:"success",
+      alertType:"warning",
       alertText:"",
-      horizontalTick:true
+      verticalTick:false,
+      firstTimeInput:false,
+      startTime:0
     };
 
     this.validateAttrs = this.validateAttrs.bind(this)
@@ -72,18 +75,20 @@ class FunctionGraph extends Component {
     const { boughtPoints } = this.state;
     return boughtPoints;
   }
+
   //callbacks
   horizontalPoints() {
-    //const { boughtCoordinates } = this.state;
-    //return boughtCoordinates
-    if(this.state.valueCoordinates<3){
-      return 3
-    }else{
-      return this.state.valueCoordinates || 3;
-    }
+      if(this.state.valueCoordinates<3){
+        return 3
+      }else{
+        return this.state.valueCoordinates || 3;
+      }
   }
 
   buyValueCoordinates = ({ valueCoordinates,totalCost, coordinates, cost }) => {
+    if(!this.state.firstTimeInput){
+      this.setState({firstTimeInput:true,startTime:new Date().getTime(),verticalTick:true})
+    }
     this.setState({
       boughtCoordinates: coordinates,
       cost: cost + totalCost,
@@ -92,6 +97,9 @@ class FunctionGraph extends Component {
   }
 
   buySamplePoints = ({ totalCost, points, cost }) => {
+    if(!this.state.firstTimeInput){
+      this.setState({firstTimeInput:true,startTime:new Date().getTime()})
+    }
     this.setState({
       boughtPoints: points,
       cost: cost + totalCost,
@@ -121,7 +129,7 @@ class FunctionGraph extends Component {
   triggerError = () => {
     this.setState({
       alert:true,
-      alertType:"error",
+      alertType:"danger",
       alertText:"Fill all the parameters"
     });
     setTimeout(()=>{
@@ -132,7 +140,7 @@ class FunctionGraph extends Component {
   }
 
   generateAlert = () => {
-    return (this.state.alert ?<Alert color={this.state.alertType}>
+    return (this.state.alert ? <Alert color={this.state.alertType}>
       {this.state.alertText}
       </Alert> : null)
   }
@@ -140,10 +148,13 @@ class FunctionGraph extends Component {
   handleSubmit = (e) => {
     if(this.validateAttrs()){
       e.preventDefault();
+      const finishTime = new Date().getTime()
       const data = {
         user_id:this.props.user.id,
         part:this.props.part,
-        ...this.props.responses
+        round_number:(this.props.round ? this.props.round : 1),
+        time_to_response:(finishTime-this.state.startTime),
+        ...this.props.responses,
       }
       if(this.props.disabled) { 
         const {updateResponse} = this.props
@@ -196,7 +207,7 @@ class FunctionGraph extends Component {
 
   render() {
     const { minX, maxX ,minY,maxY} = this.props;
-    const { debug,horizontalTick } = this.state;
+    const { debug,verticalTick } = this.state;
     const {generateAlert,renderSubmitButton,renderValueCoordinate,renderSamplePoints,renderMaxValue} = this
     return (
       <Row>
@@ -214,7 +225,7 @@ class FunctionGraph extends Component {
           <CartesianGrid strokeDasharray="3 3" />
           <Scatter name="A school" line={debug} data={this.data()} fill="#8884d8" stroke="none" />
           <XAxis dataKey="x" type="number" tick={false} />  
-          <YAxis dataKey="y" type="number" tick={horizontalTick} domain={[minY,maxY]} tickCount={this.horizontalPoints()}/>
+          <YAxis dataKey="y" type="number" tick={verticalTick} domain={[minY,maxY]} tickCount={this.horizontalPoints()}/>
         </ScatterChart>
         </Col>
         <Col lg="6">    
