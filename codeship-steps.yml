@@ -20,3 +20,8 @@
   tag: master
   service: heroku-deployment
   command: heroku container:release --app credence-goods web
+
+- name: migrate
+  tag: master
+  service: heroku-deployment
+  command: heroku run --app credence-goods -- bundle exec rake db:migrate
