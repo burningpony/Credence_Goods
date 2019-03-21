@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 //person b = expert
 //person a = customer
 class ActionCableConsumer extends Component {
-    
+
     constructor(props){
         super(props)
         //binding methods
@@ -12,12 +12,14 @@ class ActionCableConsumer extends Component {
     //life cycle 
     componentWillMount() {
         if (this.props.cable) {
+          console.log("mounting WS")
           this.setup()
         }
     }
 
     componentWillUnmount() {
-        if (!this.props.cable && this.cable) {
+        if (this.props.cable && this.cable) {
+            console.log("unmounting WS")
             this.props.cable.subscriptions.remove(this.cable)
         }
     }

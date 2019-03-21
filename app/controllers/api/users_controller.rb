@@ -2,7 +2,8 @@ module Api
   class UsersController < ApiController
     def create
       group = Group.find_by(name: user_params[:group_name])
-      user = User.create(group: group)
+      role = ["A","B"].sample
+      user = User.create(group: group,role: role)
       if user.save
         render json: user
       else

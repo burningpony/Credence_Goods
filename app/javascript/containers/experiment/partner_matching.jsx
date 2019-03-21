@@ -10,7 +10,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-    user: state.user.toJS()
+    user: state.user.toJS(),
+    group: state.group.toJS(),
+    pair: state.pair.toJS()
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PartnerMatching)

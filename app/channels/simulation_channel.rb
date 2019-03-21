@@ -10,10 +10,10 @@ class SimulationChannel < ApplicationCable::Channel
   end
 
   def request_pair(data)
-    pair = UserPair.request_pair(data["data"],1)
+    pair = UserPair.request_pair(data["data"]["id"],data["data"]["round"],data["data"]["group_id"])
     emit(specific_channel(data["room"]), pair)
   end 
-  
+
   def confirm_pair
 
   end

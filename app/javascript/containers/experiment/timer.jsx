@@ -20,38 +20,31 @@ class Timer extends Component{
         this.state = {
             value:0,
             seconds:0,
-            part1:false,
-            part2:false
+            part:0
         }
         this.startCountDown = this.startCountDown.bind(this)
         this.tick = this.tick.bind(this)
     }
 
     componentDidUpdate(prevProps) {
-
         // start conditions 
-        if(this.props.user.part_1_start && !this.state.part1){
-            this.setState({value:15,
-                seconds:0,part1:true})
-                this.startCountDown()
-        } else if(this.props.user.part_2_start && !this.state.part2) {
+        if(this.props.user.part_1_start && this.state.part < 1){
+            this.setState({value:15,seconds:0,part:1})
+            this.startCountDown()
+        } else if(this.props.user.part_2_start && this.state.part < 2) {
             clearInterval(this.intervalHandle)
-            this.setState({value:30,
-                seconds:0,part2:true})
-                this.startCountDown()
+            this.setState({value:30,seconds:0,part:2})
+            this.startCountDown()
         } else if(this.props.experimentState == "finished"){
             clearInterval(this.intervalHandle)
-            this.setState({value:0,
-                seconds:0})
+            //this.setState({value:0,seconds:0})
         }
 
         //stop conditions
         if(this.props.experimentState == 'partner_matching') {
             clearInterval(this.intervalHandle) 
         } else if(this.props.experimentState == 'rounds') {
-            clearInterval(this.intervalHandle) 
-            this.setState({part2:false})
-        
+            clearInterval(this.intervalHandle)         
         }
     }
 
@@ -69,7 +62,11 @@ class Timer extends Component{
         //time over
         if(this.state.value == 0 && this.state.seconds == 0){
             this.props.toastManager.add('You finished The experiment!!!', { appearance: 'success' });
-            this.props.transition('partner_matching')
+            if(this.props.user.part_2_start){
+                this.props.transition('rounds')
+            }else{
+                this.props.transition('partner_matching')
+            }
             clearInterval(this.intervalHandle)
         }
 

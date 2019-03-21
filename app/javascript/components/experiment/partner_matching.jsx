@@ -25,7 +25,7 @@ class PartnerMatching extends Component {
 
   onConnected(data) {
     if (!this.state.pairSetted) {
-      this.refs.SimulationChannel.perform('request_pair', this.requestFormat(this.props.user))
+      this.refs.SimulationChannel.perform('request_pair', this.requestFormat({...this.props.user,group_id:this.props.group.id,round:1}))
     }
   }
 
