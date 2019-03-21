@@ -19,9 +19,9 @@
 - name: Trigger Release
   tag: master
   service: heroku-deployment
-  command: heroku container:release --app boiling-plains-97540-goods web
+  command: heroku container:release --app boiling-plains-97540 web
 
 - name: migrate
   tag: master
   service: heroku-deployment
-  command: heroku run --app boiling-plains-97540-goods -- bundle exec rake db:migrate
+  command: heroku run --app boiling-plains-97540 -- bundle exec rake db:migrate
