@@ -16,6 +16,8 @@ WORKDIR /app
 # Install ruby gems into the container
 COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
+RUN rvm use $(cat .ruby-version) --install
+RUN gem install bundler
 RUN bundle install
 
 # Install yarn dependencies into the container
