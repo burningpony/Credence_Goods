@@ -1,6 +1,6 @@
 development:
   adapter: redis
-  url: "redis://localhost:6379/1"
+  url: "redis://h:p441aa9e70501cedcc24ff6fe23bad438e14c3a72f16f3d7efd9d7b58f13ded33@ec2-3-209-143-184.compute-1.amazonaws.com:24059"
   
 test:
   adapter: async
