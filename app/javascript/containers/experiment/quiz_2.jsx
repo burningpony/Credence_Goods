@@ -8,7 +8,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-
+  user:state.user.toJS()
 }) 
 
 export default connect(mapStateToProps,mapDispatchToProps)(Quiz2)

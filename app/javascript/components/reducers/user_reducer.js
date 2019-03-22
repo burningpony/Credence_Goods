@@ -1,17 +1,17 @@
 import { Map as iMap ,fromJS} from 'immutable';
-import { RECEIVE_USER,START_PART_1,START_PART_2 } from '../actions/user_actions';
+import { RECEIVE_USER,START_TIMER, STOP_TIMER } from '../actions/user_actions';
 
 export default function user(state = iMap(), action) {
   switch (action.type) {
     case RECEIVE_USER:
       return action.user;
-    case START_PART_1 :
+    case START_TIMER :
       const settedUser = state.toJS()
-      settedUser.part_1_start = true
+      settedUser.timer = true
       return fromJS(settedUser);
-    case START_PART_2 :
+    case STOP_TIMER :
       const settedUser2 = state.toJS()
-      settedUser2.part_2_start = true
+      settedUser2.timer = false
       return fromJS(settedUser2);
     default:
       return state;

@@ -43,7 +43,11 @@ class Quiz1 extends Component {
     }
 
     saveQuiz(){
-        saveQuiz(1,this.state.answers).then((response)=>{
+        const answers = this.state.answers.map((ans,index) => {
+            const quest = questions[index]
+            return {question: quest.question, answer: quest.answers[ans.answer]}
+        })
+        saveQuiz(this.props.user.id,answers).then((response)=>{
             if(!response.error){
                 this.props.transition()
             }

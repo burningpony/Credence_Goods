@@ -11,9 +11,9 @@ class PartnerMatching extends Component {
     super(props);
     this.state = {
       pairSetted: false,
-      player: " ",
+      player: this.props.user.role,
     };
-
+    this.props.stopTimer()
     //binding functions
     this.onConnected = this.onConnected.bind(this)
     this.onReceived = this.onReceived.bind(this)
@@ -37,15 +37,9 @@ class PartnerMatching extends Component {
   }
 
   onReceived(data) {
-    console.log("Pair Id", data.id)
-    let player = 'B'
-    if (data.person_a_id == this.props.user.id) {
-      player = 'A'
-    }
+    this.props.receivePair(fromJS({ ...data, part:2}))
 
-    this.props.receivePair(fromJS({ ...data, player, part:2}))
-
-    this.setState({ pairSetted: true, player})
+    this.setState({ pairSetted: true})
   }
   //html render methods
 

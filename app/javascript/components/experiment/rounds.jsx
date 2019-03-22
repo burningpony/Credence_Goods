@@ -9,6 +9,7 @@ class Rounds extends Component{
 
   componentDidMount(){
     this.props.updatePairRound(this.props.pair.id,{round:(this.props.pair.round+1)})
+    this.props.stopTimer()
   }
 
   render (){

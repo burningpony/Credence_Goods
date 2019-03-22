@@ -20,31 +20,25 @@ class Timer extends Component{
         this.state = {
             value:0,
             seconds:0,
-            part:0
+            started: false
         }
         this.startCountDown = this.startCountDown.bind(this)
         this.tick = this.tick.bind(this)
+        this.getSeconds = this.getSeconds.bind(this)
     }
 
     componentDidUpdate(prevProps) {
         // start conditions 
-        if(this.props.user.part_1_start && this.state.part < 1){
-            this.setState({value:15,seconds:0,part:1})
+        if(this.props.user.timer === true  && !this.state.started){
             this.startCountDown()
-        } else if(this.props.user.part_2_start && this.state.part < 2) {
-            clearInterval(this.intervalHandle)
-            this.setState({value:30,seconds:0,part:2})
-            this.startCountDown()
-        } else if(this.props.experimentState == "finished"){
-            clearInterval(this.intervalHandle)
-            //this.setState({value:0,seconds:0})
-        }
-
-        //stop conditions
-        if(this.props.experimentState == 'partner_matching') {
+            this.setState({started:true})
+        } else if(this.props.user.timer === false && this.state.started){
             clearInterval(this.intervalHandle) 
-        } else if(this.props.experimentState == 'rounds') {
-            clearInterval(this.intervalHandle)         
+            this.setState({started:false})
+            this.setState({
+                value:15,
+                seconds:this.getSeconds(0)
+            })
         }
     }
 
@@ -52,17 +46,17 @@ class Timer extends Component{
         if(this.state.seconds == 0){
             this.setState({
                 value:this.state.value-1,
-                seconds:59
+                seconds:this.getSeconds(59)
             })
         } else {
             this.setState({
-                seconds:this.state.seconds-1
+                seconds:this.getSeconds(this.state.seconds-1)
             }) 
         }
         //time over
         if(this.state.value == 0 && this.state.seconds == 0){
             this.props.toastManager.add('You finished The experiment!!!', { appearance: 'success' });
-            if(this.props.user.part_2_start){
+            if(this.props.user.part==2){
                 this.props.transition('rounds')
             }else{
                 this.props.transition('partner_matching')
@@ -72,12 +66,19 @@ class Timer extends Component{
 
     }
 
+    getSeconds(number){
+        if(number <10){
+            return "0"+number
+        }
+        return number
+    }
+
     startCountDown() {
         this.intervalHandle = setInterval(this.tick, 1000);
-        let time = this.state.value;
-        this.secondsRemaining = time * 60;
+        
         this.setState({
-          isClicked : true
+            value:15,
+            seconds:this.getSeconds(0)
         })
       }
 

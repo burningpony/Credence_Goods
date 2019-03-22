@@ -12,7 +12,7 @@ class Part2 extends Component {
     super(props);
     this.props.startTimer()
 
-    const viewMode = (this.props.pair.player == 'A')
+    const viewMode = (this.props.user.role == 'A')
     this.state = {
       viewMode: viewMode,
       x:0,
@@ -53,14 +53,14 @@ class Part2 extends Component {
 
   componentDidUpdate(prevProps) {
     // Any time the functions.response changes , it will update througth the WS 
-    if(this.props.pair.player == 'B'){
+    if(this.props.user.role == 'B'){
       this.sendChanges(this.props.functions)
     }
     return false;
   }
 
   onReceived (data){
-    if(this.props.pair.player == 'A'){
+    if(this.props.user.role == 'A'){
       if(data.action == 'function_change'){
         this.props.setFunctions(fromJS(data.data))
       } else if(data.action == 'back_to_groups'){
@@ -78,7 +78,6 @@ class Part2 extends Component {
   }
 
   onConnected (data) {
-
   }
 
   handleScroll(event){
