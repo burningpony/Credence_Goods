@@ -5,17 +5,16 @@ import ExpertInstructions from './expertInstructions';
 
 class Instructions extends Component{
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.renderInstructions = this.renderInstructions.bind(this)
   }
 
-  renderInstructions(){
+  renderInstructions() {
     if(this.props.user.role == 'A') {
-        return (<CustomerInstructions transition={this.props.transition}></CustomerInstructions>)
+        return (<CustomerInstructions transition={this.props.transition} role={this.props.user.role}></CustomerInstructions>)
     } else {
-        return (<CustomerInstructions transition={this.props.transition}></CustomerInstructions>)
-      //return (<ExpertInstructions transition={this.props.transition}></ExpertInstructions>)
+        return (<ExpertInstructions transition={this.props.transition} role={this.props.user.role}></ExpertInstructions>)
     }
   }
 

@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
+import ActionCableConsumer  from '../react-cable/ActionCableConsumer'
+import {cable} from '../app'
 
 import {Button} from '@bootstrap-styled/v4';
 class Rounds extends Component{
 
   constructor(props){
     super(props)
+
+    //binding functions
+    this.onConnected = this.onConnected.bind(this);
+    this.onReceived = this.onReceived.bind(this);
+    this.renderContinueButton = this.renderContinueButton.bind(this);
+    this.continueFunction = this.continueFunction.bind(this)
+    this.requestFormat = this.requestFormat.bind(this)
+
   }
 
   componentDidMount(){
@@ -12,14 +22,52 @@ class Rounds extends Component{
     this.props.stopTimer()
   }
 
+  onConnected() {
+
+  }
+
+  requestFormat(data){
+    return{
+      pair_id: this.props.pair.id,
+      data
+    }
+  }
+
+  continueFunction(){
+    this.props.transition("sets")
+    this.refs.RoundChannel.send(this.requestFormat(null))
+  }
+
+  onReceived(data) {
+    if(this.props.user.role == 'A') {
+      this.props.transition("sets")
+    }
+  }
+
+  renderContinueButton(){
+    if(this.props.user.role == 'A'){
+      return (<div></div>)
+    } else {
+      return (<Button onClick={()=> this.continueFunction()} color="success">
+          Start Next Round
+        </Button>)
+    }
+  }
+
   render (){
       return (
       <div>
+        <ActionCableConsumer
+          channel={{ channel: 'RoundChannel', pair_id:this.props.pair.id }}
+          onReceived={this.onReceived}
+          onConnected={this.onConnected}
+          ref="RoundChannel"
+          cable={cable}
+        />
         <h2>Round {this.props.pair.round}</h2>
         <p>To Start The next round click on the button bellow</p>
-        <Button onClick={()=> this.props.transition("sets")} color="success">
-          Start Next Round
-        </Button>
+        {this.renderContinueButton()}
+
       </div>
     );
   }

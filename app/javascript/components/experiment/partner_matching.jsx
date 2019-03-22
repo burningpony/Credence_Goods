@@ -31,15 +31,27 @@ class PartnerMatching extends Component {
 
   requestFormat(data) {
     return {
-      room: "pair_matching_" + this.props.user.id,
+      room: this.props.user.id,
       data
     }
   }
 
   onReceived(data) {
-    this.props.receivePair(fromJS({ ...data, part:2}))
+    console.log(data)
+    if(data.action == "request_pair") {
+      const pair = data.data
+      this.props.receivePair(fromJS({ ...pair, part:2}))
+      if(pair.person_a_id > 0 && pair.person_b_id > 0){ //if the pair ist complete send confirmation
+        this.refs.SimulationChannel.perform('confirm_pair', this.requestFormat(pair))
+      }else{
+        this.props.toastManager.add('You have to wait for your pair!', { appearance: 'warning' });
+      }
+    } else if(data.action == "confirm_pair") {
+      this.setState({ pairSetted: true})
+      this.props.toastManager.add('You Are Paired!', { appearance: 'success' });
 
-    this.setState({ pairSetted: true})
+    }
+    
   }
   //html render methods
 
@@ -61,21 +73,25 @@ class PartnerMatching extends Component {
   render() {
     return (
       <Row>
-        <h1>Matching Partners</h1>
-        {this.playerAlert()}
-        <h2>Player A is selecting payment method for player B</h2>
-        <h2>Player A is deciding if player B can make blind guesses</h2>
-        <h2>Player A will watch player B response to questions</h2>
-        <ActionCableConsumer
-          channel={{ channel: 'SimulationChannel', room: "pair_matching_" + this.props.user.id }}
-          onReceived={this.onReceived}
-          onConnected={this.onConnected}
-          ref="SimulationChannel"
-          cable={cable}
-        />
-        <Button onClick={this.transitionRole} type="button" disabled={!this.state.pairSetted}>
-          Continue
-        </Button>
+          <Col sm="12">
+            <h1>Matching Partners</h1>
+            {this.playerAlert()}
+            {/* <h2>Player A is selecting payment method for player B</h2>
+            <h2>Player A is deciding if player B can make blind guesses</h2>
+            <h2>Player A will watch player B response to questions</h2> */}
+            <ActionCableConsumer
+              channel={{ channel: 'SimulationChannel', room: this.props.user.id }}
+              onReceived={this.onReceived}
+              onConnected={this.onConnected}
+              ref="SimulationChannel"
+              cable={cable}
+            />
+          </Col>
+        <Col sm="12">
+          <Button onClick={this.transitionRole} type="button" disabled={!this.state.pairSetted}>
+            Continue
+          </Button>
+        </Col>
       </Row>
     );
   }

@@ -39,9 +39,6 @@ class FunctionResponsesChannel < ApplicationCable::Channel
   end
 
   private
-  def response_format(action, data)
-    return { action: action, data: data }
-  end
 
   def specific_channel(id)
     "pair_#{id}"

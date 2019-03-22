@@ -13,7 +13,8 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
     group: state.group.toJS(),
-    pair: state.pair.toJS()
+    pair: state.pair.toJS(),
+    user: state.user.toJS()
 });
 
 export default connect(mapStateToProps,mapDispatchToProps)(Rounds)

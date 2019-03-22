@@ -37,8 +37,7 @@ class SetSelect extends Component {
 
   onReceived(data) {
     console.log(data)
-    if(this.props.pair.player == 'A'){
-      console.log("recibido")
+    if(this.props.user.role == 'A'){
       this.handleSubmit(data.data)
     }
   }
@@ -48,13 +47,12 @@ class SetSelect extends Component {
     this.props.markAsSelected(set.id)
     this.props.fetchFunctions(this.props.group.id,set.id)
     this.props.transition('part'+this.props.pair.part)
-    if(this.props.pair.part == 2 && this.props.pair.player == 'B'){
-      console.log('lo que envié',set)
+    if(this.props.pair.part == 2 && this.props.user.role == 'B'){
       this.sendChanges(set)
     }
   }
 
-  sendChanges(data){
+  sendChanges(data) {
     this.refs.GroupChannel.send(this.requestFormat(data))
   }
 
@@ -67,10 +65,11 @@ class SetSelect extends Component {
 
   renderCard(index,group){
     //not render the button on part 2 for player A
-    if(this.props.pair.part == 2 && this.props.pair.player == 'A'){
+    if(this.props.pair.part == 2 && this.props.user.role == 'A'){
       return (<Card>
       <h2>Group {' '+(index+1)}</h2></Card>)
     }
+
     //default option
     return (<Card onClick={() => this.handleSubmit(group)}>
         <h2>Group {' '+(index+1)}</h2></Card>)
@@ -102,7 +101,7 @@ class SetSelect extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: userSelector(state),
+  user: state.user.toJS(),
   group: state.group.toJS(),
   sets: state.functionSets.toJS(),
   pair: state.pair.toJS()

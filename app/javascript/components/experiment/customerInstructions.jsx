@@ -6,6 +6,7 @@ class CustomerInstructions extends Component{
   render(){ return(
     <div>
       <h2>Instructions</h2>
+      <h3>You Will be the player: {this.props.role} </h3>
       <p>In this part of the experiment, you will be asked to predict the maximum values for up to 
       30 hidden functions  during a 15-minute period. 
       You will start with a blank graph for each function. To help you determine the maximum 
