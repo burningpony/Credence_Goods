@@ -79,10 +79,10 @@ class FunctionGraph extends Component {
 
   //callbacks
   horizontalPoints() {
-      if(this.state.valueCoordinates<3){
-        return 3
+      if(this.state.valueCoordinates<2){
+        return 2
       }else{
-        return this.state.valueCoordinates || 3;
+        return (this.state.valueCoordinates+1);
       }
   }
 
@@ -97,7 +97,7 @@ class FunctionGraph extends Component {
     this.checkForFirstTimeInput()
     this.setState({
       boughtCoordinates: coordinates,
-      cost: cost + totalCost,
+      valueCoordinateCost: totalCost,
       valueCoordinates
     });
   }
@@ -106,12 +106,13 @@ class FunctionGraph extends Component {
     this.checkForFirstTimeInput()
     this.setState({
       boughtPoints: points,
-      cost: cost + totalCost,
+      samplePointsCost: totalCost,
     });
   }
 
   renderCost() {
-    const { cost } = this.state;
+    const { samplePointsCost,valueCoordinateCost } = this.state;
+    const cost = samplePointsCost+valueCoordinateCost;
     let formattedCost = '';
     if (cost) {
       formattedCost = `$${Math.round(cost * 100) / 100}`;
@@ -161,7 +162,7 @@ class FunctionGraph extends Component {
         time_to_response:(finishTime-this.state.startTime),
         ...this.props.responses,
       }
-      if(this.props.disabled) { 
+      if(this.props.disabled) { //if was save 
         const {updateResponse} = this.props
         updateResponse(this.props.group.id,this.props.group.function_set_id,this.props.id,this.props.responses.response_id,data)
       } else {
@@ -233,7 +234,7 @@ class FunctionGraph extends Component {
           <YAxis dataKey="y" type="number" tick={verticalTick} domain={[minY,maxY]} tickCount={this.horizontalPoints()}/>
         </ScatterChart>
         </Col>
-        <Col lg="6">    
+        <Col lg="6">   
           {renderValueCoordinate()}
           {renderSamplePoints()}
           <h3>

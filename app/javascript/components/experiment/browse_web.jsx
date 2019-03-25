@@ -19,11 +19,8 @@ class BrowseWeb extends Component {
   }
 
   toggleBrowsing () {
-    this.props.toastManager.add('You are leaving the experiment!!!', { appearance: 'warning' });
-    setTimeout(function(){
-      const win = window.open("", '_blank');
-      win.focus();
-    },1500)
+    const win = window.open("", '_blank');
+    win.focus();
     this.setState({browsing:true})
     //this.setState(prevState => ({ browsing: !prevState.browsing }));
   }

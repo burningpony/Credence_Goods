@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Button,Input} from '@bootstrap-styled/v4';
+import {Button,Col,Row,Input} from '@bootstrap-styled/v4';
 import Label from '../styles/blocks/graph/label';
-
+const rowStyle = { marginBottom: '10px' };
 class ValueCoordinate extends Component {
 
   static propTypes() {
@@ -40,13 +40,12 @@ class ValueCoordinate extends Component {
     this.updateStateAndStorage(newValueCoordinates)
   }
 
-  updateStateAndStorage(newValueCoordinates,callback){
+  updateStateAndStorage(newValueCoordinates,callback) {
     this.setState((previousState, props) => ({
       valueCoordinates: newValueCoordinates,
       totalCost: ((props.costOfCoordinate * newValueCoordinates) + previousState.totalCost) || 0,
     }),callback);
     this.props.updateFunctionResponse(this.props.id,newValueCoordinates)
-
   }
 
   generateCoordinates = () => {
@@ -62,6 +61,7 @@ class ValueCoordinate extends Component {
 
   onClick = (e) => {
     const { callback } = this.props;
+  
     this.setState(
       { coordinates: this.generateCoordinates() },
       () => {
@@ -81,15 +81,18 @@ class ValueCoordinate extends Component {
 
   render() {
     return (
-      <div>
-        <Label>Value Coordinates:</Label>
-        <Input onChange={this.setValueCoordinates} disabled={this.props.disabled} type="number" min="1" />
+      <Row style={rowStyle}>
+        <Col sm="12">
+          <Label>Value Coordinates:</Label>
+          <Input min="2" onChange={this.setValueCoordinates} disabled={this.props.disabled} type="number" min="1" />
+        </Col>
+        <Col sm="12">
         <Button onClick={this.onClick}>SUBMIT</Button>
         Cost:
         {' '}
-
         { this.renderTotalCost() }
-      </div>
+        </Col>
+      </Row>
     );
   }
 }

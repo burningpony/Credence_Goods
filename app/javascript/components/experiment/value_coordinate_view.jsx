@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ValueCoordinate from './value_coordinate_input';
 import Label from '../styles/blocks/graph/label';
-import Input from '../styles/blocks/graph/input';
+import {Button,Col,Row,Input} from '@bootstrap-styled/v4';
 
 class ValueCoordinateView extends ValueCoordinate{
   constructor(props) {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Label from '../styles/blocks/graph/label';
 import { calculateSamplePoint, calculateBounds } from '../helpers/function';
-import {Button,Input} from '@bootstrap-styled/v4';
+import {Button,Col,Row,Input} from '@bootstrap-styled/v4';
 
 class SamplePoints extends Component {
   static propTypes() {
@@ -81,14 +81,18 @@ class SamplePoints extends Component {
   render() {
     const { cost } = this.state;
     return (
-      <div>
-        <Label>Sample Points:</Label>
-        <Input onChange={this.setSamplePoints} disabled={this.props.disabled} type="number" />
-        <Button onClick={this.onClick}>SUBMIT</Button>
-        Cost:
-        {' '}
-        { this.renderTotalCost() }
-      </div>
+      <Row>
+        <Col sm="12">
+          <Label>Sample Points:</Label>
+          <Input onChange={this.setSamplePoints} disabled={this.props.disabled} type="number" />
+        </Col>
+        <Col sm="12">
+          <Button onClick={this.onClick}>SUBMIT</Button>
+          Cost:
+          {' '}
+          { this.renderTotalCost() }
+        </Col>
+      </Row>
     );
   }
 }
