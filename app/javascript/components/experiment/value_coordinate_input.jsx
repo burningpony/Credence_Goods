@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Button,Col,Row,Input} from '@bootstrap-styled/v4';
 import Label from '../styles/blocks/graph/label';
 const rowStyle = { marginBottom: '10px' };
+
 class ValueCoordinate extends Component {
 
   static propTypes() {
@@ -20,6 +21,7 @@ class ValueCoordinate extends Component {
       totalCoordinates: 0,
       valueCoordinates: 0,
       coordinates: [],
+      minValue:2
     };
   }
 
@@ -37,7 +39,11 @@ class ValueCoordinate extends Component {
    */
   setValueCoordinates = (e) => {
     const newValueCoordinates = parseFloat(e.target.value);
-    this.updateStateAndStorage(newValueCoordinates)
+    if(this.state.minValue > newValueCoordinates){
+      this.updateStateAndStorage(this.state.minValue);
+    } else {
+      this.updateStateAndStorage(newValueCoordinates);
+    }  
   }
 
   updateStateAndStorage(newValueCoordinates,callback) {
@@ -63,7 +69,8 @@ class ValueCoordinate extends Component {
     const { callback } = this.props;
   
     this.setState(
-      { coordinates: this.generateCoordinates() },
+      { coordinates: this.generateCoordinates(),
+        minValue:this.state.valueCoordinates },
       () => {
         callback(this.state);
         // this.setState(this.constructor.defaultState());
@@ -84,7 +91,7 @@ class ValueCoordinate extends Component {
       <Row style={rowStyle}>
         <Col sm="12">
           <Label>Value Coordinates:</Label>
-          <Input min="2" onChange={this.setValueCoordinates} disabled={this.props.disabled} type="number" min="1" />
+          <input min={this.state.minValue} onChange={this.setValueCoordinates} disabled={this.props.disabled} type="number" value={this.state.valueCoordinates} />
         </Col>
         <Col sm="12">
         <Button onClick={this.onClick}>SUBMIT</Button>

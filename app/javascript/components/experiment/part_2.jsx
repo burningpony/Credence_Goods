@@ -4,7 +4,7 @@ import ActionCableConsumer  from '../react-cable/ActionCableConsumer'
 import React, { Component } from 'react';
 import { fromJS } from 'immutable';
 import {cable} from '../app'
-import {Button,Col,Row,Alert} from '@bootstrap-styled/v4';
+import {Button} from '@bootstrap-styled/v4';
 import _ from 'lodash'
 class Part2 extends Component {
 
@@ -33,7 +33,6 @@ class Part2 extends Component {
   }
   //the expert will also share his scrolling
   componentDidMount() {
-    
     if(!this.state.viewMode) { 
       window.addEventListener('scroll', this.handleScroll);
       this.debounceMouse = _.debounce((event)=>{
@@ -41,7 +40,6 @@ class Part2 extends Component {
       },50)
       window.addEventListener('mousemove', this.debounceMouse);
     }
-
   }
 
   componentWillUnmount() {
@@ -78,6 +76,7 @@ class Part2 extends Component {
   }
 
   onConnected (data) {
+
   }
 
   handleScroll(event){
@@ -128,6 +127,7 @@ class Part2 extends Component {
   cursorPosition(){
     return {top:this.state.y+"px",left:this.state.x+"px",position:"absolute"}
   }
+
   backToGroupsButton(){
     if(this.state.viewMode){
       return (<div></div>)
@@ -135,6 +135,21 @@ class Part2 extends Component {
     return (<Button onClick={this.backToGroups} color="success">
       Back to groups
     </Button>)
+  }
+
+  renderRoundOrFinish(){
+    if((this.props.group.number_of_rounds > 1 && this.props.pair.round < this.props.group.number_of_rounds) && !this.state.viewMode){
+        return (<Button onClick={()=> this.goToRoundPage()} color="success" disabled={this.props.viewMode}>
+        Another Round
+      </Button> )
+    }
+    if(!this.state.viewMode){
+      return (
+        <Button onClick={()=> this.finishPart()} color="success" disabled={this.props.viewMode}>
+          Finish
+        </Button>)
+    }
+    return(<div></div>)
   }
 
   render () { return (
@@ -153,13 +168,7 @@ class Part2 extends Component {
       </BrowseWeb>
 
       {this.backToGroupsButton()}
-      <Button onClick={()=> this.finishPart()} color="success" disabled={this.props.viewMode}>
-        Finish
-      </Button>
-
-      <Button onClick={()=> this.goToRoundPage()} color="success" disabled={this.props.viewMode}>
-        Another Round
-      </Button>
+      {this.renderRoundOrFinish()}
 
     </div>);
   }

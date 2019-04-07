@@ -79,11 +79,14 @@ class FunctionGraph extends Component {
 
   //callbacks
   horizontalPoints() {
-      if(this.state.valueCoordinates<2){
-        return 2
-      }else{
-        return (this.state.valueCoordinates+1);
-      }
+    const delta = this.props.maxY/this.state.valueCoordinates
+    const ticks = [0]
+    let line = delta;
+    for (let index = 0; index < this.state.valueCoordinates; index++) {
+      ticks.push(line.toFixed(2))
+      line = line+delta
+    }
+    return ticks
   }
 
   checkForFirstTimeInput(){
@@ -221,18 +224,19 @@ class FunctionGraph extends Component {
           {generateAlert()}
         </Col>
         <Col lg="6">
-        <ScatterChart
-          width={400}
-          height={400}
-          margin={{
-            top: 5, right: 5, bottom: 5, left: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <Scatter name="A school" line={debug} data={this.data()} fill="#8884d8" stroke="none" />
-          <XAxis dataKey="x" type="number" tick={false} />  
-          <YAxis dataKey="y" type="number" tick={verticalTick} domain={[minY,maxY]} tickCount={this.horizontalPoints()}/>
-        </ScatterChart>
+          <ScatterChart
+            width={400}
+            height={400}
+            margin={{
+              top: 5, right: 5, bottom: 5, left: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <Scatter name="A school" line={debug} data={this.data()} fill="#8884d8" stroke="none" />
+            <XAxis dataKey="x" type="number" tick={false} />  
+            <YAxis dataKey="y" type="number" tick={verticalTick} domain={[minY,maxY]} ticks={this.horizontalPoints()} allowDecimals={true}
+          allowDataOverflow={true}  interval={0}/>
+          </ScatterChart>
         </Col>
         <Col lg="6">   
           {renderValueCoordinate()}

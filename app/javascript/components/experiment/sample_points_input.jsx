@@ -23,6 +23,7 @@ class SamplePoints extends Component {
       valuePoints: 0,
       cost: 0,
       points: [],
+      minValue:0
     };
   }
 
@@ -36,7 +37,11 @@ class SamplePoints extends Component {
 
   setSamplePoints = (e) => {
     const newSamplePoints = parseFloat(e.target.value);
-    this.updateStateAndStorage(newSamplePoints);
+    if(this.state.minValue > newSamplePoints){
+      this.updateStateAndStorage(this.state.minValue);
+    } else {
+      this.updateStateAndStorage(newSamplePoints);
+    }
   }
 
   updateStateAndStorage(newSamplePoints,callback){
@@ -63,7 +68,8 @@ class SamplePoints extends Component {
   onClick = () => {
     const { callback } = this.props;
     this.setState(
-      { points: this.generatePoints() },
+      { points: this.generatePoints(),
+        minValue :this.state.samplePoints },
       () => {
         callback(this.state);
         // this.setState(this.constructor.defaultState());
@@ -84,7 +90,7 @@ class SamplePoints extends Component {
       <Row>
         <Col sm="12">
           <Label>Sample Points:</Label>
-          <Input onChange={this.setSamplePoints} disabled={this.props.disabled} type="number" />
+          <input min={this.state.minValue} onChange={this.setSamplePoints} disabled={this.props.disabled} type="number" value={this.state.samplePoints}/>
         </Col>
         <Col sm="12">
           <Button onClick={this.onClick}>SUBMIT</Button>

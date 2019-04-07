@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_20_210636) do
+ActiveRecord::Schema.define(version: 2019_04_05_131321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2019_03_20_210636) do
     t.decimal "capitation_payment", precision: 8, scale: 2, default: "0.65", null: false
     t.decimal "ffs_payment", precision: 8, scale: 2, default: "0.2", null: false
     t.bigint "function_set_id"
+    t.integer "number_of_rounds", default: 1, null: false
     t.index ["function_set_id"], name: "index_groups_on_function_set_id"
   end
 
