@@ -21,11 +21,11 @@ class MaxValuePrediction extends Component {
     };
   }
 
-
   setMaxValue = (e) => {
     this.props.setResponse(this.props.id, e.target.value);
     this.setState({ maxValue: e.value });
-  }
+    this.props.onChange && this.props.onChange(e);
+  };
 
   render() {
     return (

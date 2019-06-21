@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Button, Col, Row, Alert,
+ Button, Col, Row, Alert 
 } from '@bootstrap-styled/v4';
 
 // hmmmmm
@@ -24,7 +24,6 @@ class BrowseWeb extends Component {
     const win = window.open('', '_blank');
     win.focus();
     this.setState({ browsing: true });
-    // this.setState(prevState => ({ browsing: !prevState.browsing }));
   }
 
   renderContent() {
@@ -38,9 +37,7 @@ class BrowseWeb extends Component {
         <Button onClick={this.toggleBrowsing} color="success">
           Browse Web
         </Button>
-        <div>
-          {this.renderContent()}
-        </div>
+        <div>{this.renderContent()}</div>
       </div>
     );
   }

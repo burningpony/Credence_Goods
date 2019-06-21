@@ -1,5 +1,5 @@
 import {
-  createStore, combineReducers, applyMiddleware, compose,
+ createStore, combineReducers, applyMiddleware, compose 
 } from 'redux';
 import thunk from 'redux-thunk';
 import experiment from '../reducers/experiment_reducer';
@@ -12,13 +12,16 @@ import functionSets from '../reducers/function_set_reducer';
 import pair from '../reducers/user_pair_reducer';
 // import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
-
 export default createStore(
   combineReducers({
-    user, experiment, group, currentSet, functionSets, functions, pair,
+    user,
+    experiment,
+    group,
+    currentSet,
+    functionSets,
+    functions,
+    pair,
   }),
   {},
-  compose(
-    applyMiddleware(thunk),
-  ),
+  compose(applyMiddleware(thunk)),
 );

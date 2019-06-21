@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
-  Button, Col, Row, Alert,
+ Button, Col, Row, Alert 
 } from '@bootstrap-styled/v4';
 
 import {
@@ -50,16 +50,16 @@ class FunctionGraph extends Component {
     super(props);
     this.state = {
       boughtPoints: [],
-      boughtCoordinates: [],
-      valueCoordinates: 0,
-      cost: 0,
-      debug: true,
+      numValueCoordinates: 0,
+      samplePointsCost: 0,
+      valueCoordinateCost: 0,
       alert: false,
       alertType: 'warning',
       alertText: '',
       verticalTick: false,
       firstTimeInput: false,
       startTime: 0,
+      maxValuePrediction: undefined,
     };
 
     this.validateAttrs = this.validateAttrs.bind(this);
@@ -85,10 +85,10 @@ class FunctionGraph extends Component {
 
   // callbacks
   horizontalPoints() {
-    const delta = this.props.maxY / this.state.valueCoordinates;
+    const delta = this.props.maxY / this.state.numValueCoordinates;
     const ticks = [0];
     let line = delta;
-    for (let index = 0; index < this.state.valueCoordinates; index++) {
+    for (let index = 0; index < this.state.numValueCoordinates; index++) {
       ticks.push(line.toFixed(2));
       line += delta;
     }
@@ -106,21 +106,15 @@ class FunctionGraph extends Component {
     }
   }
 
-  buyValueCoordinates = ({
-    valueCoordinates,
-    totalCost,
-    coordinates,
-    cost,
-  }) => {
+  buyValueCoordinates = ({ numValueCoordinates, totalCost }) => {
     this.checkForFirstTimeInput();
     this.setState({
-      boughtCoordinates: coordinates,
       valueCoordinateCost: totalCost,
-      valueCoordinates,
+      numValueCoordinates,
     });
   };
 
-  buySamplePoints = ({ totalCost, points, cost }) => {
+  buySamplePoints = ({ totalCost, points }) => {
     this.checkForFirstTimeInput();
     this.setState({
       boughtPoints: points,
@@ -139,13 +133,7 @@ class FunctionGraph extends Component {
   }
 
   validateAttrs = () => {
-    if (this.props.responses) {
-      return !(
-        isNaN(this.props.responses.max_value_prediction)
-        && isNaN(this.props.responses.num_bought_value_coordinates)
-        && isNaN(this.props.responses.num_bought_sample_points)
-      );
-    }
+    if (this.state.maxValuePrediction) return true;
     return false;
   };
 
@@ -163,8 +151,8 @@ class FunctionGraph extends Component {
   };
 
   generateAlert = () => (this.state.alert ? (
-    <Alert color={this.state.alertType}>{this.state.alertText}</Alert>
-  ) : null);
+      <Alert color={this.state.alertType}>{this.state.alertText}</Alert>
+    ) : null);
 
   handleSubmit = (e) => {
     if (this.validateAttrs()) {
@@ -242,7 +230,7 @@ class FunctionGraph extends Component {
           id={this.props.id}
           max={maxX}
           min={minX}
-          costOfCoordinate={2.33}
+          costOfPoint={2.33}
           func={this.func}
           num_bought_sample_points={
             this.props.responses.num_bought_sample_points
@@ -257,13 +245,17 @@ class FunctionGraph extends Component {
         id={this.props.id}
         max={maxX}
         min={minX}
-        costOfCoordinate={2.33}
+        costOfPoint={2.33}
         func={this.func}
         callback={this.buySamplePoints}
         disabled={this.props.disabled}
       />
     );
   }
+
+  handleMaxValueChange = (e) => {
+    this.setState({ maxValuePrediction: e.target.value });
+  };
 
   renderMaxValue() {
     const { minX, maxX } = this.props;
@@ -280,7 +272,10 @@ class FunctionGraph extends Component {
       );
     }
     return (
-      <MaxValuePredict id={this.props.id} viewMode={this.props.viewMode} />
+      <MaxValuePredict
+        id={this.props.id}
+        onChange={this.handleMaxValueChange}
+      />
     );
   }
 
@@ -293,9 +288,9 @@ class FunctionGraph extends Component {
 
   render() {
     const {
-      minX, maxX, minY, maxY,
-    } = this.props;
-    const { debug, verticalTick } = this.state;
+ minX, maxX, minY, maxY 
+} = this.props;
+    const { verticalTick } = this.state;
     const {
       generateAlert,
       renderSubmitButton,
@@ -304,23 +299,22 @@ class FunctionGraph extends Component {
       renderMaxValue,
     } = this;
     return (
-      <Row>
+      <Row className="p-4">
         <Col lg="12">{generateAlert()}</Col>
         <Col lg="6">
           <ScatterChart
             width={400}
             height={400}
             margin={{
-              top: 5,
+              top: 20,
               right: 5,
               bottom: 5,
-              left: 5,
+              left: 20,
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <Scatter
-              name="A school"
-              line={debug}
+              name="Points"
               data={this.data()}
               fill="#8884d8"
               stroke="none"
@@ -329,7 +323,7 @@ class FunctionGraph extends Component {
             <YAxis
               dataKey="y"
               type="number"
-              tick={verticalTick}
+              tick={verticalTick || undefined}
               domain={[minY, maxY]}
               ticks={this.horizontalPoints()}
               allowDecimals
@@ -342,12 +336,7 @@ class FunctionGraph extends Component {
           {renderValueCoordinate()}
           {renderSamplePoints()}
           <h3>
-            Cos
-            <span onClick={e => this.setState({ debug: !this.state.debug })}>
-              t
-            </span>
-            :
-            {' '}
+            Cost:&nbsp;
             <small>{this.renderCost()}</small>
           </h3>
           {renderMaxValue()}

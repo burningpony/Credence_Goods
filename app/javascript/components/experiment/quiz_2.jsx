@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import {
-  Card, Row, Col, Button, Container,
+ Card, Row, Col, Button, Container 
 } from '@bootstrap-styled/v4';
 import { saveQuiz } from '../../services/quiz_service';
 
 const questions = [
   {
-    question: 'Assume you predicted that the maximum for the above function was Y. How close was this to the actual maxima? [X is the actual distance from the maxima]',
+    question:
+      'Assume you predicted that the maximum for the above function was Y. How close was this to the actual maxima? [X is the actual distance from the maxima]',
     answers: ['a. 0', 'b. .25 X', 'c. X', 'd. 1.25X', 'e. 1.5X'],
   },
   {
-    question: 'Assume you predicted that the maximum for the above function was Y. How close was this to the actual maxima? [X is the actual distance from the maxima]',
+    question:
+      'Assume you predicted that the maximum for the above function was Y. How close was this to the actual maxima? [X is the actual distance from the maxima]',
     answers: ['a. 0', 'b. .25 X', 'c. X', 'd. 1.25X', 'e. 1.5X'],
   },
 ];
@@ -62,10 +64,10 @@ class Quiz2 extends Component {
         {questions.map((question, i) => (
           <div key={i}>
             <h2>
-                    Question
-              {' '}
-              {i + 1}
-            </h2>
+Question
+{' '}
+{i + 1}
+</h2>
             <p>{question.question}</p>
             <div>
               {question.answers.map((ans, j) => (
@@ -74,8 +76,8 @@ class Quiz2 extends Component {
                     value={j}
                     checked={this.isAnswered(i, j)}
                     onChange={() => this.onChanged(i, j)}
-type="radio"
-id=""
+                    type="radio"
+                    id=""
                   />
                   {ans}
                 </p>
