@@ -1,66 +1,72 @@
 import React, { Component } from 'react';
-import ActionCableConsumer from '../react-cable/ActionCableConsumer'
-import { cable } from '../app'
-import {Button,Col,Row,Alert} from '@bootstrap-styled/v4';
+import {
+  Button, Col, Row, Alert,
+} from '@bootstrap-styled/v4';
 import { fromJS } from 'immutable';
+import ActionCableConsumer from '../react-cable/ActionCableConsumer';
+import { cable } from '../app';
 
 
 class ReselectPartner extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       pairSetted: false,
-      player: " ",
+      player: ' ',
     };
 
-    //binding functions
-    this.onConnected = this.onConnected.bind(this)
-    this.onReceived = this.onReceived.bind(this)
-    this.requestFormat = this.requestFormat.bind(this)
-    this.playerAlert = this.playerAlert.bind(this)
-    this.transitionRole = this.transitionRole.bind(this)
+    // binding functions
+    this.onConnected = this.onConnected.bind(this);
+    this.onReceived = this.onReceived.bind(this);
+    this.requestFormat = this.requestFormat.bind(this);
+    this.playerAlert = this.playerAlert.bind(this);
+    this.transitionRole = this.transitionRole.bind(this);
   }
 
 
   onConnected(data) {
     if (!this.state.pairSetted) {
-      this.refs.SimulationChannel.perform('request_pair', this.requestFormat(this.props.user))
+      this.refs.SimulationChannel.perform('request_pair', this.requestFormat(this.props.user));
     }
   }
 
   requestFormat(data) {
     return {
-      room: "pair_matching_" + this.props.user.id,
-      data
-    }
+      room: `pair_matching_${this.props.user.id}`,
+      data,
+    };
   }
 
   onReceived(data) {
-    console.log("Pair Id", data.id)
-    let player = 'B'
+    console.log('Pair Id', data.id);
+    let player = 'B';
     if (data.person_a_id == this.props.user.id) {
-      player = 'A'
+      player = 'A';
     }
 
-    this.props.receivePair(fromJS({ ...data, player, part:2}))
+    this.props.receivePair(fromJS({ ...data, player, part: 2 }));
 
-    this.setState({ pairSetted: true, player})
+    this.setState({ pairSetted: true, player });
   }
-  //html render methods
+  // html render methods
 
   playerAlert() {
-    if (!this.state.pairSetted)
-      return (<h1>Waiting the assignation</h1>)
-    else
-      return (<h1>You will be the player {this.state.player} ,Wait a moment for the pair user</h1>)
+    if (!this.state.pairSetted) return (<h1>Waiting the assignation</h1>);
+    return (
+      <h1>
+You will be the player
+        {this.state.player}
+        {' '}
+,Wait a moment for the pair user
+      </h1>
+    );
   }
 
   transitionRole() {
     if (this.state.player == 'B') {
-      this.props.transition('quiz1')
+      this.props.transition('quiz1');
     } else {
-      this.props.transition('sets')
+      this.props.transition('sets');
     }
   }
 
@@ -74,7 +80,7 @@ class ReselectPartner extends Component {
         <h2>Player A is deciding if player B can make blind guesses</h2>
         <h2>Player A will watch player B response to questions</h2>
         <ActionCableConsumer
-          channel={{ channel: 'SimulationChannel', room: "pair_matching_" + this.props.user.id }}
+          channel={{ channel: 'SimulationChannel', room: `pair_matching_${this.props.user.id}` }}
           onReceived={this.onReceived}
           onConnected={this.onConnected}
           ref="SimulationChannel"
@@ -86,7 +92,6 @@ class ReselectPartner extends Component {
       </Row>
     );
   }
-
 }
 
 export default ReselectPartner;

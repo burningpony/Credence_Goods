@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { Map as iMap } from 'immutable';
+import { Button } from '@bootstrap-styled/v4';
 import { user as userSelector } from './selectors/user_selectors';
 import { configureUser } from './actions/user_actions';
-import {Button} from '@bootstrap-styled/v4';
 
 const StyledForm = styled.form`
     font-size: 1em;
@@ -69,7 +69,7 @@ class GroupSelect extends Component {
   renderErrors() {
     return (
       <Errors>
-        {this.errors().toJS().map((error,index) => (
+        {this.errors().toJS().map((error, index) => (
           <p key={index}>
             {error}
           </p>

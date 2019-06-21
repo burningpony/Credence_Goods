@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2019_04_05_131321) do
     t.bigint "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_function_sets_on_group_id"
   end
 
   create_table "functions", force: :cascade do |t|
@@ -75,9 +76,7 @@ ActiveRecord::Schema.define(version: 2019_04_05_131321) do
     t.decimal "salary_payment", precision: 8, scale: 2, default: "24.0", null: false
     t.decimal "capitation_payment", precision: 8, scale: 2, default: "0.65", null: false
     t.decimal "ffs_payment", precision: 8, scale: 2, default: "0.2", null: false
-    t.bigint "function_set_id"
     t.integer "number_of_rounds", default: 1, null: false
-    t.index ["function_set_id"], name: "index_groups_on_function_set_id"
   end
 
   create_table "quiz_responses", force: :cascade do |t|

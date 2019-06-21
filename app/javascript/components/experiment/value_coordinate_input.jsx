@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Button,Col,Row,Input} from '@bootstrap-styled/v4';
+import {
+  Button, Col, Row, Input,
+} from '@bootstrap-styled/v4';
 import Label from '../styles/blocks/graph/label';
+
 const rowStyle = { marginBottom: '10px' };
 
 class ValueCoordinate extends Component {
-
   static propTypes() {
     return {
-      id:PropTypes.function.isRequired,//function_id
+      id: PropTypes.function.isRequired, // function_id
       functionString: PropTypes.string.isRequired,
       costOfCoordinate: PropTypes.number.isRequired,
       callback: PropTypes.func.isRequired,
@@ -21,14 +23,14 @@ class ValueCoordinate extends Component {
       totalCoordinates: 0,
       valueCoordinates: 0,
       coordinates: [],
-      minValue:2
+      minValue: 2,
     };
   }
 
   constructor(props) {
     super(props);
     this.state = this.constructor.defaultState();
-    this.updateStateAndStorage = this.updateStateAndStorage.bind(this)
+    this.updateStateAndStorage = this.updateStateAndStorage.bind(this);
   }
 
   /**
@@ -39,19 +41,19 @@ class ValueCoordinate extends Component {
    */
   setValueCoordinates = (e) => {
     const newValueCoordinates = parseFloat(e.target.value);
-    if(this.state.minValue > newValueCoordinates){
+    if (this.state.minValue > newValueCoordinates) {
       this.updateStateAndStorage(this.state.minValue);
     } else {
       this.updateStateAndStorage(newValueCoordinates);
-    }  
+    }
   }
 
-  updateStateAndStorage(newValueCoordinates,callback) {
+  updateStateAndStorage(newValueCoordinates, callback) {
     this.setState((previousState, props) => ({
       valueCoordinates: newValueCoordinates,
       totalCost: ((props.costOfCoordinate * newValueCoordinates) + previousState.totalCost) || 0,
-    }),callback);
-    this.props.updateFunctionResponse(this.props.id,newValueCoordinates)
+    }), callback);
+    this.props.updateFunctionResponse(this.props.id, newValueCoordinates);
   }
 
   generateCoordinates = () => {
@@ -67,10 +69,12 @@ class ValueCoordinate extends Component {
 
   onClick = (e) => {
     const { callback } = this.props;
-  
+
     this.setState(
-      { coordinates: this.generateCoordinates(),
-        minValue:this.state.valueCoordinates },
+      {
+        coordinates: this.generateCoordinates(),
+        minValue: this.state.valueCoordinates,
+      },
       () => {
         callback(this.state);
         // this.setState(this.constructor.defaultState());
@@ -94,10 +98,10 @@ class ValueCoordinate extends Component {
           <input min={this.state.minValue} onChange={this.setValueCoordinates} disabled={this.props.disabled} type="number" value={this.state.valueCoordinates} />
         </Col>
         <Col sm="12">
-        <Button onClick={this.onClick}>SUBMIT</Button>
+          <Button onClick={this.onClick}>SUBMIT</Button>
         Cost:
-        {' '}
-        { this.renderTotalCost() }
+          {' '}
+          { this.renderTotalCost() }
         </Col>
       </Row>
     );

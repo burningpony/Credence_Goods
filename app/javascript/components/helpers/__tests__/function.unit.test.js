@@ -12,8 +12,8 @@ describe('#calculateBounds', () => {
     expect(calculateBounds(8, { min: 0, max: 10 })).toEqual([0, 1.25]);
   });
 
-  it("should start a negative number if provided", () => {
+  it('should start a negative number if provided', () => {
     expect(calculateBounds(1, { min: -10, max: 0 })).toEqual([-10, 0]);
     expect(calculateBounds(8, { min: -10, max: 10 })).toEqual([-10, -7.5]);
-  })
+  });
 });

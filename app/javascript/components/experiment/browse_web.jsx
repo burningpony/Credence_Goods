@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import {Button,Col,Row,Alert} from '@bootstrap-styled/v4';
+import {
+  Button, Col, Row, Alert,
+} from '@bootstrap-styled/v4';
 
 // hmmmmm
 const Browser = () => (
@@ -15,14 +17,14 @@ class BrowseWeb extends Component {
   constructor(props) {
     super(props);
     this.state = { browsing: false };
-    this.toggleBrowsing = this.toggleBrowsing.bind(this)
+    this.toggleBrowsing = this.toggleBrowsing.bind(this);
   }
 
-  toggleBrowsing () {
-    const win = window.open("", '_blank');
+  toggleBrowsing() {
+    const win = window.open('', '_blank');
     win.focus();
-    this.setState({browsing:true})
-    //this.setState(prevState => ({ browsing: !prevState.browsing }));
+    this.setState({ browsing: true });
+    // this.setState(prevState => ({ browsing: !prevState.browsing }));
   }
 
   renderContent() {

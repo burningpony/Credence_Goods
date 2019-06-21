@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import {
+  Button, Col, Row, Input,
+} from '@bootstrap-styled/v4';
 import Label from '../styles/blocks/graph/label';
 import { calculateSamplePoint, calculateBounds } from '../helpers/function';
-import {Button,Col,Row,Input} from '@bootstrap-styled/v4';
 
 class SamplePoints extends Component {
   static propTypes() {
     return {
-      id:PropTypes.function.isRequired,//function_id
+      id: PropTypes.function.isRequired, // function_id
       func: PropTypes.function.isRequired,
       costOfPoint: PropTypes.number.isRequired,
       min: PropTypes.number.isRequired,
@@ -23,33 +25,33 @@ class SamplePoints extends Component {
       valuePoints: 0,
       cost: 0,
       points: [],
-      minValue:0
+      minValue: 0,
     };
   }
 
   constructor(props) {
     super(props);
     this.state = this.constructor.defaultState();
-    //binding
-    this.updateStateAndStorage = this.updateStateAndStorage.bind(this)
-    this.renderTotalCost = this.renderTotalCost.bind(this)
+    // binding
+    this.updateStateAndStorage = this.updateStateAndStorage.bind(this);
+    this.renderTotalCost = this.renderTotalCost.bind(this);
   }
 
   setSamplePoints = (e) => {
     const newSamplePoints = parseFloat(e.target.value);
-    if(this.state.minValue > newSamplePoints){
+    if (this.state.minValue > newSamplePoints) {
       this.updateStateAndStorage(this.state.minValue);
     } else {
       this.updateStateAndStorage(newSamplePoints);
     }
   }
 
-  updateStateAndStorage(newSamplePoints,callback){
+  updateStateAndStorage(newSamplePoints, callback) {
     this.setState((previousState, props) => ({
       samplePoints: newSamplePoints,
       totalCost: ((props.costOfCoordinate * newSamplePoints) + previousState.totalCost) || 0,
-    }),callback);
-    this.props.updateFunctionResponse(this.props.id,newSamplePoints)
+    }), callback);
+    this.props.updateFunctionResponse(this.props.id, newSamplePoints);
   }
 
   generatePoints = () => {
@@ -68,15 +70,17 @@ class SamplePoints extends Component {
   onClick = () => {
     const { callback } = this.props;
     this.setState(
-      { points: this.generatePoints(),
-        minValue :this.state.samplePoints },
+      {
+        points: this.generatePoints(),
+        minValue: this.state.samplePoints,
+      },
       () => {
         callback(this.state);
         // this.setState(this.constructor.defaultState());
       },
     );
   }
-  
+
   renderTotalCost() {
     const { totalCost } = this.state;
     if (totalCost) {
@@ -90,7 +94,7 @@ class SamplePoints extends Component {
       <Row>
         <Col sm="12">
           <Label>Sample Points:</Label>
-          <input min={this.state.minValue} onChange={this.setSamplePoints} disabled={this.props.disabled} type="number" value={this.state.samplePoints}/>
+          <input min={this.state.minValue} onChange={this.setSamplePoints} disabled={this.props.disabled} type="number" value={this.state.samplePoints} />
         </Col>
         <Col sm="12">
           <Button onClick={this.onClick}>SUBMIT</Button>

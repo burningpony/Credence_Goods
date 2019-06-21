@@ -1,30 +1,30 @@
-import FunctionGraph from '../../containers/experiment/function_graph';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import FunctionGraph from '../../containers/experiment/function_graph';
 
 class FunctionsSelection extends Component {
-  
   static propTypes() {
     return {
-      viewMode:PropTypes.boolean.isRequired,//function_id
-      part:PropTypes.string.isRequired,
-      groupId:PropTypes.number.isRequired,
-      round:PropTypes.number.isRequired,
+      viewMode: PropTypes.boolean.isRequired, // function_id
+      part: PropTypes.string.isRequired,
+      groupId: PropTypes.number.isRequired,
+      round: PropTypes.number.isRequired,
     };
   }
 
   constructor(props) {
-    super(props);   
+    super(props);
   }
 
-  render () {
+  render() {
     return (<div>
       {this.props.mathFunctions.map((func, i) => (
         <div key={i}>
           <h2>
             Function
-            {' '}{func.representation}
+            {' '}
+            {func.representation}
             {i + 1}
           </h2>
 
@@ -45,7 +45,7 @@ class FunctionsSelection extends Component {
       ))}
     </div>
     );
-    }
+  }
 }
 
 export default FunctionsSelection;

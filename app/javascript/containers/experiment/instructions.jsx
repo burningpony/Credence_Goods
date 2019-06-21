@@ -1,6 +1,6 @@
-import Instructions from '../../components/experiment/instructions';
 import { connect } from 'react-redux';
 import React from 'react';
+import Instructions from '../../components/experiment/instructions';
 import { setState } from '../../components/actions/experiment_actions';
 
 const mapDispatchToProps = dispatch => ({
@@ -8,7 +8,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  user: state.user.toJS()
+  user: state.user.toJS(),
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(Instructions)
+export default connect(mapStateToProps, mapDispatchToProps)(Instructions);
