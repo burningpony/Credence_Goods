@@ -72,8 +72,13 @@ class SamplePointsInput extends Component {
     }
   };
 
+  renderTotalCost(){
+    const { totalCost } = this.state;
+    return (totalCost && Math.round(totalCost * 100) / 100);
+  }
+
   render() {
-    const { totalCost, minValue, numSamplePoints } = this.state;
+    const { minValue, numSamplePoints } = this.state;
     return (
       <Row>
         <Col sm="12">
@@ -84,12 +89,13 @@ class SamplePointsInput extends Component {
             disabled={this.props.disabled}
             type="number"
             value={numSamplePoints}
+            name="points"
           />
         </Col>
         <Col sm="12">
-          <Button onClick={this.handleClick}>SUBMIT</Button>
+          <Button name="points" onClick={this.handleClick}>SUBMIT</Button>
           Cost: &nbsp;
-          {totalCost && Math.round(totalCost * 100) / 100}
+          {this.renderTotalCost()}
           &nbsp;
         </Col>
       </Row>

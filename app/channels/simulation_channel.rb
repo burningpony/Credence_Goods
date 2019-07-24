@@ -15,13 +15,12 @@ class SimulationChannel < ApplicationCable::Channel
   end 
 
   def confirm_pair(data)
-    emit(specific_channel(data["data"]["person_a_id"]),response_format("confirm_pair",data["id"]) )
-    emit(specific_channel(data["data"]["person_b_id"]),response_format("confirm_pair",data["id"]) )
+    emit(specific_channel(data["data"]["person_a_id"]),response_format("confirm_pair",data["room"]) )
+    emit(specific_channel(data["data"]["person_b_id"]),response_format("confirm_pair",data["room"]) )
   end
 
 
   private
-
 
   def specific_channel(id)
     "simulation_#{id}"

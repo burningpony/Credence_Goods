@@ -23,9 +23,8 @@ class PartnerMatching extends Component {
     this.transitionRole = this.transitionRole.bind(this);
   }
 
-
   onConnected(data) {
-    if (!this.state.pairSetted) {
+    if (this.state.pairSetted === false) {
       this.refs.SimulationChannel.perform('request_pair', this.requestFormat({ ...this.props.user, group_id: this.props.group.id, round: 1 }));
     }
   }

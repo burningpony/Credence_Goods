@@ -80,7 +80,7 @@ Group
 
     // default option
     return (
-      <Card onClick={() => this.handleSubmit(group)}>
+      <Card onClick={() => this.handleSubmit(group)} id="group-option">
         <h2>
 Group
           {` ${index + 1}`}

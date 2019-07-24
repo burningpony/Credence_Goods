@@ -15,7 +15,10 @@ class SamplePointsView extends SamplePointsInput {
     const newProps = this.props;
     if (newProps.num_bought_sample_points) {
       if ((!oldProps.num_bought_sample_points) || (oldProps.num_bought_sample_points != newProps.num_bought_sample_points)) {
-        this.updateStateAndStorage(this.props.num_bought_sample_points, this.onClick);
+        this.setState({
+          numSamplePoints: newProps.num_bought_sample_points,
+          totalCost: this.props.costOfPoint * newProps.num_bought_sample_points || 0,
+        },this.handleClick);
       }
     }
   }

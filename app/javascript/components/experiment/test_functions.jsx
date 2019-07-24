@@ -12,10 +12,10 @@ class TestFunctions extends Component {
   render() {
     return (
       <div>
-        <h1>Tests functions</h1>
-        <div>
+        <h1 id="#title">Tests functions</h1>
+        <div >
           {mathFunctions.map((func, i) => (
-            <div key={i}>
+            <div key={i} id="function">
               <h2>
                             Function
                 {' '}
@@ -39,7 +39,7 @@ class TestFunctions extends Component {
           ))}
         </div>
 
-        <Button onClick={() => this.props.transition()} color="success">
+        <Button onClick={() => this.props.transition()} name="continue" color="success">
           Continue to select a group
         </Button>
       </div>
