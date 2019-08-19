@@ -13,6 +13,7 @@ class FunctionsSelection extends Component {
     };
   }
 
+  
   constructor(props) {
     super(props);
   }
@@ -20,7 +21,7 @@ class FunctionsSelection extends Component {
   render() {
     return (<div>
       {this.props.mathFunctions.map((func, i) => (
-        <div key={i}>
+        <div key={i} id="function">
           <h2>
             Function
             {' '}

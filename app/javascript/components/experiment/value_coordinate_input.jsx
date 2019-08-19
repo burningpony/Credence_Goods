@@ -61,7 +61,7 @@ class ValueCoordinateInput extends Component {
     return localCoordinates;
   };
 
-  onClick = (e) => {
+  handleClick = (e) => {
     const { callback } = this.props;
     const { numValueCoordinates, minValue } = this.state;
     if (numValueCoordinates < minValue) {
@@ -75,9 +75,14 @@ class ValueCoordinateInput extends Component {
       );
     }
   };
+  
+  renderTotalCost(){
+    const { totalCost } = this.state;
+    return (totalCost && Math.round(totalCost * 100) / 100);
+  }
 
   render() {
-    const { totalCost, minValue, numValueCoordinates } = this.state;
+    const { minValue, numValueCoordinates } = this.state;
     return (
       <Row style={rowStyle}>
         <Col sm="12">
@@ -88,12 +93,13 @@ class ValueCoordinateInput extends Component {
             disabled={this.props.disabled}
             type="number"
             value={numValueCoordinates}
+            name="valueCoordinate"
           />
         </Col>
         <Col sm="12">
-          <Button onClick={this.onClick}>SUBMIT</Button>
+          <Button name="valueCoordinate" onClick={this.handleClick}>SUBMIT</Button>
           Cost: &nbsp;
-          {totalCost && Math.round(totalCost * 100) / 100}
+          {this.renderTotalCost()}
         </Col>
       </Row>
     );

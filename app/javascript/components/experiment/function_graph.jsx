@@ -23,7 +23,7 @@ import ValueCoordinateView from "../../containers/experiment/value_coordinate_vi
 import SamplePointsInput from "../../containers/experiment/sample_points_input";
 import SamplePointsView from "../../containers/experiment/sample_points_view";
 import MaxValuePredict from "../../containers/experiment/max_value_predictor";
-
+import {costOfCoordinate,costOfPoint} from './constants'
 const FlexDisplay = styled.div`
   display: flex;
 `;
@@ -200,7 +200,7 @@ class FunctionGraph extends Component {
       return (
         <ValueCoordinateView
           id={this.props.id}
-          costOfCoordinate={2.33}
+          costOfCoordinate={costOfCoordinate}
           func={this.func}
           callback={this.buyValueCoordinates}
           num_bought_value_coordinates={
@@ -213,7 +213,7 @@ class FunctionGraph extends Component {
     return (
       <ValueCoordinateInput
         id={this.props.id}
-        costOfCoordinate={2.33}
+        costOfCoordinate={costOfCoordinate}
         func={this.func}
         callback={this.buyValueCoordinates}
         disabled={this.props.disabled}
@@ -222,6 +222,7 @@ class FunctionGraph extends Component {
   }
 
   renderSamplePoints() {
+    
     const { minX, maxX } = this.props;
     if (this.props.viewMode) {
       return (
@@ -229,7 +230,7 @@ class FunctionGraph extends Component {
           id={this.props.id}
           max={maxX}
           min={minX}
-          costOfPoint={2.33}
+          costOfPoint={costOfPoint}
           func={this.func}
           num_bought_sample_points={
             this.props.responses.num_bought_sample_points
@@ -239,17 +240,19 @@ class FunctionGraph extends Component {
         />
       );
     }
+
     return (
       <SamplePointsInput
         id={this.props.id}
         max={maxX}
         min={minX}
-        costOfPoint={2.33}
+        costOfPoint={costOfPoint}
         func={this.func}
         callback={this.buySamplePoints}
         disabled={this.props.disabled}
       />
     );
+
   }
 
   handleMaxValueChange = e => {
@@ -266,6 +269,7 @@ class FunctionGraph extends Component {
             value={this.props.responses.max_value_prediction || 0}
             disabled
             type="number"
+            
           />
         </div>
       );
@@ -280,7 +284,7 @@ class FunctionGraph extends Component {
 
   renderSubmitButton() {
     if (!this.props.viewMode) {
-      return <Button onClick={this.handleSubmit}> Predict </Button>;
+      return <Button name="prediction" onClick={this.handleSubmit}> Predict </Button>;
     }
     return <div />;
   }

@@ -12,7 +12,7 @@ class Part1 extends Component {
   render() {
     return (
       <div>
-        <h1>Part 1</h1>
+        <h1 >Part 1</h1>
         <BrowseWeb toastManager={this.props.toastManager}>
           <FunctionsSelection part={1} />
         </BrowseWeb>
@@ -21,7 +21,7 @@ class Part1 extends Component {
           Back to groups
         </Button>
 
-        <Button onClick={() => this.props.transition('quiz2')} color="success">
+        <Button onClick={() => this.props.transition('payment')} name="continue" color="success">
           Continue
         </Button>
 

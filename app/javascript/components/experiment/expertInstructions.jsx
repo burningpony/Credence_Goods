@@ -6,7 +6,7 @@ class ExpertInstructions extends Component {
     return (
       <div>
         <h2>Instructions</h2>
-        <h3>
+        <h3 id="role">
 You Will be the player:
           {' '}
           {this.props.role}

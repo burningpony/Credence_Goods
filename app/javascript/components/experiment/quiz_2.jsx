@@ -64,20 +64,20 @@ class Quiz2 extends Component {
         {questions.map((question, i) => (
           <div key={i}>
             <h2>
-Question
-{' '}
-{i + 1}
-</h2>
+          Question
+          {' '}
+          {i + 1}
+          </h2>
             <p>{question.question}</p>
             <div>
               {question.answers.map((ans, j) => (
-                <p key={j}>
+                <p key={j} id="question">
                   <input
                     value={j}
                     checked={this.isAnswered(i, j)}
                     onChange={() => this.onChanged(i, j)}
                     type="radio"
-                    id=""
+                    id={j}
                   />
                   {ans}
                 </p>
@@ -85,7 +85,7 @@ Question
             </div>
           </div>
         ))}
-        <Button onClick={this.saveQuiz}>Submit</Button>
+        <Button onClick={this.saveQuiz} name="submitQuiz">Submit</Button>
       </div>
     );
   }

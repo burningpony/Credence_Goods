@@ -134,7 +134,7 @@ class Part2 extends Component {
       return (<div />);
     }
     return (
-      <Button onClick={this.backToGroups} color="success">
+      <Button onClick={this.backToGroups} color="success" name="groups">
       Back to groups
       </Button>
     );
@@ -143,14 +143,14 @@ class Part2 extends Component {
   renderRoundOrFinish() {
     if ((this.props.group.number_of_rounds > 1 && this.props.pair.round < this.props.group.number_of_rounds) && !this.state.viewMode) {
       return (
-        <Button onClick={() => this.goToRoundPage()} color="success" disabled={this.props.viewMode}>
+        <Button onClick={() => this.goToRoundPage()} color="success" disabled={this.props.viewMode} name="round">
         Another Round
         </Button>
       );
     }
     if (!this.state.viewMode) {
       return (
-        <Button onClick={() => this.finishPart()} color="success" disabled={this.props.viewMode}>
+        <Button onClick={() => this.finishPart()} color="success" disabled={this.props.viewMode} name="finish">
           Finish
         </Button>);
     }

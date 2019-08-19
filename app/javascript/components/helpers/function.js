@@ -1,8 +1,11 @@
 const gr = (Math.sqrt(5) + 1) / 2; // 1/phi
 
-const gss = (f, a, b, tol = 1e-5) => {
+export const gss = (f, a, b, tol = 1e-5) => {
   let c = b - (b - a) / gr;
   let d = a + (b - a) / gr;
+  console.log('funcs')
+  console.log(c,d)
+  console.log(f(c),f(d))
 
   while (Math.abs(c - d) > tol) {
     if (f(c) < f(d)) {
@@ -30,6 +33,6 @@ export const calculateBounds = (n, { min, max }) => {
 
 export const calculateSamplePoint = (func, a, b) => {
   const x = gss(func, a, b);
-
+  console.log("puntos",x, func(x));
   return [x, func(x)];
 };

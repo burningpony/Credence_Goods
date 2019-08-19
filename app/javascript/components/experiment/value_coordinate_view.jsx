@@ -14,8 +14,10 @@ class ValueCoordinateView extends ValueCoordinate {
     const newProps = this.props;
     if (newProps.num_bought_value_coordinates) {
       if ((!oldProps.num_bought_value_coordinates) || (oldProps.num_bought_value_coordinates != newProps.num_bought_value_coordinates)) {
-        console.log('entre');
-        this.updateStateAndStorage(this.props.num_bought_value_coordinates, this.onClick);
+        this.setState({
+          numValueCoordinates: newProps.num_bought_value_coordinates,
+          totalCost: this.props.costOfCoordinate * newProps.num_bought_value_coordinates || 0,
+        },this.handleClick);
       }
     }
   }

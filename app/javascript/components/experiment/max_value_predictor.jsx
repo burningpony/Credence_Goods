@@ -31,7 +31,7 @@ class MaxValuePrediction extends Component {
     return (
       <div>
         <Label>Max Value Prediction:</Label>
-        <Input onChange={this.setMaxValue} type="number" />
+        <Input onChange={this.setMaxValue} type="number" name="prediction" />
         {/* <Button >Predict</Button> */}
       </div>
     );
