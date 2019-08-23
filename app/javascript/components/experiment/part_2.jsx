@@ -71,7 +71,7 @@ class Part2 extends Component {
       } else if (data.action == 'mouse_move') {
         this.setState({ x: data.data.x, y: data.data.y });
       } else {
-        this.props.transition('finished');
+        this.props.transition('payment_part2');
       }
     }
   }
@@ -109,7 +109,7 @@ class Part2 extends Component {
   }
 
   finishPart() {
-    this.props.transition('finished');
+    this.props.transition('payment_part2');
     this.refs.FunctionResponsesChannel.perform('finish', this.requestFormat({}));
   }
 

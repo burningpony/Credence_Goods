@@ -14,6 +14,7 @@ import TestFunctions from '../containers/experiment/test_functions';
 import PartnerMatching from '../containers/experiment/partner_matching';
 import Instructions from '../containers/experiment/instructions';
 import PaymentSummary from '../containers/experiment/payment_summary';
+import PaymentSummaryPart2 from '../containers/experiment/payment_summar_part2';
 
 import { state as getState } from './selectors/experiment_selectors';
 import Timer from '../containers/experiment/timer';
@@ -60,6 +61,8 @@ class ExperimentComponent extends Component {
         return (<Rounds toastManager={this.props.toastManager} />);
       case 'payment':
         return (<PaymentSummary toastManager={this.props.toastManager} />);
+      case 'payment_part2':
+        return (<PaymentSummaryPart2 toastManager={this.props.toastManager} />);
       default:
         return (<GroupSelect toastManager={this.props.toastManager} />);
     }

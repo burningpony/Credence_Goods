@@ -170,6 +170,7 @@ class FunctionGraph extends Component {
         time_to_response: finishTime - this.state.startTime,
         ...this.props.responses
       };
+      console.log(data);
       if (this.props.disabled) {
         // if was save
         const { updateResponse } = this.props;
