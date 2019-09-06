@@ -71,13 +71,13 @@ export const updateFunctionResponses = (groupId, setId, functionId, responseId, 
 
 });
 
-export const getFunctionResponses = async (groupId, setId, functionId, responseId, functionsResponses) => dispatch => 
-fetch(`${API_URL}/user/${userId}/function_responses`, {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-    'X-Requested-With': 'XMLHttpRequest',
-    'X-CSRF-Token': getToken(),
-  },
-});
+export const getFunctionResponses = (userId) => 
+  fetch(`${API_URL}/users/${userId}/function_responses`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-CSRF-Token': getToken(),
+    },
+}).then(response => response.json());

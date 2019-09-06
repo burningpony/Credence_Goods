@@ -17,7 +17,7 @@ class FunctionResponsesChannel < ApplicationCable::Channel
   end
 
   def finish(data)
-    emit specific_channel(data["pair_id"]),response_format('finish', nil)
+    emit specific_channel(data["pair_id"]),response_format('payment_part2', nil)
   end
   
   def new_round(data)

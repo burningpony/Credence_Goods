@@ -4,6 +4,7 @@ import { gss } from '../helpers/function';
 import math from "mathjs";
 import {costOfCoordinate,costOfPoint} from './constants'
 import {getFunctionResponses} from '../actions/functions_actions'
+
 class PaymentSummaryPart2 extends Component {
 
   constructor(props) {
@@ -12,64 +13,79 @@ class PaymentSummaryPart2 extends Component {
         payment: 30,
         responses: []
       }
-    }
-  
+  }
 
-  getFunctionResponses = async () => {
-    const responses = await getFunctionResponses();
-    this.setState({responses});
+  componentDidMount(){
+    this.getFunctionResponses();
+  }
+
+  getFunctionResponses = () => {
+    getFunctionResponses(this.props.user.id).then((responses)=>{
+      console.log(responses);
+      this.setState({responses});
+    });
   }
 
   calculateCapitation = () => {
     let total = 0;
     const differentGroups = [...new Set(this.state.responses.map(x => x.set_id)) ]
     differentGroups.forEach((gr)=>{
-      const value = this.state.responses.find(x => (x.max_value_prediction!==null && x.set_id === gr)) ? 1 : 0;
+      const value = this.state.responses.find(x => (x.max_value_prediction!==null && x.set_id === gr)) ? this.props.group.capitation_payment : 0;
       total += value;
     })
+    return total;
   }
 
   calculateFeeForService = () => {
     let total = 0;
     this.state.responses.forEach((res)=>{
-      total = total+(res.num_bought_sample_points * 0.20)+(res.num_bought_value_coordinates * 0.20) + (res.max_value_prediction * 0.60)
+      total = total+(res.num_bought_sample_points * this.props.group.ffs_payment)+(res.num_bought_value_coordinates * this.props.group.ffs_payment) + (res.max_value_prediction * ((this.props.group.ffs_payment*2)-1))
     });
     return total;
   }
 
   calculateSalary = () => {
-    return 10;
+    return this.props.group.salary_payment;
   }
-
-  calculatePayment = () => {
-    const {group,functions} = this.props;
+  calculatePaymentFunction = () => {
+    const {responses} = this.props;
     let totalPayment =  0;
-    functions.forEach(item => {
+    responses.forEach(item => {
         const func = (x) => {
             return math.eval(item.representation, { x });
         };
         const actualMax = gss(func,item.min_x,item.max_x)
-        const maxValuePredicted = item.responses.max_value_prediction ? item.responses.max_value_prediction : 0 ;
-        const costValueCoordinates = item.responses.num_bought_value_coordinates*costOfCoordinate;
-        const costSamplePoints = item.responses.num_bought_sample_points*costOfPoint;
-        console.log("max",actualMax,maxValuePredicted);
+        const maxValuePredicted = item.max_value_prediction ? item.max_value_prediction : 0 ;
+        const costValueCoordinates = item.num_bought_value_coordinates*costOfCoordinate;
+        const costSamplePoints = item.num_bought_sample_points*costOfPoint;
         totalPayment = totalPayment+(actualMax - Math.abs((maxValuePredicted-actualMax)) - costValueCoordinates - costSamplePoints) 
-        
     });
     return parseFloat(totalPayment).toFixed(2);
+  }
+
+  calculatePayment = () => {
+    if (this.props.user.role == 'B') {
+        if(this.props.group.default_payment == 1){
+            return this.calculateSalary();
+        } else if(this.props.group.default_payment == 1){
+          return this.calculateCapitation();
+        } else {
+          return this.calculateFeeForService();
+        }
+    } else { //player A payment based on performance on player B
+      return this.calculatePaymentFunction();
+    }
   }
   
   render() {
     return (
       <div>
-          <h1 id="title"> Payment Summary for Part 1 </h1>
+          <h1 id="title"> Payment Summary for Part 2 </h1>
             <div>
-                <p>For each function payment will be:</p>
-                <p>Payment = Actual Maximum – ⎢Predicted – Actual ⎢ – Cost of Coordinates - Cost of Points</p>
                 <p>Total Cost ${this.calculatePayment()}</p>
                 <p>Total Payment = ${parseFloat(this.state.payment - this.calculatePayment()).toFixed(2)}</p>
             </div>
-            <Button onClick={() => this.props.transition('group_selection')} color="success" id="continue">
+            <Button onClick={() => this.props.transition('finish')} color="success" id="continue">
                Continue
             </Button>
       </div>
