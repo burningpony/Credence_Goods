@@ -1,8 +1,12 @@
 class UserPair < ApplicationRecord
+
+    belongs_to :expert, class_name: "User", foreign_key: "person_a_id"
+    belongs_to :customer, class_name: "User", foreign_key: "person_b_id"
     
     scope :free_person_a, -> (group_id) { where(:person_a_id => [nil,""] ).where(:group_id => group_id).take(1) }
     scope :free_person_b, -> (group_id) { where(:person_b_id => [nil,""] ).where(:group_id => group_id).take(1) }
     scope :has_pair, -> (user_id) { where(:person_b_id => user_id).or(where(:person_a_id => user_id)).count  }
+
 
 
     def self.request_pair(user_id,round,group_id)

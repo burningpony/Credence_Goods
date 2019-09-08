@@ -22,7 +22,9 @@ Setup DB. (only once)
 
 In another tab. To start the application and it's Dependencies
 
-3. `$ docker-compose up -d`
+3. `$ docker-compose up -d db redis`
+
+4. `$ rails s`
 
 ### Working within the project
 
