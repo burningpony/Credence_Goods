@@ -1,7 +1,7 @@
 class UserPair < ApplicationRecord
 
-    belongs_to :expert, class_name: "User", foreign_key: "person_a_id"
-    belongs_to :customer, class_name: "User", foreign_key: "person_b_id"
+    belongs_to :expert, class_name: "User", foreign_key: "person_a_id", optional: true
+    belongs_to :customer, class_name: "User", foreign_key: "person_b_id", optional: true
     
     scope :free_person_a, -> (group_id) { where(:person_a_id => [nil,""] ).where(:group_id => group_id).take(1) }
     scope :free_person_b, -> (group_id) { where(:person_b_id => [nil,""] ).where(:group_id => group_id).take(1) }
@@ -20,10 +20,17 @@ class UserPair < ApplicationRecord
                 pair = UserPair.free_person_b(group_id)
                 role = :person_b_id
             end
-
+            #byebug
             if pair.count == 0
-                return UserPair.create(role => user.id, :round => round, :group_id => group_id)
+                puts 'creo el par'
+                pair = UserPair.create(role => user.id, :round => round, :group_id => group_id)
+                if pair.save
+                    return pair
+                else
+                    puts pair.errors.full_messages
+                end
             end
+            
             pair = pair.first
             pair.update(role => user.id)
             pair.save
