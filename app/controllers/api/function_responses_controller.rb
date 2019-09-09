@@ -5,6 +5,7 @@ module Api
         def create
             response = FunctionResponse.create(response_params)
             json_response(response)
+            #byebug
         end
 
         def update
@@ -13,6 +14,10 @@ module Api
             json_response(response)
         end
 
+        def index
+            response = FunctionResponse.find_by_user_id_with_group(params[:user_id])
+            json_response(response)
+        end 
 
         private
         def response_params

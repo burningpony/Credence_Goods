@@ -22,7 +22,6 @@ class SamplePointsInput extends Component {
     totalCost: 0,
     points: [],
     numSamplePoints: 0,
-    minValue: 0,
   };
 
   setNumSamplePoints = (e) => {
@@ -32,7 +31,7 @@ class SamplePointsInput extends Component {
         numSamplePoints: newNumSamplePoints,
       },
       () => {
-        if (newNumSamplePoints > this.state.minValue) {
+        if (newNumSamplePoints > this.props.minValue) {
           this.setState({
             totalCost: this.props.costOfPoint * newNumSamplePoints || 0,
           });
@@ -56,16 +55,15 @@ class SamplePointsInput extends Component {
   };
 
   handleClick = (e) => {
-    const { callback } = this.props;
-    const { numSamplePoints, minValue } = this.state;
+    const { callback, minValue} = this.props;
+    const { numSamplePoints } = this.state;
 
-    if (numSamplePoints < minValue) {
+    if (numSamplePoints < minValue ) {
       this.setState({ numSamplePoints: minValue });
     } else {
       this.setState(
         {
           points: this.generatePoints(),
-          minValue: numSamplePoints,
         },
         () => callback(this.state),
       );
@@ -78,7 +76,8 @@ class SamplePointsInput extends Component {
   }
 
   render() {
-    const { minValue, numSamplePoints } = this.state;
+    const { numSamplePoints } = this.state;
+    const { minValue } = this.props;
     return (
       <Row>
         <Col sm="12">

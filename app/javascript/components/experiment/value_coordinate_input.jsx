@@ -57,22 +57,17 @@ class ValueCoordinateInput extends Component {
     for (let i = 0; i < numValueCoordinates; i++) {
       localCoordinates.push(i * Math.random());
     }
-
+    
     return localCoordinates;
   };
 
   handleClick = (e) => {
-    const { callback } = this.props;
-    const { numValueCoordinates, minValue } = this.state;
+    const { callback, minValue } = this.props;
+    const { numValueCoordinates } = this.state;
     if (numValueCoordinates < minValue) {
       this.setState({ numValueCoordinates: minValue });
     } else {
-      this.setState(
-        {
-          minValue: numValueCoordinates,
-        },
-        () => callback(this.state),
-      );
+       callback(this.state)
     }
   };
   

@@ -1,9 +1,6 @@
 - name: ci
   type: parallel
   steps:
-  - name: ruby specs
-    service: credence-goods
-    command: rake db:create spec
   - name: js specs
     service: credence-goods
     command: yarn test

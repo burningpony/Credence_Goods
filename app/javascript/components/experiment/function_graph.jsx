@@ -49,6 +49,7 @@ class FunctionGraph extends Component {
     this.state = {
       boughtPoints: [],
       numValueCoordinates: 0,
+      samplePoints: 0,
       samplePointsCost: 0,
       valueCoordinateCost: 0,
       alert: false,
@@ -106,18 +107,27 @@ class FunctionGraph extends Component {
 
   buyValueCoordinates = ({ numValueCoordinates, totalCost }) => {
     this.checkForFirstTimeInput();
-    this.setState({
-      valueCoordinateCost: totalCost,
-      numValueCoordinates
-    });
+    if((this.state.samplePointsCost+totalCost) <= 5) {
+      this.setState({
+        valueCoordinateCost: totalCost,
+        numValueCoordinates
+      });
+    } else {
+      this.triggerError("The value of Sample points and Value Coordinates coultdn't be greater than $5");
+    }
   };
 
-  buySamplePoints = ({ totalCost, points }) => {
+  buySamplePoints = ({ totalCost, points,numSamplePoints }) => {
     this.checkForFirstTimeInput();
-    this.setState({
-      boughtPoints: points,
-      samplePointsCost: totalCost
-    });
+    if((this.state.valueCoordinateCost+totalCost) <= 5) {
+      this.setState({
+        samplePoints: numSamplePoints,
+        boughtPoints: points,
+        samplePointsCost: totalCost
+      });
+    } else {
+      this.triggerError("The value of Sample points and Value Coordinates coultdn't be greater than $5");
+    }
   };
 
   renderCost() {
@@ -135,11 +145,11 @@ class FunctionGraph extends Component {
     return false;
   };
 
-  triggerError = () => {
+  triggerError = (text="Nothing was predicted!") => {
     this.setState({
       alert: true,
       alertType: "danger",
-      alertText: "Nothing was predicted!"
+      alertText: text
     });
     setTimeout(() => {
       this.setState({
@@ -170,6 +180,7 @@ class FunctionGraph extends Component {
         time_to_response: finishTime - this.state.startTime,
         ...this.props.responses
       };
+      console.log(data);
       if (this.props.disabled) {
         // if was save
         const { updateResponse } = this.props;
@@ -207,6 +218,7 @@ class FunctionGraph extends Component {
             this.props.responses.num_bought_value_coordinates
           }
           disabled={this.props.disabled}
+          
         />
       );
     }
@@ -217,6 +229,7 @@ class FunctionGraph extends Component {
         func={this.func}
         callback={this.buyValueCoordinates}
         disabled={this.props.disabled}
+        minValue={this.state.numValueCoordinates}
       />
     );
   }
@@ -250,6 +263,8 @@ class FunctionGraph extends Component {
         func={this.func}
         callback={this.buySamplePoints}
         disabled={this.props.disabled}
+        minValue={this.state.samplePoints}
+        total={this.totalCost}
       />
     );
 

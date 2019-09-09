@@ -40,6 +40,7 @@ class FunctionsSelection extends Component {
             responses={func.responses}
             viewMode={this.props.viewMode}
             round={this.props.round}
+            part={this.props.part}
           />
 
         </div>
