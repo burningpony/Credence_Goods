@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_06_192455) do
+ActiveRecord::Schema.define(version: 2019_09_09_041521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,10 +69,6 @@ ActiveRecord::Schema.define(version: 2019_09_06_192455) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name", null: false
-    t.boolean "player_a_can_choose_player_b_payment", default: false, null: false
-    t.boolean "sample_value_points_allowed", default: true, null: false
-    t.boolean "sample_value_coordinates_allowed", default: true, null: false
-    t.integer "treatment_selection", default: 1, null: false
     t.decimal "salary_payment", precision: 8, scale: 2, default: "24.0", null: false
     t.decimal "capitation_payment", precision: 8, scale: 2, default: "0.65", null: false
     t.decimal "ffs_payment", precision: 8, scale: 2, default: "0.2", null: false
