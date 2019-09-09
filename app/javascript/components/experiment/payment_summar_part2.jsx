@@ -4,7 +4,7 @@ import math from 'mathjs';
 import { gss } from '../helpers/function';
 import { costOfCoordinate, costOfPoint } from './constants';
 import { getFunctionResponses } from '../actions/functions_actions';
-
+import { finishExperiment } from '../actions/user_pair_actions'
 class PaymentSummaryPart2 extends Component {
   constructor(props) {
     super(props);
@@ -71,6 +71,12 @@ class PaymentSummaryPart2 extends Component {
     return this.calculatePaymentFunction();
   }
 
+  finish = () => {
+    finishExperiment().then((data)=>{
+      this.props.transition('finish')
+    })
+  }
+
   render() {
     return (
       <div>
@@ -85,7 +91,7 @@ Total Payment = $
             {parseFloat(this.state.payment - this.calculatePayment()).toFixed(2)}
           </p>
         </div>
-        <Button onClick={() => this.props.transition('finish')} color="success" id="continue">
+        <Button onClick={this.finish} color="success" id="continue">
                Continue
         </Button>
       </div>

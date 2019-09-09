@@ -22,3 +22,14 @@ export const updateUserPair = (id, data) => dispatch => fetch(`${API_URL}/user_p
 }).then(response => response.json()).then((response) => {
   dispatch({ type: UPDATE_ROUND });
 });
+
+export const finishExperiment = (userId) => 
+  fetch(`${API_URL}/users/${userId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-CSRF-Token': getToken(),
+    },
+}).then(response => response.json());

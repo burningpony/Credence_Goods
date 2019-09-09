@@ -24,10 +24,16 @@ module Api
       end
     end
 
+    def update
+      user = User.find(params[:id])
+      user.update(finished_at: Time.current)
+    end
+
     private
 
     def user_params
       params.permit(:group_name)
     end
+    
   end
 end
