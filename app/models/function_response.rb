@@ -1,6 +1,6 @@
 class FunctionResponse < ApplicationRecord
     belongs_to :function
-    scope :find_by_user_id, -> (user_id) { where(:part => 2 ).where(:user_id => user_id) }
+    # scope :find_by_user_id, -> (user_id) { where(:part => 2 ).where(:user_id => user_id) }
     enum part: [ :unknown, :part_1, :part_2]
 
     attr_accessor :set_id
