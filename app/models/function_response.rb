@@ -1,5 +1,6 @@
 class FunctionResponse < ApplicationRecord
     belongs_to :function
+    belongs_to :user
     enum part: [ :unknown, :part_1, :part_2]
 
     attr_accessor :set_id
