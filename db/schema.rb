@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_09_043609) do
+ActiveRecord::Schema.define(version: 2019_09_12_035803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2019_09_09_043609) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["function_id"], name: "index_function_responses_on_function_id"
+    t.index ["user_id", "function_id", "part", "round_number"], name: "function_response_uniqueness", unique: true
     t.index ["user_id"], name: "index_function_responses_on_user_id"
   end
 
@@ -92,6 +93,7 @@ ActiveRecord::Schema.define(version: 2019_09_09_043609) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_user_pairs_on_group_id"
+    t.index ["person_a_id", "person_b_id", "round"], name: "user_pair_uniqueness", unique: true
     t.index ["person_a_id"], name: "index_user_pairs_on_person_a_id"
     t.index ["person_b_id"], name: "index_user_pairs_on_person_b_id"
   end
