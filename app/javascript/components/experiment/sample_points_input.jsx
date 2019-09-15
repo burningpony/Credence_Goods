@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
- Button, Col, Row, Input 
+  Button, Col, Row, Input,
 } from '@bootstrap-styled/v4';
 import Label from '../styles/blocks/graph/label';
 import { calculateSamplePoint, calculateBounds } from '../helpers/function';
@@ -46,19 +46,37 @@ class SamplePointsInput extends Component {
     const { numSamplePoints } = this.state;
     const localPoints = [];
 
-    for (let i = 0; i < numSamplePoints; i++) {
+    let collisions = 0;
+
+    for (let i = 0; i < (numSamplePoints + collisions); i++) {
       const [localMin, localMax] = calculateBounds(i + 1, { min, max });
       const [x, y] = calculateSamplePoint(func, localMin, localMax);
-      localPoints.push({ x, y });
+      const MAX_COLLISIONS = 50;
+
+      const hasCollison = !!localPoints.find((point) => {
+        const COLLISION_THRESHOLD = (max - min) / MAX_COLLISIONS;
+
+        const isNearbyX = x + COLLISION_THRESHOLD > point.x && x - COLLISION_THRESHOLD < point.x;
+        const isNearbyY = y + COLLISION_THRESHOLD > point.y && y - COLLISION_THRESHOLD < point.y;
+        return isNearbyX && isNearbyY;
+      });
+
+      if (hasCollison) {
+        if (collisions < MAX_COLLISIONS) {
+          collisions += 1;
+        }
+      } else {
+        localPoints.push({ x, y });
+      }
     }
     return localPoints;
   };
 
   handleClick = (e) => {
-    const { callback, minValue} = this.props;
+    const { callback, minValue } = this.props;
     const { numSamplePoints } = this.state;
 
-    if (numSamplePoints < minValue ) {
+    if (numSamplePoints < minValue) {
       this.setState({ numSamplePoints: minValue });
     } else {
       this.setState(
@@ -70,7 +88,7 @@ class SamplePointsInput extends Component {
     }
   };
 
-  renderTotalCost(){
+  renderTotalCost() {
     const { totalCost } = this.state;
     return (totalCost && Math.round(totalCost * 100) / 100);
   }

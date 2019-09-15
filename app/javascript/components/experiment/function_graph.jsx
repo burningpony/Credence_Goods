@@ -1,7 +1,9 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { Button, Col, Row, Alert } from "@bootstrap-styled/v4";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import {
+  Button, Col, Row, Alert,
+} from '@bootstrap-styled/v4';
 
 import {
   ScatterChart,
@@ -9,21 +11,19 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
-  Legend,
-  Line
-} from "recharts";
+} from 'recharts';
 
-import math from "mathjs";
-import Input from "../styles/blocks/graph/input";
-import Label from "../styles/blocks/graph/label";
+import math from 'mathjs';
+import Input from '../styles/blocks/graph/input';
+import Label from '../styles/blocks/graph/label';
 
-import ValueCoordinateInput from "../../containers/experiment/value_coordinate_input";
-import ValueCoordinateView from "../../containers/experiment/value_coordinate_view";
-import SamplePointsInput from "../../containers/experiment/sample_points_input";
-import SamplePointsView from "../../containers/experiment/sample_points_view";
-import MaxValuePredict from "../../containers/experiment/max_value_predictor";
-import {costOfCoordinate,costOfPoint} from './constants'
+import ValueCoordinateInput from '../../containers/experiment/value_coordinate_input';
+import ValueCoordinateView from '../../containers/experiment/value_coordinate_view';
+import SamplePointsInput from '../../containers/experiment/sample_points_input';
+import SamplePointsView from '../../containers/experiment/sample_points_view';
+import MaxValuePredict from '../../containers/experiment/max_value_predictor';
+import { costOfCoordinate, costOfPoint } from './constants';
+
 const FlexDisplay = styled.div`
   display: flex;
 `;
@@ -40,7 +40,7 @@ class FunctionGraph extends Component {
       round: PropTypes.number.isRequired,
       responses: PropTypes.object.isRequired,
       viewMode: PropTypes.boolean.isRequired,
-      part: PropTypes.string.isRequired
+      part: PropTypes.string.isRequired,
     };
   }
 
@@ -53,12 +53,12 @@ class FunctionGraph extends Component {
       samplePointsCost: 0,
       valueCoordinateCost: 0,
       alert: false,
-      alertType: "warning",
-      alertText: "",
+      alertType: 'warning',
+      alertText: '',
       verticalTick: false,
       firstTimeInput: false,
       startTime: 0,
-      maxValuePrediction: undefined
+      maxValuePrediction: undefined,
     };
 
     this.validateAttrs = this.validateAttrs.bind(this);
@@ -72,7 +72,7 @@ class FunctionGraph extends Component {
     this.renderSubmitButton = this.renderSubmitButton.bind(this);
   }
 
-  func = x => {
+  func = (x) => {
     const { func } = this.props;
     return math.eval(func, { x });
   };
@@ -100,7 +100,7 @@ class FunctionGraph extends Component {
       this.setState({
         firstTimeInput: true,
         startTime: date,
-        verticalTick: true
+        verticalTick: true,
       });
     }
   }
@@ -110,20 +110,20 @@ class FunctionGraph extends Component {
     if((this.state.samplePointsCost+totalCost) <= 5) {
       this.setState({
         valueCoordinateCost: totalCost,
-        numValueCoordinates
+        numValueCoordinates,
       });
     } else {
       this.triggerError("The value of Sample points and Value Coordinates coultdn't be greater than $5");
     }
   };
 
-  buySamplePoints = ({ totalCost, points,numSamplePoints }) => {
+  buySamplePoints = ({ totalCost, points, numSamplePoints }) => {
     this.checkForFirstTimeInput();
     if((this.state.valueCoordinateCost+totalCost) <= 5) {
       this.setState({
         samplePoints: numSamplePoints,
         boughtPoints: points,
-        samplePointsCost: totalCost
+        samplePointsCost: totalCost,
       });
     } else {
       this.triggerError("The value of Sample points and Value Coordinates coultdn't be greater than $5");
@@ -133,7 +133,7 @@ class FunctionGraph extends Component {
   renderCost() {
     const { samplePointsCost, valueCoordinateCost } = this.state;
     const cost = samplePointsCost + valueCoordinateCost;
-    let formattedCost = "";
+    let formattedCost = '';
     if (cost) {
       formattedCost = `$${Math.round(cost * 100) / 100}`;
     }
@@ -145,40 +145,39 @@ class FunctionGraph extends Component {
     return false;
   };
 
-  triggerError = (text="Nothing was predicted!") => {
+  triggerError = (text = 'Nothing was predicted!') => {
     this.setState({
       alert: true,
-      alertType: "danger",
-      alertText: text
+      alertType: 'danger',
+      alertText: text,
     });
     setTimeout(() => {
       this.setState({
-        alert: false
+        alert: false,
       });
     }, 10000);
   };
 
-  generateAlert = () =>
-    this.state.alert ? (
-      <Alert color={this.state.alertType}>{this.state.alertText}</Alert>
-    ) : null;
+  generateAlert = () => (this.state.alert ? (
+    <Alert color={this.state.alertType}>{this.state.alertText}</Alert>
+  ) : null);
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     if (this.validateAttrs()) {
       e.preventDefault();
       const finishTime = new Date().getTime();
       console.log(
-        "time spent",
+        'time spent',
         finishTime - this.state.startTime,
         finishTime,
-        this.state.startTime
+        this.state.startTime,
       );
       const data = {
         user_id: this.props.user.id,
         part: this.props.part,
         round_number: this.props.round ? this.props.round : 1,
         time_to_response: finishTime - this.state.startTime,
-        ...this.props.responses
+        ...this.props.responses,
       };
       console.log(data);
       if (this.props.disabled) {
@@ -189,7 +188,7 @@ class FunctionGraph extends Component {
           this.props.group.function_set_id,
           this.props.id,
           this.props.responses.response_id,
-          data
+          data,
         );
       } else {
         const { storeResponse } = this.props;
@@ -197,7 +196,7 @@ class FunctionGraph extends Component {
           this.props.group.id,
           this.props.group.function_set_id,
           this.props.id,
-          data
+          data,
         );
       }
     } else {
@@ -218,7 +217,7 @@ class FunctionGraph extends Component {
             this.props.responses.num_bought_value_coordinates
           }
           disabled={this.props.disabled}
-          
+
         />
       );
     }
@@ -235,7 +234,6 @@ class FunctionGraph extends Component {
   }
 
   renderSamplePoints() {
-    
     const { minX, maxX } = this.props;
     if (this.props.viewMode) {
       return (
@@ -267,10 +265,9 @@ class FunctionGraph extends Component {
         total={this.totalCost}
       />
     );
-
   }
 
-  handleMaxValueChange = e => {
+  handleMaxValueChange = (e) => {
     this.setState({ maxValuePrediction: e.target.value });
   };
 
@@ -284,7 +281,7 @@ class FunctionGraph extends Component {
             value={this.props.responses.max_value_prediction || 0}
             disabled
             type="number"
-            
+
           />
         </div>
       );
@@ -305,14 +302,16 @@ class FunctionGraph extends Component {
   }
 
   render() {
-    const { minX, maxX, minY, maxY } = this.props;
+    const {
+      minX, maxX, minY, maxY,
+    } = this.props;
     const { verticalTick } = this.state;
     const {
       generateAlert,
       renderSubmitButton,
       renderValueCoordinate,
       renderSamplePoints,
-      renderMaxValue
+      renderMaxValue,
     } = this;
     return (
       <Row className="p-4">
@@ -325,7 +324,7 @@ class FunctionGraph extends Component {
               top: 20,
               right: 5,
               bottom: 5,
-              left: 20
+              left: 20,
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
@@ -335,7 +334,7 @@ class FunctionGraph extends Component {
               fill="#8884d8"
               stroke="none"
             />
-            <XAxis dataKey="x" type="number" tick={false} />
+            <XAxis dataKey="x" type="number" tick={false} domain={[minX, maxX]} />
             <YAxis
               dataKey="y"
               type="number"

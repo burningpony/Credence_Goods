@@ -1,10 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import SamplePointsInput from './sample_points_input';
-import Button from '../styles/blocks/graph/button';
 import Label from '../styles/blocks/graph/label';
 import Input from '../styles/blocks/graph/input';
-import { calculateSamplePoint, calculateBounds } from '../helpers/function';
 
 class SamplePointsView extends SamplePointsInput {
   constructor(props) {
@@ -18,7 +15,7 @@ class SamplePointsView extends SamplePointsInput {
         this.setState({
           numSamplePoints: newProps.num_bought_sample_points,
           totalCost: this.props.costOfPoint * newProps.num_bought_sample_points || 0,
-        },this.handleClick);
+        }, this.handleClick);
       }
     }
   }
