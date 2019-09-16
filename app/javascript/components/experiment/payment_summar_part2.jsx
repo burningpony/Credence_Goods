@@ -20,14 +20,15 @@ class PaymentSummaryPart2 extends Component {
   getPayment = () => {
     const { part, user } = this.props;
 
-    getPayment( user.id, part ).then((response) => {
+    getPayment(user.id, part).then((response) => {
       console.log(response);
       this.setState({payment: response });
     });
   }
 
   finish = () => {
-    finishExperiment().then((data)=>{
+    const { user } = this.props;
+    finishExperiment(user.id).then((data)=>{
       this.props.transition('finish')
     })
   }
