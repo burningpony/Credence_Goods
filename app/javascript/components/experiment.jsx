@@ -60,9 +60,9 @@ class ExperimentComponent extends Component {
       case 'rounds':
         return (<Rounds toastManager={this.props.toastManager} />);
       case 'payment':
-        return (<PaymentSummary toastManager={this.props.toastManager} />);
+        return (<PaymentSummary toastManager={this.props.toastManager} part={1} />);
       case 'payment_part2':
-        return (<PaymentSummaryPart2 toastManager={this.props.toastManager} />);
+        return (<PaymentSummaryPart2 toastManager={this.props.toastManager} part={2}/>);
       default:
         return (<GroupSelect toastManager={this.props.toastManager} />);
     }

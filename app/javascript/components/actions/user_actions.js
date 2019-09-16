@@ -27,3 +27,14 @@ export const configureUser = groupName => dispatch => fetch(`${API_URL}/users`,
   dispatch(receiveUser(fromJS(response)));
   if (!response.errors) dispatch(fetchGroup(response.group_id));
 });
+
+export const getPayment = (userId, part) => 
+  fetch(`${API_URL}/users/${userId}/payments/${part}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-CSRF-Token': getToken(),
+    },
+}).then(response => response.json());

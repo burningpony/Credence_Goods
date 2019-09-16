@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   namespace :api, format: :json do
     resources :users, only: [:create, :update] do
-      resources :function_responses, only: [:index]
+      resources :payments, only: [:show]
     end
     resources :user_pairs, only: [:update]
     resources :quizes, only: [:create]

@@ -71,13 +71,3 @@ export const updateFunctionResponses = (groupId, setId, functionId, responseId, 
 
 });
 
-export const getFunctionResponses = (userId) => 
-  fetch(`${API_URL}/users/${userId}/function_responses`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      'X-Requested-With': 'XMLHttpRequest',
-      'X-CSRF-Token': getToken(),
-    },
-}).then(response => response.json());

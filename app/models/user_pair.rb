@@ -7,8 +7,6 @@ class UserPair < ApplicationRecord
     scope :free_person_b, -> (group_id) { where(:person_b_id => [nil,""] ).where(:group_id => group_id).take(1) }
     scope :has_pair, -> (user_id) { where(:person_b_id => user_id).or(where(:person_a_id => user_id)).count  }
 
-
-
     def self.request_pair(user_id,round,group_id)
         #group = Group.find(user[:group_id])
         user = User.find(user_id)
@@ -20,9 +18,7 @@ class UserPair < ApplicationRecord
                 pair = UserPair.free_person_b(group_id)
                 role = :person_b_id
             end
-            #byebug
             if pair.count == 0
-                puts 'creo el par'
                 pair = UserPair.create(role => user.id, :round => round, :group_id => group_id)
                 if pair.save
                     return pair
