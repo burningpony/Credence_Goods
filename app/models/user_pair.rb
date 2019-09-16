@@ -8,7 +8,6 @@ class UserPair < ApplicationRecord
     scope :has_pair, -> (user_id) { where(:person_b_id => user_id).or(where(:person_a_id => user_id)).count  }
 
     def self.request_pair(user_id,round,group_id)
-        #group = Group.find(user[:group_id])
         user = User.find(user_id)
         if(UserPair.has_pair(user.id) == 0)
             if user.role == 'A'

@@ -26,7 +26,11 @@ module Api
 
     def update
       user = User.find(params[:id])
-      user.update(finished_at: Time.current)
+      if user.update(finished_at: Time.current)
+        render json: true
+      else
+        render json: { errors: user.errors.full_messages }
+      end
     end
 
     private
