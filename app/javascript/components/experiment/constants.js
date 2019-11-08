@@ -1,2 +1,2 @@
-export const costOfCoordinate = 2.33;
-export const costOfPoint = 2.33;
+export const costOfCoordinate = 0.30;
+export const costOfPoint = 0.25;
