@@ -1,24 +1,24 @@
 - name: ci
   type: parallel
   steps:
-  - name: js specs
-    service: credence-goods
-    command: yarn test
+    - name: js specs
+      service: credence-goods
+      command: yarn test
 
 - name: Push
   tag: master
   service: app
   type: push
-  image_name: registry.heroku.com/boiling-plains-97540/web
+  image_name: registry.heroku.com/credence-goods/web
   registry: registry.heroku.com
   dockercfg_service: heroku-dockercfg-generator
 
 - name: Trigger Release
   tag: master
   service: heroku-deployment
-  command: heroku container:release --app boiling-plains-97540 web
+  command: heroku container:release --app credence-goods web
 
 - name: migrate
   tag: master
   service: heroku-deployment
-  command: heroku run --app boiling-plains-97540 -- bundle exec rake db:migrate
+  command: heroku run --app credence-goods -- bundle exec rake db:migrate

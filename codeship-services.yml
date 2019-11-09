@@ -1,6 +1,6 @@
 credence-goods:
   build:
-    image: boiling-plains-97540
+    image: credence-goods
     dockerfile: Dockerfile
   depends_on:
     - redis
@@ -19,7 +19,7 @@ heroku-deployment:
     - ./:/deploy
 app:
   build:
-    image: registry.heroku.com/boiling-plains-97540
+    image: registry.heroku.com/credence-goods
     dockerfile: Dockerfile
   encrypted_env_file: heroku-deployment.env.encrypted
 heroku-dockercfg-generator:
