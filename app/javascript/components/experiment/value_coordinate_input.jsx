@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import {
- Button, Col, Row, Input 
-} from '@bootstrap-styled/v4';
-import Label from '../styles/blocks/graph/label';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Button, Col, Row, Input } from "@bootstrap-styled/v4";
+import Label from "../styles/blocks/graph/label";
 
-const rowStyle = { marginBottom: '10px' };
+const rowStyle = { marginBottom: "10px" };
 
 class ValueCoordinateInput extends Component {
   static propTypes() {
@@ -13,14 +11,14 @@ class ValueCoordinateInput extends Component {
       id: PropTypes.function.isRequired, // function_id
       functionString: PropTypes.string.isRequired,
       costOfCoordinate: PropTypes.number.isRequired,
-      callback: PropTypes.func.isRequired,
+      callback: PropTypes.func.isRequired
     };
   }
 
   state = {
     totalCost: 0,
     numValueCoordinates: 0,
-    minValue: 0,
+    minValue: 0
   };
 
   /**
@@ -29,24 +27,24 @@ class ValueCoordinateInput extends Component {
    * @returns
    * @memberof ValueCoordinate
    */
-  setValueCoordinates = (e) => {
+  setValueCoordinates = e => {
     const newNumValueCoordinates = parseFloat(e.target.value);
 
     this.setState(
       {
-        numValueCoordinates: newNumValueCoordinates,
+        numValueCoordinates: newNumValueCoordinates
       },
       () => {
         if (newNumValueCoordinates > this.state.minValue) {
           this.setState({
-            totalCost: this.props.costOfCoordinate * newNumValueCoordinates || 0,
+            totalCost: this.props.costOfCoordinate * newNumValueCoordinates || 0
           });
           this.props.updateFunctionResponse(
             this.props.id,
-            newNumValueCoordinates,
+            newNumValueCoordinates
           );
         }
-      },
+      }
     );
   };
 
@@ -57,23 +55,23 @@ class ValueCoordinateInput extends Component {
     for (let i = 0; i < numValueCoordinates; i++) {
       localCoordinates.push(i * Math.random());
     }
-    
+
     return localCoordinates;
   };
 
-  handleClick = (e) => {
+  handleClick = e => {
     const { callback, minValue } = this.props;
     const { numValueCoordinates } = this.state;
     if (numValueCoordinates < minValue) {
       this.setState({ numValueCoordinates: minValue });
     } else {
-       callback(this.state)
+      callback(this.state);
     }
   };
-  
-  renderTotalCost(){
+
+  renderTotalCost() {
     const { totalCost } = this.state;
-    return (totalCost && Math.round(totalCost * 100) / 100);
+    return totalCost && Math.round(totalCost * 100) / 100;
   }
 
   render() {
@@ -92,7 +90,9 @@ class ValueCoordinateInput extends Component {
           />
         </Col>
         <Col sm="12">
-          <Button name="valueCoordinate" onClick={this.handleClick}>SUBMIT</Button>
+          <Button name="valueCoordinate" size="sm" onClick={this.handleClick}>
+            SUBMIT
+          </Button>
           Cost: &nbsp;
           {this.renderTotalCost()}
         </Col>

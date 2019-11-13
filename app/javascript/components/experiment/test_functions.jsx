@@ -2,24 +2,36 @@ import React, { Component } from 'react';
 import { Button } from '@bootstrap-styled/v4';
 import FunctionGraph from '../../containers/experiment/function_graph';
 
-const mathFunctions = [{
-  id: 0, representation: 'x', max_y: 1, max_x: 1, min_y: 0, min_x: 0,
-}, {
-  representation: '(x*x)', max_y: 1, max_x: 1, min_y: 0, min_x: 0,
-}];
+const mathFunctions = [
+  {
+    id: 0,
+    representation: 'x',
+    max_y: 1,
+    max_x: 1,
+    min_y: 0,
+    min_x: 0,
+  },
+  {
+    representation: '(x*x)',
+    max_y: 1,
+    max_x: 1,
+    min_y: 0,
+    min_x: 0,
+  },
+];
 
 class TestFunctions extends Component {
   render() {
     return (
       <div>
         <h1 id="#title">Tests functions</h1>
-        <div >
+        <div>
           {mathFunctions.map((func, i) => (
             <div key={i} id="function">
               <h2>
-                            Function
-                {' '}
-                {func.representation}
+                Function 
+{' '}
+{func.representation}
                 {i + 1}
               </h2>
 
@@ -34,12 +46,15 @@ class TestFunctions extends Component {
                 responses={func.responses}
                 viewMode={this.props.viewMode}
               />
-
             </div>
           ))}
         </div>
 
-        <Button onClick={() => this.props.transition()} name="continue" color="success">
+        <Button
+          onClick={() => this.props.transition()}
+          name="continue"
+          color="success"
+        >
           Continue to select a group
         </Button>
       </div>

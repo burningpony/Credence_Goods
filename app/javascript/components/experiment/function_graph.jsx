@@ -2,15 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
-  Button, Col, Row, Alert,
+ Button, Col, Row, Alert 
 } from '@bootstrap-styled/v4';
 
 import {
-  ScatterChart,
-  Scatter,
-  XAxis,
-  YAxis,
-  CartesianGrid,
+ ScatterChart, Scatter, XAxis, YAxis, CartesianGrid 
 } from 'recharts';
 
 import math from 'mathjs';
@@ -107,26 +103,30 @@ class FunctionGraph extends Component {
 
   buyValueCoordinates = ({ numValueCoordinates, totalCost }) => {
     this.checkForFirstTimeInput();
-    if((this.state.samplePointsCost+totalCost) <= 5) {
+    if (this.state.samplePointsCost + totalCost <= 5) {
       this.setState({
         valueCoordinateCost: totalCost,
         numValueCoordinates,
       });
     } else {
-      this.triggerError("The value of Sample points and Value Coordinates coultdn't be greater than $5");
+      this.triggerError(
+        "The value of Sample points and Value Coordinates coultdn't be greater than $5",
+      );
     }
   };
 
   buySamplePoints = ({ totalCost, points, numSamplePoints }) => {
     this.checkForFirstTimeInput();
-    if((this.state.valueCoordinateCost+totalCost) <= 5) {
+    if (this.state.valueCoordinateCost + totalCost <= 5) {
       this.setState({
         samplePoints: numSamplePoints,
         boughtPoints: points,
         samplePointsCost: totalCost,
       });
     } else {
-      this.triggerError("The value of Sample points and Value Coordinates coultdn't be greater than $5");
+      this.triggerError(
+        "The value of Sample points and Value Coordinates coultdn't be greater than $5",
+      );
     }
   };
 
@@ -159,19 +159,13 @@ class FunctionGraph extends Component {
   };
 
   generateAlert = () => (this.state.alert ? (
-    <Alert color={this.state.alertType}>{this.state.alertText}</Alert>
-  ) : null);
+      <Alert color={this.state.alertType}>{this.state.alertText}</Alert>
+    ) : null);
 
   handleSubmit = (e) => {
     if (this.validateAttrs()) {
       e.preventDefault();
       const finishTime = new Date().getTime();
-      console.log(
-        'time spent',
-        finishTime - this.state.startTime,
-        finishTime,
-        this.state.startTime,
-      );
       const data = {
         user_id: this.props.user.id,
         part: this.props.part,
@@ -179,7 +173,6 @@ class FunctionGraph extends Component {
         time_to_response: finishTime - this.state.startTime,
         ...this.props.responses,
       };
-      console.log(data);
       if (this.props.disabled) {
         // if was save
         const { updateResponse } = this.props;
@@ -217,10 +210,10 @@ class FunctionGraph extends Component {
             this.props.responses.num_bought_value_coordinates
           }
           disabled={this.props.disabled}
-
         />
       );
     }
+
     return (
       <ValueCoordinateInput
         id={this.props.id}
@@ -281,11 +274,11 @@ class FunctionGraph extends Component {
             value={this.props.responses.max_value_prediction || 0}
             disabled
             type="number"
-
           />
         </div>
       );
     }
+
     return (
       <MaxValuePredict
         id={this.props.id}
@@ -296,15 +289,21 @@ class FunctionGraph extends Component {
 
   renderSubmitButton() {
     if (!this.props.viewMode) {
-      return <Button name="prediction" onClick={this.handleSubmit}> Predict </Button>;
+      return (
+        <Button name="prediction" size="sm" onClick={this.handleSubmit}>
+          {' '}
+          Predict
+{" "}
+        </Button>
+      );
     }
     return <div />;
   }
 
   render() {
     const {
-      minX, maxX, minY, maxY,
-    } = this.props;
+ minX, maxX, minY, maxY 
+} = this.props;
     const { verticalTick } = this.state;
     const {
       generateAlert,
@@ -322,7 +321,7 @@ class FunctionGraph extends Component {
             height={400}
             margin={{
               top: 20,
-              right: 5,
+              right: 20,
               bottom: 5,
               left: 20,
             }}
@@ -334,12 +333,23 @@ class FunctionGraph extends Component {
               fill="#8884d8"
               stroke="none"
             />
-            <XAxis dataKey="x" type="number" tick={false} domain={[minX, maxX]} />
+            <XAxis
+              dataKey="x"
+              type="number"
+              tick={false}
+              domain={[
+                minX - Math.abs((maxX - minX) / 40),
+                maxX + Math.abs((maxX - minX) / 40),
+              ]}
+            />
             <YAxis
               dataKey="y"
               type="number"
               tick={verticalTick || undefined}
-              domain={[minY, maxY]}
+              domain={[
+                minY - Math.abs((maxY - minY) / 40),
+                maxY + Math.abs((maxY - minY) / 40),
+              ]}
               ticks={this.horizontalPoints()}
               allowDecimals
               allowDataOverflow

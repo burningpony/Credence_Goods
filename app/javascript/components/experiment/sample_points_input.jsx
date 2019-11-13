@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Col, Row, Input,
+ Button, Col, Row, Input 
 } from '@bootstrap-styled/v4';
 import Label from '../styles/blocks/graph/label';
 import { calculateSamplePoint, calculateBounds } from '../helpers/function';
@@ -48,7 +48,7 @@ class SamplePointsInput extends Component {
 
     let collisions = 0;
 
-    for (let i = 0; i < (numSamplePoints + collisions); i++) {
+    for (let i = 0; i < numSamplePoints + collisions; i++) {
       const [localMin, localMax] = calculateBounds(i + 1, { min, max });
       const [x, y] = calculateSamplePoint(func, localMin, localMax);
       const MAX_COLLISIONS = 50;
@@ -56,8 +56,10 @@ class SamplePointsInput extends Component {
       const hasCollison = !!localPoints.find((point) => {
         const COLLISION_THRESHOLD = (max - min) / MAX_COLLISIONS;
 
-        const isNearbyX = x + COLLISION_THRESHOLD > point.x && x - COLLISION_THRESHOLD < point.x;
-        const isNearbyY = y + COLLISION_THRESHOLD > point.y && y - COLLISION_THRESHOLD < point.y;
+        const isNearbyX =          x + COLLISION_THRESHOLD > point.x
+          && x - COLLISION_THRESHOLD < point.x;
+        const isNearbyY =          y + COLLISION_THRESHOLD > point.y
+          && y - COLLISION_THRESHOLD < point.y;
         return isNearbyX && isNearbyY;
       });
 
@@ -90,7 +92,7 @@ class SamplePointsInput extends Component {
 
   renderTotalCost() {
     const { totalCost } = this.state;
-    return (totalCost && Math.round(totalCost * 100) / 100);
+    return totalCost && Math.round(totalCost * 100) / 100;
   }
 
   render() {
@@ -110,7 +112,9 @@ class SamplePointsInput extends Component {
           />
         </Col>
         <Col sm="12">
-          <Button name="points" onClick={this.handleClick}>SUBMIT</Button>
+          <Button name="points" size="sm" onClick={this.handleClick}>
+            SUBMIT
+          </Button>
           Cost: &nbsp;
           {this.renderTotalCost()}
           &nbsp;

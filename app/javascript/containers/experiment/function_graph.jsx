@@ -1,7 +1,10 @@
 import { connect } from 'react-redux';
-import React from 'react';
 import FunctionGraph from '../../components/experiment/function_graph';
-import { storeFunctionResponses, updateFunctionResponses, GET_FUNCTION } from '../../components/actions/functions_actions';
+import {
+  storeFunctionResponses,
+  updateFunctionResponses,
+  GET_FUNCTION,
+} from '../../components/actions/functions_actions';
 
 const mapStateToProps = state => ({
   group: state.group.toJS(),
@@ -10,8 +13,27 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  storeResponse: (groupId, setId, functionId, functionsResponses) => dispatch(storeFunctionResponses(groupId, setId, functionId, functionsResponses)),
-  updateResponse: (groupId, setId, functionId, responseId, functionsResponses) => dispatch(updateFunctionResponses(groupId, setId, functionId, responseId, functionsResponses)),
+  storeResponse: (groupId, setId, functionId, functionsResponses) => dispatch(
+      storeFunctionResponses(groupId, setId, functionId, functionsResponses),
+    ),
+  updateResponse: (
+    groupId,
+    setId,
+    functionId,
+    responseId,
+    functionsResponses,
+  ) => dispatch(
+      updateFunctionResponses(
+        groupId,
+        setId,
+        functionId,
+        responseId,
+        functionsResponses,
+      ),
+    ),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FunctionGraph);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(FunctionGraph);
