@@ -21,7 +21,7 @@ class BrowseWeb extends Component {
   }
 
   toggleBrowsing() {
-    const win = window.open('', '_blank');
+    const win = window.open('https://www.google.com', '_blank');
     win.focus();
     this.setState({ browsing: true });
   }
