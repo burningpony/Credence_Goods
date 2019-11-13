@@ -31,7 +31,6 @@ In another tab. To start the application and it's Dependencies
 #### Pulling down others work
 
     $ git pull
-    $ docker-compose build web
 
 #### Running Tests
 
