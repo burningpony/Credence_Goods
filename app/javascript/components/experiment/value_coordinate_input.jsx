@@ -91,7 +91,7 @@ class ValueCoordinateInput extends Component {
         </Col>
         <Col sm="12">
           <Button name="valueCoordinate" size="sm" onClick={this.handleClick}>
-            SUBMIT
+            Submit
           </Button>
           Cost: &nbsp;
           {this.renderTotalCost()}

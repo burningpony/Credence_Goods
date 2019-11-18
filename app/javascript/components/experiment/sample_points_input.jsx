@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import {
- Button, Col, Row, Input 
-} from '@bootstrap-styled/v4';
-import Label from '../styles/blocks/graph/label';
-import { calculateSamplePoint, calculateBounds } from '../helpers/function';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Button, Col, Row, Input } from "@bootstrap-styled/v4";
+import Label from "../styles/blocks/graph/label";
+import { calculateSamplePoint, calculateBounds } from "../helpers/function";
 
 class SamplePointsInput extends Component {
   static propTypes() {
@@ -14,30 +12,30 @@ class SamplePointsInput extends Component {
       costOfPoint: PropTypes.number.isRequired,
       min: PropTypes.number.isRequired,
       max: PropTypes.number.isRequired,
-      callback: PropTypes.function.isRequired,
+      callback: PropTypes.function.isRequired
     };
   }
 
   state = {
     totalCost: 0,
     points: [],
-    numSamplePoints: 0,
+    numSamplePoints: 0
   };
 
-  setNumSamplePoints = (e) => {
+  setNumSamplePoints = e => {
     const newNumSamplePoints = parseFloat(e.target.value);
     this.setState(
       {
-        numSamplePoints: newNumSamplePoints,
+        numSamplePoints: newNumSamplePoints
       },
       () => {
         if (newNumSamplePoints > this.props.minValue) {
           this.setState({
-            totalCost: this.props.costOfPoint * newNumSamplePoints || 0,
+            totalCost: this.props.costOfPoint * newNumSamplePoints || 0
           });
           this.props.updateFunctionResponse(this.props.id, newNumSamplePoints);
         }
-      },
+      }
     );
   };
 
@@ -53,13 +51,15 @@ class SamplePointsInput extends Component {
       const [x, y] = calculateSamplePoint(func, localMin, localMax);
       const MAX_COLLISIONS = 50;
 
-      const hasCollison = !!localPoints.find((point) => {
+      const hasCollison = !!localPoints.find(point => {
         const COLLISION_THRESHOLD = (max - min) / MAX_COLLISIONS;
 
-        const isNearbyX =          x + COLLISION_THRESHOLD > point.x
-          && x - COLLISION_THRESHOLD < point.x;
-        const isNearbyY =          y + COLLISION_THRESHOLD > point.y
-          && y - COLLISION_THRESHOLD < point.y;
+        const isNearbyX =
+          x + COLLISION_THRESHOLD > point.x &&
+          x - COLLISION_THRESHOLD < point.x;
+        const isNearbyY =
+          y + COLLISION_THRESHOLD > point.y &&
+          y - COLLISION_THRESHOLD < point.y;
         return isNearbyX && isNearbyY;
       });
 
@@ -74,7 +74,7 @@ class SamplePointsInput extends Component {
     return localPoints;
   };
 
-  handleClick = (e) => {
+  handleClick = e => {
     const { callback, minValue } = this.props;
     const { numSamplePoints } = this.state;
 
@@ -83,9 +83,9 @@ class SamplePointsInput extends Component {
     } else {
       this.setState(
         {
-          points: this.generatePoints(),
+          points: this.generatePoints()
         },
-        () => callback(this.state),
+        () => callback(this.state)
       );
     }
   };
@@ -113,7 +113,7 @@ class SamplePointsInput extends Component {
         </Col>
         <Col sm="12">
           <Button name="points" size="sm" onClick={this.handleClick}>
-            SUBMIT
+            Submit
           </Button>
           Cost: &nbsp;
           {this.renderTotalCost()}
