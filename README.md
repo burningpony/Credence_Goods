@@ -7,24 +7,17 @@ An application to support the collection of data for economics studies.
 - docker
 - docker-compose
 
-### Getting it Running
+### Getting it Running Locally
 
 Start a bash console inside of the dev environment.
 
-1. `$ docker-compose run --rm web bash`
+1. `$ docker-compose up -d db redis`
 
-**If this readme says "in the container" it is assumed the following command is
-run within the above command.**
-
-Setup DB. (only once)
+(Ensure you do not have a local postgres running on the same port)
 
 2. `$ bin/setup`
 
-In another tab. To start the application and it's Dependencies
-
-3. `$ docker-compose up -d db redis`
-
-4. `$ rails s`
+3. `$ rails s`
 
 ### Working within the project
 
@@ -42,7 +35,7 @@ In the container
 
 Project Updates Credence Goods. Initial documentation..
 
-Current Flow Experiment:
+Current Flow of Experiment:
 
 (Configurations / set up in admin)
 Navigate to root and type in group name associated with experiment.
@@ -54,7 +47,7 @@ Part 1
 
 Quiz 2
 
-Matching Partners Screen (wait until match)->
+Matching Partners Screen (wait until match)
 
 ### Part 2
 (Repeat until out of rounds in group)
@@ -87,7 +80,7 @@ Expert:
 
 #### FFS:
 
--The groups configured ffs payment _ (number of bought payment requests + number of bought sample points) + number of function predictions _ group ffs payment _ 3
+-The groups configured ffs payment * (number of bought payment requests + number of bought sample points) + number of function predictions _ group ffs payment _ 3
 
 -Prediction payment for ffs is currently estimated as group ffs payment _ 3 is that okay?
 
@@ -111,9 +104,11 @@ Total Payment: Part 1 payment + Part 2 payment
 
 -Notes on accuracy mechanism below.
 
-#### Known remaining TODO:
+#### TODO:
 
--Emmanuel and I will be running through the experiment, to ensure it is behaving as we expect, giving it more of a stress test to ensure that the experiment will run in larger groups as best as we can. Ensuring indexes and querying can handle larger groups as well.
+-Payments Calculations seem to be a little bit bugged
+
+-Running through the experiment, to ensure it is behaving as we expect, giving it more of a stress test to ensure that the experiment will run in larger groups as best as we can. Ensuring indexes and querying can handle larger groups as well.
 
 -Images for quizzes, we will be generating images for the quizzes and setting the correct answers as best as we can.
 
@@ -122,10 +117,6 @@ Total Payment: Part 1 payment + Part 2 payment
 -Re enable Heroku hosting to credence goods app. Will forward www route along once determined.
 
 -Some payment tweaks (subtract expenses for part 1)
-
-#### Schema
-
-I am attaching the database to schema outline what can be configured on the group as well as what data is currently getting captured. I believe all extraneous fields have been removed, will be verifying this statement.
 
 #### Routes
 
@@ -167,22 +158,33 @@ User view
 Users should really be thought of as participants.. poorly named
 \*Starred routes are used by experiment runners. Admin routes contain xml and csv exports.
 
-#### Action Items
+## Configuration Details
+Configuration occurs underneath the /admin route.
 
--Let us know if there is anything out of the ordinary in these descriptions.
--Let us know if you have any questions.
--Let us know if there is additional information that needs to be captured. (Do we need to try to capture time that a user browses.)
--Let us know if the payment calculations look correct.
--Should we be enforcing that all functions are answered in part 1?
--We will be looking to finish up our TODOs and cleaning up anything that comes up in item 1 of TODO.
--Prediction payment for ffs is currently estimated as group ffs payment \* 3 is that okay?
--Will the function playground work for function generation for you guys?
--What do we think about changing the point prediction accuracy mechanism to make max loss 1 dollar? Example: Line Max = 300, minY = 100, maxY = 400.
+#### Groups
+`/admin/groups`
+Groups specifies the nature of the experiment. 
 
-abs(Actual Max - Prediction) / (maxY - minY)
+**Name:** Name of the group used for accessing the group
+**Payment Method:** Capitation, FFS, or Salary.
+**Salary Payment:** Amount of salary paid if salary payment method.
+**Capitation Payment:** Amount of capitation paid if capitation payment method
+**FFS Payment:** Amount of FFS paid if FFs is selected
 
-When Prediction = 1000 loss = 1
-When Prediction = 300 loss = 0
-When Prediction = 400 loss = abs(300 - 400) / (400 - 100) = .333
-When Prediction = 355 loss = abs(300 - 355) / (400 - 100) = .1833
-When Prediction = 455 loss = abs(300 - 355) / (400 - 100) = .5166
+#### Function Set
+`/admin/function_sets`
+After a group is created a functionset can be created, a function set is a collection of functions to be grouped together. These sets will be grouped together as the participant answers the questions. Function sets are attached to a group.
+
+**Group:** Group function set will be associated with.
+
+#### Functions
+
+**Function Set:** Function set the function will be attached to.
+**String Representation of Function:** Math.js representation of the function. https://mathjs.org/docs/expressions/parsing.html
+**Bounds** Bounds that will limit range of function for predictions / graphing. 
+
+## Results Details
+
+#### Dashboard
+`/admin/dashboard`
+Orders recently finished participants and displays how much they should be paid.
