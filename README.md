@@ -46,15 +46,17 @@ Current Flow Experiment:
 
 (Configurations / set up in admin)
 Navigate to root and type in group name associated with experiment.
-Instructions ->
-Test Functions ->
-Part 1 ->
-Quiz 2 ->
+Instructions
+Test Functions
+Part 1
+Quiz 2
 Matching Partners Screen (wait until match)->
-Part 2 ->
+Part 2
 (Repeat until out of rounds in group)
-Expert -> Makes predictions on groups function sets
-Customer -> Watches matched Expert make estimations
+Expert 
+- Makes predictions on groups function sets
+Customer
+- Watches matched Expert make estimations
 Payment Screen
 
 Payment Calculations
