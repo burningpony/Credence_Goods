@@ -47,46 +47,71 @@ Current Flow Experiment:
 (Configurations / set up in admin)
 Navigate to root and type in group name associated with experiment.
 Instructions
+
 Test Functions
+
 Part 1
+
 Quiz 2
+
 Matching Partners Screen (wait until match)->
-Part 2
+
+### Part 2
 (Repeat until out of rounds in group)
+
 Expert 
+
 - Makes predictions on groups function sets
+
 Customer
+
 - Watches matched Expert make estimations
+
 Payment Screen
 
 Payment Calculations
+
 Cost of Coordinate = 0.30
+
 Cost of Point = 0.25
 
-Part 1:
+### Part 1:
+
 Starting Cash (hard coded to 30) - the accuracy of point predictions (diff max value and prediction) - price of requested sample points - price of requested basis lines.
+
 Should we be enforcing that all functions are answered in part 1?
-Part 2:
+
+### Part 2:
+
 Expert:
-FFS:
+
+#### FFS:
+
 -The groups configured ffs payment _ (number of bought payment requests + number of bought sample points) + number of function predictions _ group ffs payment _ 3
+
 -Prediction payment for ffs is currently estimated as group ffs payment _ 3 is that okay?
-Salary:
+
+#### Salary:
 -The groups configured Salary amount
 Capitation:
 -The groups configured capitation payment \* number of unique function_sets the expert made predictions on
-Customer:
+
+#### Customer:
 Starting Cash (hard coded to 30) - the accuracy of point predictions by each expert by round (diff max value and prediction) - price of requested sample points - price of requested basis lines
 
 Total Payment: Part 1 payment + Part 2 payment
 
-Notes:
+#### Notes:
+
 -Points no longer collide, if a requested point lands within 1/50th of the ranges of the function a new point will be requested in the next range.
+
 -We do have an automated test that ensures that two users can pair and move through the entire experiment.
+
 -We do not plan on generating the functions programmatically, we do plan on providing a function playground view to help construct functions, let us know if this will be enough for you guys.
+
 -Notes on accuracy mechanism below.
 
-Known remaining TODO:
+#### Known remaining TODO:
 
 -Emmanuel and I will be running through the experiment, to ensure it is behaving as we expect, giving it more of a stress test to ensure that the experiment will run in larger groups as best as we can. Ensuring indexes and querying can handle larger groups as well.
 
@@ -98,40 +123,52 @@ Known remaining TODO:
 
 -Some payment tweaks (subtract expenses for part 1)
 
-Schema
+#### Schema
 
 I am attaching the database to schema outline what can be configured on the group as well as what data is currently getting captured. I believe all extraneous fields have been removed, will be verifying this statement.
 
-Routes
+#### Routes
 
 All routes are protected by basic http auth. User: user Password: 123456789.
 
 /
 Route to experiment interface, Presents input to select which group the participant will be a member of (uses named group from admin interface
 
-/admin*
+##### /admin*
+
 Experimenter dashboard for viewing recently finished users. Shows payment with by recently finished users.
-/admin/comments
+
+##### /admin/comments
+
 Placeholder (not really used)
-/admin/function_responses
-Table containing all function responses. A function response is how we store a user’s answer to a graph, for both parts 1 and 2. CSV export
-/admin/function_set*
+
+##### /admin/function_responses
+Table containing all function responses. A function response is how we store a user’s answer to a graph, for both parts 1 and
+2. CSV export
+
+##### /admin/function_set*
 This is referred to as a group inside of the experiment documentation. Function set attaches a set of functions to a group. This is where function sets for groups are managed.
-/admin/functions*
+
+##### /admin/functions*
 Functions that will be graphed. Must be attached to a function set. Has a String representation of the function, then function bounds. Bounds specify where the GSS function will find value, also bounds of graph.
-/admin/groups*
+
+##### /admin/groups*
 Admin view for creating groups default payment of the group specifies how experts will be paid in part 2. Can specify payment details, as well as number of rounds.
-/admin/quiz_responses
+
+##### /admin/quiz_responses
 Stores user responses to the quizzes
-/admin/user_pairs
-User pairs for part 2. (How experimenter is matched with a customer)
+
+##### /admin/user_pairs
+
+##### User pairs for part 2. (How experimenter is matched with a customer)
 /users
 User view
 
 Users should really be thought of as participants.. poorly named
 \*Starred routes are used by experiment runners. Admin routes contain xml and csv exports.
 
-Action Items
+#### Action Items
+
 -Let us know if there is anything out of the ordinary in these descriptions.
 -Let us know if you have any questions.
 -Let us know if there is additional information that needs to be captured. (Do we need to try to capture time that a user browses.)
