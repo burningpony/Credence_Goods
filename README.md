@@ -162,17 +162,24 @@ Users should really be thought of as participants.. poorly named
 Configuration occurs underneath the /admin route.
 
 #### Groups
+
 `/admin/groups`
 Groups specifies the nature of the experiment. 
 
 **Name:** Name of the group used for accessing the group
+
 **Payment Method:** Capitation, FFS, or Salary.
+
 **Salary Payment:** Amount of salary paid if salary payment method.
+
 **Capitation Payment:** Amount of capitation paid if capitation payment method
+
 **FFS Payment:** Amount of FFS paid if FFs is selected
 
 #### Function Set
+
 `/admin/function_sets`
+
 After a group is created a functionset can be created, a function set is a collection of functions to be grouped together. These sets will be grouped together as the participant answers the questions. Function sets are attached to a group.
 
 **Group:** Group function set will be associated with.
@@ -180,11 +187,14 @@ After a group is created a functionset can be created, a function set is a colle
 #### Functions
 
 **Function Set:** Function set the function will be attached to.
+
 **String Representation of Function:** Math.js representation of the function. https://mathjs.org/docs/expressions/parsing.html
+
 **Bounds** Bounds that will limit range of function for predictions / graphing. 
 
 ## Results Details
 
 #### Dashboard
+
 `/admin/dashboard`
 Orders recently finished participants and displays how much they should be paid.
